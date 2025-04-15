@@ -30,7 +30,8 @@ class InputReader:
 
     def get_line_no(self):
         return self.line_no
-        
+    
+    #when we've read too far and the next char is for the next token
     def push_back(self, char):
         if char == '\n':
             self.line_no -= 1
