@@ -51,7 +51,7 @@ class StateNode:
         return self.action if self.action else None
 
 
-class AcceptingNode(StateNode):
+class FinalStateNode(StateNode):
     def __init__(self, action, should_rewind=False):
         super().__init__(node_type=NodeType.ACCEPTING, action=action, accept_any_char=True)
         self.should_rewind = should_rewind
