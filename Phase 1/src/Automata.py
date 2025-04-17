@@ -1,60 +1,79 @@
+from collections import defaultdict
 from enum import Enum
 
+class Error(Enum):
+    INVALID_NUM       = "Invalid Number"
+    INVALID_INPUT     = "Invalid Input"
+    UNCLOSED_COMMENT  = "Unclosed Comment"
+    UNMATCHED_COMMENT = "Unmatched Comment"
 
-class NodeType(Enum):
-    INTERMEDIATE = 0    # Normal state
-    ACCEPTING = 1       # Final state (token accepted)
-    REJECT = 2          # Error state
+class StateType(Enum):
+    DEF = 0
+    ACCEPT = 1
+    ERROR = 2
 
 
-class Condition:
+class State:
+    def __init__(self, type=(StateType.DEF,)):
+        self.type = type
+
+    def is_terminal(self):
+        return self.type[0] in (StateType.ACCEPT, StateType.ERROR)
+
+
+class Alphabet:
     def __init__(self):
-        self.allowed_ranges = []
-        self.blocked_ranges = []
+        self.include_ranges = []
+        self.exclude_ranges = []
 
-    def allow(self, start, end=None):
-        if end is None:
-            end = start
-        self.allowed_ranges.append((start, end))
+    def __is_in_ranges(self, ranges, char):
+        for start, end in ranges:
+            if start <= char <= end:
+                return True
+        return False
+
+    def __add_to_ranges(self, ranges, char_range):
+        if len(char_range) == 1:
+            char_range = (char_range[0], char_range[0])
+        ranges.append(char_range)
+
+    def include(self, char_range):
+        self.__add_to_ranges(self.include_ranges, char_range)
         return self
 
-    def block(self, start, end=None):
-        if end is None:
-            end = start
-        self.blocked_ranges.append((start, end))
+    def exclude(self, char_range):
+        self.__add_to_ranges(self.exclude_ranges, char_range)
         return self
 
-    def is_satisfied_by(self, char):
-        allowed = any(start <= char <= end for start, end in self.allowed_ranges) if self.allowed_ranges else True
-        blocked = any(start <= char <= end for start, end in self.blocked_ranges)
-        return allowed and not blocked
-
-
-class StateNode:
-    def __init__(self, node_type=NodeType.INTERMEDIATE, action=None, accept_any_char=False):
-        self.node_type = node_type
-        self.action = action
-        self.accept_any_char = accept_any_char
-        self.transitions = []
-
-    def add_path(self, condition, target_node):
-        self.transitions.append((condition, target_node))
+    def include_all_chars(self):
+        self.include((chr(0), chr(127)))
         return self
 
-    def accepts_any_character(self):
-        return self.accept_any_char
-
-    def next(self, char):
-        for condition, target_node in self.transitions:
-            if condition.is_satisfied_by(char):
-                return target_node
-        return self.action if self.action else None
+    def is_in_alphabet(self, char):
+        in_includes = self.__is_in_ranges(self.include_ranges, char)
+        in_excludes = self.__is_in_ranges(self.exclude_ranges, char)
+        return in_includes and not in_excludes
 
 
-class FinalStateNode(StateNode):
-    def __init__(self, action, should_rewind=False):
-        super().__init__(node_type=NodeType.ACCEPTING, action=action, accept_any_char=True)
-        self.should_rewind = should_rewind
+class Automaton:
+    def __init__(self, start_state):
+        self.start_state = start_state
+        self.states = [start_state]
+        self.transitions = defaultdict(list)
 
-    def needs_rewind(self):
-        return self.should_rewind
+    def get_start_state(self):
+        return self.start_state
+
+    def add_state(self, state):
+        self.states.append(state)
+
+    def add_transition(self, from_state, to_state, alphabet):
+        self.transitions[from_state].append((to_state, alphabet))
+
+    def next_states(self, from_states, char):
+        to_states = []
+        for from_state in from_states:
+            for to_state, alphabet in self.transitions[from_state]:
+                if alphabet.is_in_alphabet(char) and to_state not in to_states:
+                    to_states.append(to_state)
+        return to_states
