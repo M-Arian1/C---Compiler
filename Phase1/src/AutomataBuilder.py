@@ -1,42 +1,45 @@
 from Automata import *
+from Tokens import *
 
 
 
-# class Token(Enum):
-#     NUM = 0
-    
 class AutomataBuilder:
     def __init__(self) :
-        pass
+        self.__buildAutomaton()
         
     
     def buildAutomaton():
-        
-        start_state = State()
-        automaton = Automaton(start_state)
+        start_state= State()
+        panic_alphabet = Alphabet().includeAllChars().exclude(('a', 'z')) \
+                                                    .exclude(('A', 'Z')) \
+                                                    .exclude(('0', '9')) \
+                                                    .exclude((':',)).exclude((';',)).exclude(('[',']')).exclude(('(',')')).exclude(('{','}')) \
+                                                    .exclude(('+',)).exclude(('-',)).exclude(('*',)).exclude(('/',)).exclude(('=',)).exclude(('<',)) \
+                                                    .exclude((' ',)).exclude(('\t',)).exclude(('\n',)).exclude(('\r',)).exclude(('\f',)).exclude(('\v',))
+        automaton = Automaton(start_state, panic_alphabet)
         
         #STATES DEFINITION
-        end_state = State(type= 1)
+        end_state = State()
         
-        state_no_1 = State(type= 0)
-        state_num = State(type= 0)
-        err_state_inv_num = State(type= 2)
+        state_no_1 = State()
+        state_num = State(push_back_needed=True)
+        err_state_inv_num = State((StateType.ERROR, Error.INVALID_NUM))
         
-        state_symbol = State(type= 1)
-        state_assign = State(type= 0)
+        state_symbol = State((StateType.ACCEPT, Token.SYMBOL))
+        state_assign = State()
         
-        state_no_2 = State(type= 0)
-        err_state_unmatched_comm = State(type= 2)
-        state_symb_type_2 = State(type= 1)
+        state_no_2 = State()
+        err_state_unmatched_comm = State((StateType.ERROR, Error.UNMATCHED_COMMENT))
+        state_symb_type_2 = State((StateType.ACCEPT, Token.SYMBOL), push_back_needed=True)
         
-        state_comm_start = State(type= 0)
-        state_comm_star = State(type = 0)
-        state_no_3 = State(type= 0)
-        state_unclosed_comm = State(type= 2)
-        state_comment = State(type= 1)
+        state_comm_start = State()
+        state_comm_star = State()
+        state_no_3 = State()
+        state_unclosed_comm = State((StateType.ERROR, Error.UNCLOSED_COMMENT))
+        state_comment = State((StateType.ACCEPT, Token.COMMENT))
         
-        state_no_4 = State(type= 0)
-        state_txt_id = State(type= 1)
+        state_no_4 = State()
+        state_txt_id = State((StateType.ACCEPT, Token.ID) ,push_back_needed= True)
         
         automaton.add_state(state_no_1)
         automaton.add_state(state_num)
@@ -49,7 +52,7 @@ class AutomataBuilder:
         automaton.add_state(err_state_unmatched_comm)
         automaton.add_state(state_symb_type_2)
         
-        automaton.add_state(state_comm_start)
+        automaton.add_state(state_comm_start, False)
         automaton.add_transition(state_comm_star)
         automaton.add_state(state_no_3)
         automaton.add_state(state_unclosed_comm)
@@ -136,4 +139,4 @@ class AutomataBuilder:
         alph_let_dig.include(('0', '9'))
         automaton.add_transition(state_no_4, state_no_4, alph_let_dig)
         automaton.add_transition(state_no_4, state_txt_id, alph_ws_s_eof)
-        pass
+        return automaton

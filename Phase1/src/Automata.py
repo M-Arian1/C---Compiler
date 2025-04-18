@@ -7,18 +7,22 @@ class Error(Enum):
     UNCLOSED_COMMENT  = "Unclosed Comment"
     UNMATCHED_COMMENT = "Unmatched Comment"
 
+
 class StateType(Enum):
-    DEF = 0
+    INTER = 0
     ACCEPT = 1
     ERROR = 2
 
-
 class State:
-    def __init__(self, type=(StateType.DEF,)):
+    def __init__(self, type =(StateType.DEF,), push_back_needed = False):
         self.type = type
+        self.push_back_need = push_back_needed
 
     def is_terminal(self):
         return self.type[0] in (StateType.ACCEPT, StateType.ERROR)
+    
+    def is_push_back_needed(self):
+        return self.is_push_back_needed
 
 
 class Alphabet:
@@ -56,16 +60,27 @@ class Alphabet:
 
 
 class Automaton:
-    def __init__(self, start_state):
+    def __init__(self, start_state, default_panic_alph=Alphabet()):
         self.start_state = start_state
+        self.default_panic_state = State((StateType.ERROR, Error.INVALID_INPUT))
         self.states = [start_state]
         self.transitions = defaultdict(list)
+        self.default_panic_alph = default_panic_alph
+        
+        self.add_transition_to_panic(start_state)
+        self.add_transition_to_panic(self.default_panic_state)
+        
+    def add_transition_to_panic(self, from_state):
+        self.transitions[from_state].append((self.default_panic_state, self.default_panic_alph))
 
     def get_start_state(self):
         return self.start_state
 
-    def add_state(self, state):
+    def addState(self, state, add_transition_to_panic = True):
         self.states.append(state)
+        if add_transition_to_panic:
+            self.add_transition_to_panic(state)
+        return
 
     def add_transition(self, from_state, to_state, alphabet):
         self.transitions[from_state].append((to_state, alphabet))
