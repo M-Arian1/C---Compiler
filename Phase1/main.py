@@ -37,9 +37,13 @@ def get_next_token():
         
     final_state = states[0]
     if final_state.push_back_needed:
-        input_reader.push_back(char)
+        input_reader.push_back(token[-1])
+        token = token[:-1]
     
     return final_state, token, input_reader.get_line_no()
+
+def is_comment_token(token):
+    return token.strip().startswith('/*') and token.strip().endswith('*/')
 
 def main():
     global C_minus_scanner
@@ -47,19 +51,66 @@ def main():
     C_minus_scanner = AutomataBuilder()
     input_reader = InputReader('input.txt')
     
-    sym_table = SymbolTable(['break', 'else', 'if', 'int', 'while', 'return', 'void', 'main'])
+    # Define keywords list
+    keywords = ['break', 'else', 'if', 'int', 'while', 'return', 'void']
+    
+    sym_table = SymbolTable(keywords)
     error_table = ErrorTable()
     token_table = TokenTable()
     
+    in_comment = False
+    comment_buffer = ""
+    
     while input_reader.has_next():
         state, token, line_no = get_next_token()
+        if not token:
+            continue
+            
+        # Check for comments
+        if token.strip() == "/*":
+            in_comment = True
+            comment_buffer = token
+            continue
+            
+        if in_comment:
+            comment_buffer += token
+            if token.strip() == "*/":
+                in_comment = False
+                token_table.add_token(state_type=(StateType.ACCEPT, Token.COMMENT), token=comment_buffer, line_no=line_no)
+                comment_buffer = ""
+            continue
+            
+        # Process token based on its content rather than relying solely on state
+        token_stripped = token.strip()
+        
         if state.type[0] == StateType.ERROR:
             error_table.add_record(token, state)
         else:
-            token_table.add_token(state, token, line_no)
-            # Check if it's an ID or KEYWORD
-            if isinstance(state.type, tuple) and len(state.type) > 1 and state.type[1] in [Token.ID, Token.KEYWORD]:
-                sym_table.add_symbol({"name": token})
+            # Classic token classification approach
+            if token_stripped in keywords:
+                token_table.add_token(state_type=(StateType.ACCEPT, Token.KEYWORD), token=token, line_no=line_no)
+                sym_table.add_symbol({"name": token_stripped})
+            elif token_stripped.isdigit():
+                # Handle numbers
+                token_table.add_token(state_type=(StateType.ACCEPT, Token.NUM), token=token, line_no=line_no)
+            elif token_stripped.isalnum() and token_stripped and not token_stripped[0].isdigit():
+                # Handle identifiers
+                token_table.add_token(state_type=(StateType.ACCEPT, Token.ID), token=token, line_no=line_no)
+                sym_table.add_symbol({"name": token_stripped})
+            elif token_stripped in ['+', '-', '*', '/', '<', '=', '==', ';', ':', ',', '[', ']', '(', ')', '{', '}']:
+                # Handle symbols
+                token_table.add_token(state_type=(StateType.ACCEPT, Token.SYMBOL), token=token, line_no=line_no)
+            elif isinstance(state.type, tuple) and len(state.type) > 1:
+                # State-based classification as fallback
+                if state.type[1] == Token.COMMENT:
+                    continue  # Skip comments in token table output
+                token_table.add_token(state, token, line_no)
+            else:
+                # Last resort using the token's content to classify
+                if '==' in token_stripped:
+                    token_table.add_token(state_type=(StateType.ACCEPT, Token.SYMBOL), token=token, line_no=line_no)
+                else:
+                    token_table.add_token(state, token, line_no)
     
     token_table.write_to_file(token_table.generate_text(), "tokens.txt")
     sym_table.write_to_file(sym_table.sym_to_text(), "symbol_table.txt")

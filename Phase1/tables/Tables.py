@@ -38,8 +38,8 @@ class SymbolTable(Table):
     
     def sym_to_text(self):
         text = ""
-        for sym in self.all_symbols:
-            text += sym["name"] + "\n"
+        for i, sym in enumerate(self.all_symbols):
+            text += f"{i+1}.\t{sym['name']}\n"
         return text
 
 
@@ -52,7 +52,11 @@ class ErrorTable(Table):
         self.lexical_records.append({"token": token.strip(), "error": final_state.type[1].value})
         
     def generate_error_text(self):
+        if not self.lexical_records:
+            return "There is no lexical error."
+            
         text = ""
+        current_line = None
         for rec in self.lexical_records:
             text += "(" + rec["token"] + ",\t" + rec["error"] + ")\n"
         return text
@@ -63,18 +67,30 @@ class TokenTable(Table):
         super().__init__()
         self.tokens = []
         
-    def add_token(self, state, token, line_no):
-        if state.type == Token.COMMENT or state.type == Token.WHITESPACE:
+    def add_token(self, state=None, token=None, line_no=None, state_type=None):
+        if state and state.type == Token.COMMENT or (state and state.type == Token.WHITESPACE):
             return
+            
         while len(self.tokens) <= line_no:
             self.tokens.append([])
-        error_value = state.type[1].value if isinstance(state.type, tuple) and len(state.type) > 1 else "Unknown"
-        self.tokens[line_no].append("(" + token.strip() + ",\t" + error_value + ")")
+            
+        token_type = None
+        if state_type:
+            token_type = state_type[1].value
+        elif isinstance(state.type, tuple) and len(state.type) > 1:
+            token_type = state.type[1].value
+        else:
+            token_type = "Unknown"
+            
+        self.tokens[line_no].append("(" + token.strip() + ",\t" + token_type + ")")
     
     def generate_text(self):
         final_text = ""
-        for token_line in self.tokens:
-            text = ""
+        for i, token_line in enumerate(self.tokens):
+            if not token_line:
+                continue
+                
+            text = f"{i}.\t"
             for rec in token_line:
                 text += str(rec) + "\t"
             text += "\n"
