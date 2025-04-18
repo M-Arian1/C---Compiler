@@ -49,8 +49,8 @@ def get_next_token():
         
     final_state = states[0]
     
-    for state in states:
-        print(state.get_name, token)
+    # for state in states:
+    #     print(state.get_name, token)
     if final_state.push_back_needed:
         input_reader.push_back(token[-1])
         token = token[:-1]
@@ -94,6 +94,10 @@ def main():
             else:
                 in_comment = False
                 # error_table.add_record(token, state, line_no)
+                states_list = []
+                states_list.append(state)
+                next_s = C_minus_scanner.next_states(states_list,chr(26))
+                state = next_s[1]
                 comment_buffer = ""
         
             
@@ -105,6 +109,8 @@ def main():
         if state.type[0] == StateType.ERROR:
             
             error_table.add_record(token, state, line_no)
+            
+       
         else:
             # Classic token classification approach
             if token_stripped in keywords:
