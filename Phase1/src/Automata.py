@@ -14,7 +14,7 @@ class StateType(Enum):
     ERROR = 2
 
 class State:
-    def __init__(self, type =(StateType.DEF,), push_back_needed = False):
+    def __init__(self, type =(StateType.INTER,), push_back_needed = False):
         self.type = type
         self.push_back_need = push_back_needed
 

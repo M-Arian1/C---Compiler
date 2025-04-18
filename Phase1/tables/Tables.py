@@ -1,6 +1,10 @@
 from collections import defaultdict
-from Phase1.src.Automata import *
-from Phase1.src.Tokens import *
+
+from src.Automata import *
+from src.Tokens import *
+
+
+
 
 class Table:
     def __init__(self):

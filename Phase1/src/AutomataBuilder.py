@@ -1,5 +1,5 @@
-from Automata import *
-from Tokens import *
+from src.Automata import *
+from src.Tokens import *
 
 
 

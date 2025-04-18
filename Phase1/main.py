@@ -1,12 +1,12 @@
-from Phase1.tables.Tables import *
+import sys
+import os
+sys.path.append(os.path.dirname(__file__))
 
-from Phase1.src.AutomataBuilder import *
-from Phase1.src.AutomataBuilder import AutomataBuilder
-from Phase1.src.InputReader import InputReader
-from Phase1.tables import *
 
-from src import *
-from tables import *
+from tables.Tables import SymbolTable, ErrorTable, TokenTable
+from src.AutomataBuilder import AutomataBuilder
+from src.InputReader import InputReader
+
 
 def get_next_token():
     
@@ -60,4 +60,5 @@ def main():
     sym_table.write_to_file(sym_table.sym_to_text, "symbol_table.txt")
     error_table.write_to_file(error_table.generate_error_text, "lexical_errors.txt")        
     
-    
+    if __name__=="__main__":
+        main()
