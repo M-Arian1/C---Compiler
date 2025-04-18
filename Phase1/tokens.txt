@@ -1,0 +1,17 @@
+
+
+(void,	ID)	(main,	Unknown)	((,	SYMBOL)	(void,	Unknown)	(),	SYMBOL)	({,	SYMBOL)	
+(int,	ID)	(a,	Unknown)	(;,	SYMBOL)	
+(int,	ID)	(b,	Unknown)	(;,	SYMBOL)	
+(int,	ID)	(c,	Unknown)	(;,	SYMBOL)	
+
+(a,	ID)	(=,	SYMBOL)	
+(2,	Unknown)	
+(b,	ID)	(=,	SYMBOL)	
+(3,	Unknown)	
+(c,	ID)	(=,	SYMBOL)	(a,	ID)	(+,	SYMBOL)	(b,	Unknown)	(;,	SYMBOL)	
+(a,	ID)	(=,	SYMBOL)	(c,	ID)	(-,	SYMBOL)	(2,	Unknown)	(;,	SYMBOL)	
+(b,	ID)	(=,	SYMBOL)	(a,	ID)	(+,	SYMBOL)	(10,	Unknown)	(;,	SYMBOL)	
+(return,	Unknown)	(;,	SYMBOL)	
+(},	SYMBOL)	
+(,	Unknown)	

@@ -1,6 +1,5 @@
 class InputReader:
     def __init__(self, filename = "input.txt", buffer_size = 100):
-        
         self.filename = filename
         self.buffer_pointer = 0
         self.buffer_size = buffer_size
@@ -10,32 +9,29 @@ class InputReader:
         self.__load_buffer()
         
     def __load_buffer(self):
-        
         self.buffer = self.input_file.read(self.buffer_size)
         if len(self.buffer) < self.buffer_size:
             self.buffer += chr(26)
-            
         self.buffer_pointer = 0
         
+    def _refill_buffer(self):
+        self.__load_buffer()
         
-    def next_char_exists(self):
+    def has_next(self):
         if self.buffer_pointer < len(self.buffer):
             return True
-
-        if len(self.buffer) < self.buffer_size:
+        elif len(self.buffer) < self.buffer_size:
             return False
-
-        self._refill_buffer()
-        return self.has_next()
+        else:
+            self._refill_buffer()
+            return self.has_next()
 
     def get_line_no(self):
         return self.line_no
     
-    #when we've read too far and the next char is for the next token
     def push_back(self, char):
         if char == '\n':
             self.line_no -= 1
-
         if self.buffer_pointer > 0:
             self.buffer_pointer -= 1
         else:
@@ -52,5 +48,4 @@ class InputReader:
             self.line_no += 1
 
         return next_char
-    
-    
+

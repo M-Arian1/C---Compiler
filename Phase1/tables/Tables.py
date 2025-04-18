@@ -68,7 +68,8 @@ class TokenTable(Table):
             return
         while len(self.tokens) <= line_no:
             self.tokens.append([])
-        self.tokens[line_no].append("(" + token.strip() + ",\t" + state.type[1].value + ")")
+        error_value = state.type[1].value if isinstance(state.type, tuple) and len(state.type) > 1 else "Unknown"
+        self.tokens[line_no].append("(" + token.strip() + ",\t" + error_value + ")")
     
     def generate_text(self):
         final_text = ""

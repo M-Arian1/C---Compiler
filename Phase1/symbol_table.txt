@@ -1,0 +1,23 @@
+break
+else
+if
+int
+while
+return
+void
+main
+
+void 
+
+	int 
+
+
+	a 
+
+	b 
+
+	c 
+ a 
+
+	a 
+ c 

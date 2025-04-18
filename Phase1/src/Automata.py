@@ -16,7 +16,7 @@ class StateType(Enum):
 class State:
     def __init__(self, type =(StateType.INTER,), push_back_needed = False):
         self.type = type
-        self.push_back_need = push_back_needed
+        self.push_back_needed = push_back_needed
 
     def is_terminal(self):
         return self.type[0] in (StateType.ACCEPT, StateType.ERROR)
@@ -76,7 +76,7 @@ class Automaton:
     def get_start_state(self):
         return self.start_state
 
-    def addState(self, state, add_transition_to_panic = True):
+    def add_state(self, state, add_transition_to_panic = True):
         self.states.append(state)
         if add_transition_to_panic:
             self.add_transition_to_panic(state)

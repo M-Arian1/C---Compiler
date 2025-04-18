@@ -4,13 +4,20 @@ from src.Tokens import *
 
 
 class AutomataBuilder:
-    def __init__(self) :
-        self.__buildAutomaton()
+    def __init__(self):
+        self.automaton = self.buildAutomaton()
         
-    
+    def getStartState(self):
+        return self.automaton.get_start_state()
+        
+    def next_states(self, states, char):
+        return self.automaton.next_states(states, char)
+
+        
+    @staticmethod
     def buildAutomaton():
         start_state= State()
-        panic_alphabet = Alphabet().includeAllChars().exclude(('a', 'z')) \
+        panic_alphabet = Alphabet().include_all_chars().exclude(('a', 'z')) \
                                                     .exclude(('A', 'Z')) \
                                                     .exclude(('0', '9')) \
                                                     .exclude((':',)).exclude((';',)).exclude(('[',']')).exclude(('(',')')).exclude(('{','}')) \
@@ -53,7 +60,7 @@ class AutomataBuilder:
         automaton.add_state(state_symb_type_2)
         
         automaton.add_state(state_comm_start, False)
-        automaton.add_transition(state_comm_star)
+        automaton.add_transition(state_comm_star, end_state, panic_alphabet)
         automaton.add_state(state_no_3)
         automaton.add_state(state_unclosed_comm)
         automaton.add_state(state_comment)
@@ -64,8 +71,9 @@ class AutomataBuilder:
         #State Transitions
         alph_eof = Alphabet()
         #EOF = chr(26)
+        alph_ws_s_eof = Alphabet()
         alph_ws_s_eof.include((chr(26), chr(26)))
-        automaton.add_trasition(start_state, end_state, alph_eof)
+        automaton.add_transition(start_state, end_state, alph_eof)
         
         alph_ws = Alphabet()
         for ws in [' ', '\t', '\n', '\r', '\f', '\v']:
@@ -86,7 +94,7 @@ class AutomataBuilder:
         alph_letter = Alphabet()
         alph_letter.include(('A','Z'))
         alph_letter.include(('a','z'))
-        automaton.add_transition(state_no_1, err_state_inv_num)
+        automaton.add_transition(state_no_1, err_state_inv_num, alph_letter)
         
         
         
@@ -95,7 +103,7 @@ class AutomataBuilder:
             alph_syms.include((sym, sym))
         automaton.add_transition(start_state, state_symbol, alph_syms)
         
-        alph_eq_sign = Alphabet
+        alph_eq_sign = Alphabet()
         alph_eq_sign.include(('=','='))
         automaton.add_transition(start_state, state_assign, alph_eq_sign)
         automaton.add_transition(state_assign, state_symbol, alph_eq_sign)
