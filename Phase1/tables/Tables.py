@@ -105,10 +105,11 @@ class TokenTable(Table):
         for i, token_line in enumerate(self.tokens):
             if not token_line:
                 continue
-                
+
             text = f"{i}.\t"
             for rec in token_line:
-                text += str(rec) + "\t"
+                text += f"{str(rec)}    "  # Add consistent spacing between tokens
+            text = text.rstrip()  # Remove trailing spaces for consistency
             text += "\n"
             final_text += text
         return final_text
