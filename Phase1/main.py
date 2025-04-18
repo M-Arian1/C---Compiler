@@ -49,7 +49,7 @@ def main():
     global C_minus_scanner
     global input_reader
     C_minus_scanner = AutomataBuilder()
-    input_reader = InputReader('input.txt')
+    input_reader = InputReader('Phase1/src/inputfiles/input.txt')
     
     # Define keywords list
     keywords = ['break', 'else', 'if', 'int', 'while', 'return', 'void']
@@ -84,7 +84,7 @@ def main():
         token_stripped = token.strip()
         
         if state.type[0] == StateType.ERROR:
-            error_table.add_record(token, state)
+            error_table.add_record(token, state, line_no)
         else:
             # Classic token classification approach
             if token_stripped in keywords:
@@ -112,9 +112,9 @@ def main():
                 else:
                     token_table.add_token(state, token, line_no)
     
-    token_table.write_to_file(token_table.generate_text(), "tokens.txt")
-    sym_table.write_to_file(sym_table.sym_to_text(), "symbol_table.txt")
-    error_table.write_to_file(error_table.generate_error_text(), "lexical_errors.txt")
+    token_table.write_to_file(token_table.generate_text(), "Phase1/src/outputfiles/tokens.txt")
+    sym_table.write_to_file(sym_table.sym_to_text(), "Phase1/src/outputfiles/symbol_table.txt")
+    error_table.write_to_file(error_table.generate_error_text(), "Phase1/src/outputfiles/lexical_errors.txt")
 
 if __name__=="__main__":
     main()

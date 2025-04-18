@@ -48,8 +48,8 @@ class ErrorTable(Table):
         super().__init__()
         self.lexical_records = []
     
-    def add_record(self, token, final_state):
-        self.lexical_records.append({"token": token.strip(), "error": final_state.type[1].value})
+    def add_record(self, token, final_state, line_no):
+        self.lexical_records.append({"token": token.strip(), "error": final_state.type[1].value, "line" : line_no})
         
     def generate_error_text(self):
         if not self.lexical_records:
@@ -58,7 +58,7 @@ class ErrorTable(Table):
         text = ""
         current_line = None
         for rec in self.lexical_records:
-            text += "(" + rec["token"] + ",\t" + rec["error"] + ")\n"
+            text += "(" + rec["token"] + ",\t" + rec["error"] + ")" + str(rec["line"]) +"\n"
         return text
 
 
@@ -80,9 +80,9 @@ class TokenTable(Table):
         elif isinstance(state.type, tuple) and len(state.type) > 1:
             token_type = state.type[1].value
         else:
-            token_type = "Unknown"
-            
-        self.tokens[line_no].append("(" + token.strip() + ",\t" + token_type + ")")
+            token_type = ""
+        if not token_type == "":
+            self.tokens[line_no].append("(" + token.strip() + ",\t" + token_type + ")")
     
     def generate_text(self):
         final_text = ""

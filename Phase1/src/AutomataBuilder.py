@@ -20,6 +20,7 @@ class AutomataBuilder:
         panic_alphabet = Alphabet().include_all_chars().exclude(('a', 'z')) \
                                                     .exclude(('A', 'Z')) \
                                                     .exclude(('0', '9')) \
+                                                    .exclude((',',))\
                                                     .exclude((':',)).exclude((';',)).exclude(('[',']')).exclude(('(',')')).exclude(('{','}')) \
                                                     .exclude(('+',)).exclude(('-',)).exclude(('*',)).exclude(('/',)).exclude(('=',)).exclude(('<',)) \
                                                     .exclude((' ',)).exclude(('\t',)).exclude(('\n',)).exclude(('\r',)).exclude(('\f',)).exclude(('\v',))
@@ -73,8 +74,7 @@ class AutomataBuilder:
         #State Transitions
         alph_eof = Alphabet()
         #EOF = chr(26)
-        alph_ws_s_eof = Alphabet()
-        alph_ws_s_eof.include((chr(26), chr(26)))
+        
         automaton.add_transition(start_state, end_state, alph_eof)
         
         alph_ws = Alphabet()
@@ -90,7 +90,10 @@ class AutomataBuilder:
         alph_ws_s_eof = Alphabet()
         for ws in [' ', '\t', '\n', '\r', '\f', '\v']:
             alph_ws_s_eof.include((ws, ws))
-        alph_ws_s_eof.include((chr(26), chr(26)))
+        for sym in [';', ':', ',', '[', ']', '(', ')', '{', '}', '+', '-', '*', '/', '=', '<']:
+            alph_ws_s_eof.include((sym, sym))
+            
+        alph_ws_s_eof.include((chr(26), chr(26)))  
         automaton.add_transition(state_no_1, state_num, alph_ws_s_eof)
         
         alph_letter = Alphabet()
