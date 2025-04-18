@@ -49,16 +49,27 @@ class ErrorTable(Table):
         self.lexical_records = []
     
     def add_record(self, token, final_state, line_no):
-        self.lexical_records.append({"token": token.strip(), "error": final_state.type[1].value, "line" : line_no})
+        while len(self.lexical_records) <= line_no:
+            self.lexical_records.append([])
+
+        self.lexical_records[line_no].append({
+            "token": token.strip(),
+            "error": final_state.type[1].value,
+            "line": line_no
+        })
         
     def generate_error_text(self):
         if not self.lexical_records:
             return "There is no lexical error."
             
         text = ""
-        current_line = None
-        for rec in self.lexical_records:
-            text += "(" + rec["token"] + ",\t" + rec["error"] + ")" + str(rec["line"]) +"\n"
+        for line in self.lexical_records:
+            for rec in line:
+                text += str(rec["line"]) +".\t(" + rec["token"] + ",\t" + rec["error"] + ")\t"
+            if not line:
+                continue
+            else:
+                text += "\n"
         return text
 
 
@@ -81,8 +92,10 @@ class TokenTable(Table):
             token_type = state.type[1].value
         else:
             token_type = ""
+        
         if not token_type == "":
-            self.tokens[line_no].append("(" + token.strip() + ",\t" + token_type + ")")
+            token = token.strip()
+            self.tokens[line_no].append("(" + token_type + ",\t" + token + ")")
     
     def generate_text(self):
         final_text = ""
