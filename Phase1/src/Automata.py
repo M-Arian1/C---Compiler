@@ -53,7 +53,7 @@ class Alphabet:
         return self
 
     def include_all_chars(self):
-        self.include((chr(0), chr(127)))
+        self.include((chr(0), chr(255)))
         return self
 
     def is_in_alphabet(self, char):

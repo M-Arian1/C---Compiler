@@ -32,6 +32,7 @@ def get_next_token():
         token += char
         counter += 1
 
+    
     if not states :
         input_reader.push_back(token[-1])
         token = token[:-1]
@@ -41,7 +42,6 @@ def get_next_token():
     if final_state.push_back_needed:
         input_reader.push_back(token[-1])
         token = token[:-1]
-    
     return final_state, token, input_reader.get_line_no()
 
 def is_comment_token(token):

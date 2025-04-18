@@ -1,4 +1,3 @@
-5.	(result[#,	Invalid Input)	
-23.	(void$,	Invalid Input)	
-26.	(f$,	Invalid Input)	(a$,	Invalid Input)	
-35.	(*/,	Unmatched Comment)	(*/,	Unmatched Comment)	
+1.	(voi$,	Invalid Input)	($,	Invalid Input)	
+2.	(TT%,	Invalid Input)	(^,	Invalid Input)	(&,	Invalid Input)	
+7.	(ef%,	Invalid Input)	
