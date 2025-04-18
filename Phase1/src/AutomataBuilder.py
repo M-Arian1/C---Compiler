@@ -41,7 +41,7 @@ class AutomataBuilder:
         err_state_unmatched_comm = State((StateType.ERROR, Error.UNMATCHED_COMMENT))
         state_symb_type_2 = State((StateType.ACCEPT, Token.SYMBOL), push_back_needed=True)
         
-        state_comm_start = State()
+        state_comm_slash = State()
         state_comm_star = State()
         state_no_3 = State()
         state_unclosed_comm = State((StateType.ERROR, Error.UNCLOSED_COMMENT))
@@ -62,7 +62,8 @@ class AutomataBuilder:
         automaton.add_state(err_state_unmatched_comm)
         automaton.add_state(state_symb_type_2)
         
-        automaton.add_state(state_comm_start, False)
+        automaton.add_state(state_comm_slash)
+        automaton.add_state(state_comm_star, False)
         automaton.add_transition(state_comm_star, end_state, panic_alphabet)
         automaton.add_state(state_no_3)
         automaton.add_state(state_unclosed_comm)
@@ -132,9 +133,9 @@ class AutomataBuilder:
         automaton.add_transition(state_no_2, state_symb_type_2, alph_ws_dig_let)
         
         # Handle comments
-        automaton.add_transition(start_state, state_comm_start, alph_slash)
-        automaton.add_transition(state_comm_start, state_symb_type_2, alph_ws_dig_let)
-        automaton.add_transition(state_comm_start, state_comm_star, alph_star)
+        automaton.add_transition(start_state, state_comm_slash, alph_slash)
+        automaton.add_transition(state_comm_slash, state_symb_type_2, alph_ws_dig_let)
+        automaton.add_transition(state_comm_slash, state_comm_star, alph_star)
         
         alph_any_but_star_eof = Alphabet().include_all_chars()
         alph_any_but_star_eof.exclude(('*','*')).exclude((chr(26), chr(26)))
