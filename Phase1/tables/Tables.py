@@ -64,12 +64,15 @@ class ErrorTable(Table):
             
         text = ""
         for line in self.lexical_records:
-            for rec in line:
-                text += str(rec["line"]) +".\t(" + rec["token"] + ",\t" + rec["error"] + ")\t"
             if not line:
                 continue
-            else:
-                text += "\n"
+            
+            line_cnt = str(line[0]["line"])
+            text += line_cnt +".\t"
+            for rec in line:
+                text += "(" + rec["token"] + ",\t" + rec["error"] + ")\t"
+          
+            text += "\n"
         return text
 
 

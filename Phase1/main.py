@@ -31,8 +31,10 @@ def get_next_token():
         states = new_states
         token += char
         counter += 1
-    
-    if not states:
+
+    if not states :
+        input_reader.push_back(token[-1])
+        token = token[:-1]
         return C_minus_scanner.default_panic_state, token, input_reader.get_line_no()
         
     final_state = states[0]

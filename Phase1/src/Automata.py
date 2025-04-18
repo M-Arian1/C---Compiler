@@ -23,6 +23,9 @@ class State:
     
     def is_push_back_needed(self):
         return self.is_push_back_needed
+    
+    def get_state_type(self):
+        return self.type[0]
 
 
 class Alphabet:
@@ -68,7 +71,7 @@ class Automaton:
         self.default_panic_alph = default_panic_alph
         
         self.add_transition_to_panic(start_state)
-        self.add_transition_to_panic(self.default_panic_state)
+        # self.add_transition_to_panic(self.default_panic_state)
         
     def add_transition_to_panic(self, from_state):
         self.transitions[from_state].append((self.default_panic_state, self.default_panic_alph))
