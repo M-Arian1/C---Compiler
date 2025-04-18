@@ -5,8 +5,11 @@
 5.	while
 6.	return
 7.	void
-8.	f
-9.	a
-10.	g
-11.	b
-12.	output
+8.	count
+9.	result
+10.	f
+11.	a
+12.	main
+13.	i
+14.	loop
+15.	output

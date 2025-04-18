@@ -5,6 +5,7 @@ sys.path.append(os.path.dirname(__file__))
 
 from tables.Tables import SymbolTable, ErrorTable, TokenTable
 from src.AutomataBuilder import AutomataBuilder
+from src.Automata import Automaton, State, Alphabet, Error
 from src.InputReader import InputReader
 from src.Automata import StateType
 from src.Tokens import Token
@@ -20,8 +21,21 @@ def get_next_token():
     
     while states:
         char = input_reader.get_next_char()
-        if not char or char == chr(26):  # Check for EOF
+        if not char :  # Check for EOF
             break
+        if char == chr(26) :
+            stripped_tok = token.strip()
+            if (stripped_tok.startswith("/*")):
+                
+                final_state = State((StateType.ERROR, Error.UNCLOSED_COMMENT))
+                
+                return final_state, token, input_reader.get_line_no()
+            else:
+                break
+      
+       
+            
+            
         
         new_states = C_minus_scanner.next_states(states, char)
         if not new_states:
@@ -39,12 +53,6 @@ def get_next_token():
         return C_minus_scanner.default_panic_state, token, input_reader.get_line_no()
         
     final_state = states[0]
-<<<<<<< HEAD
-    
-    # for state in states:
-    #     print(state.get_name, token)
-=======
->>>>>>> parent of e72117f (T7 still not fixed)
     if final_state.push_back_needed:
         input_reader.push_back(token[-1])
         token = token[:-1]
@@ -75,36 +83,38 @@ def main():
             continue
             
         # Check for comments
-        if token.strip() == "/*":
+        if token.startswith("/*"):
             in_comment = True
             comment_buffer = token
-            continue
+            
             
         if in_comment:
             comment_buffer += token
-            if token.strip() == "*/":
+            if token.endswith("*/"):
                 in_comment = False
-                token_table.add_token(state_type=(StateType.ACCEPT, Token.COMMENT), token=comment_buffer, line_no=line_no)
+                # token_table.add_token(state_type=(StateType.ACCEPT, Token.COMMENT), token=comment_buffer, line_no=line_no)
                 comment_buffer = ""
-<<<<<<< HEAD
             else:
-                in_comment = False
-                # error_table.add_record(token, state, line_no)
-                states_list = []
-                states_list.append(state)
-                next_s = C_minus_scanner.next_states(states_list,chr(26))
-                state = next_s[1]
-                comment_buffer = ""
-        
-=======
-            continue
->>>>>>> parent of e72117f (T7 still not fixed)
+                if state.type[0] == StateType.ERROR and state.type[1] == Error.UNCLOSED_COMMENT:
+                    error_table.add_record(token, state, line_no)
+            continue        
+                
             
+                
+                
+       
         # Process token based on its content rather than relying solely on state
         token_stripped = token.strip()
-        
+        # print("type",state.type)
         if state.type[0] == StateType.ERROR:
-            error_table.add_record(token, state, line_no)
+            if(state.type [1] == Error.UNCLOSED_COMMENT):
+                if(token.find("\n")):
+                    error_table.add_record(str(token[:9]+"..."), state, line_no)
+                else:
+                    error_table.add_record(token, state, line_no)
+            else:
+                error_table.add_record(token, state, line_no)
+        
             
        
         else:
