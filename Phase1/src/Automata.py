@@ -12,20 +12,25 @@ class StateType(Enum):
     INTER = 0
     ACCEPT = 1
     ERROR = 2
+    END = 3
 
 class State:
-    def __init__(self, type =(StateType.INTER,), push_back_needed = False):
+    def __init__(self, type=(StateType.INTER,), push_back_needed=False, name=None):
         self.type = type
         self.push_back_needed = push_back_needed
+        self.name = name  # New name attribute
 
     def is_terminal(self):
         return self.type[0] in (StateType.ACCEPT, StateType.ERROR)
-    
+
     def is_push_back_needed(self):
-        return self.is_push_back_needed
-    
+        return self.push_back_needed  # Fixed typo here
+
     def get_state_type(self):
         return self.type[0]
+    
+    def get_name(self):
+        return str(self.name)  # Getter for the name attribute
 
 
 class Alphabet:
@@ -65,33 +70,34 @@ class Alphabet:
 class Automaton:
     def __init__(self, start_state, default_panic_alph=Alphabet()):
         self.start_state = start_state
-        self.default_panic_state = State((StateType.ERROR, Error.INVALID_INPUT))
+        self.default_panic_state = State((StateType.ERROR, Error.INVALID_INPUT),name= "panic_state")
         self.states = [start_state]
-        self.transitions = defaultdict(list)
+        self.transitions = defaultdict(list)  # will replace this in a second
         self.default_panic_alph = default_panic_alph
-        
+
         self.add_transition_to_panic(start_state)
-        # self.add_transition_to_panic(self.default_panic_state)
-        
+
     def add_transition_to_panic(self, from_state):
+        """Fallback transition to panic state for undefined input."""
+        # Now: one default fallback for any char in default_panic_alph
         self.transitions[from_state].append((self.default_panic_state, self.default_panic_alph))
 
     def get_start_state(self):
         return self.start_state
 
-    def add_state(self, state, add_transition_to_panic = True):
+    def add_state(self, state, add_transition_to_panic=True):
         self.states.append(state)
         if add_transition_to_panic:
             self.add_transition_to_panic(state)
-        return
 
     def add_transition(self, from_state, to_state, alphabet):
+        """In DFA — for each input char, one possible destination."""
         self.transitions[from_state].append((to_state, alphabet))
 
-    def next_states(self, from_states, char):
-        to_states = []
-        for from_state in from_states:
-            for to_state, alphabet in self.transitions[from_state]:
-                if alphabet.is_in_alphabet(char) and to_state not in to_states:
-                    to_states.append(to_state)
-        return to_states
+    def next_state(self, current_state, char):
+        """Move deterministically to the next state based on the input character."""
+        for to_state, alphabet in self.transitions[current_state]:
+            if alphabet.is_in_alphabet(char):
+                return to_state
+        # If no alphabet matches, panic state should always be defined
+        return self.default_panic_state

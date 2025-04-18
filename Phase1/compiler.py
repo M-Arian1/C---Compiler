@@ -20,44 +20,47 @@ def get_next_token():
     global C_minus_scanner
     global input_reader
     
-    states = [C_minus_scanner.getStartState()]
+    state = C_minus_scanner.getStartState()
     counter = 0
     token = ""
+    # print(state.get_name())
     
-    while states:
+    while state.type[0] == StateType.INTER:
         char = input_reader.get_next_char()
         if not char :  # Check for EOF
             break
-        if char == chr(26) :
-            stripped_tok = token.strip()
-            if (stripped_tok.startswith("/*")):
+        # if char == chr(26) :
+        #     stripped_tok = token.strip()
+        #     if (stripped_tok.startswith("/*")):
                 
-                final_state = State((StateType.ERROR, Error.UNCLOSED_COMMENT))
+        #         final_state = State((StateType.ERROR, Error.UNCLOSED_COMMENT))
                 
-                return final_state, token, input_reader.get_line_no()
-            else:
-                break
+        #         return final_state, token, input_reader.get_line_no()
+        #     else:
+        #         break
       
        
             
             
         
-        new_states = C_minus_scanner.next_states(states, char)
-        if not new_states:
+        new_state = C_minus_scanner.next_state(state, char)
+        # print(new_state.get_name(), token)
+        if not new_state:
             input_reader.push_back(char)
             break
             
-        states = new_states
+        state = new_state
         token += char
         counter += 1
 
     
-    if not states :
+    if not state :
+        
         input_reader.push_back(token[-1])
         token = token[:-1]
         return C_minus_scanner.default_panic_state, token, input_reader.get_line_no()
         
-    final_state = states[0]
+    final_state = state
     if final_state.push_back_needed:
         input_reader.push_back(token[-1])
         token = token[:-1]
@@ -83,7 +86,13 @@ def main():
     comment_buffer = ""
     
     while input_reader.has_next():
+        
         state, token, line_no = get_next_token()
+        # print("new token " + token+"\n")
+        # print("\n"+'"""')
+        # print(token)
+        # print(state.get_name())
+        # print('"""' + '\n')
         if not token:
             continue
             
@@ -112,9 +121,12 @@ def main():
         token_stripped = token.strip()
         # print("type",state.type)
         if state.type[0] == StateType.ERROR:
+            # print(state.get_name())
             if(state.type [1] == Error.UNCLOSED_COMMENT):
-                if(token.find("\n")):
-                    error_table.add_record(str(token[:9]+"..."), state, line_no)
+                if "\n" in token:
+                    token = token.split()[0]
+                    first_word = token.strip()[:7]
+                    error_table.add_record(f"{first_word}...", state, line_no)
                 else:
                     error_table.add_record(token, state, line_no)
             else:
@@ -124,6 +136,9 @@ def main():
        
         else:
             # Classic token classification approach
+            
+            if state.type[0] == StateType.END:
+                continue
             if token_stripped in keywords:
                 token_table.add_token(state_type=(StateType.ACCEPT, Token.KEYWORD), token=token, line_no=line_no)
                 sym_table.add_symbol({"name": token_stripped})
