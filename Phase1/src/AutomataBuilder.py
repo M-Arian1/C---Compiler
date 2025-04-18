@@ -16,7 +16,7 @@ class AutomataBuilder:
         
     @staticmethod
     def buildAutomaton():
-        start_state = State(name="start")
+        start_state= State()
         panic_alphabet = Alphabet().include_all_chars().exclude(('a', 'z')) \
                                                     .exclude(('A', 'Z')) \
                                                     .exclude(('0', '9')) \
@@ -27,31 +27,30 @@ class AutomataBuilder:
         automaton = Automaton(start_state, panic_alphabet)
         
         #STATES DEFINITION
+        end_state = State()
         
-        end_state = State(name="end")
-
-        state_no_1 = State(name="state_no_1")
-        state_num = State((StateType.ACCEPT, Token.NUM), push_back_needed=True, name="state_num")
-        err_state_inv_num = State((StateType.ERROR, Error.INVALID_NUM), name="err_invalid_num")
-
-        state_symbol = State((StateType.ACCEPT, Token.SYMBOL), name="state_symbol")
-        state_assign = State(name="state_assign")
-        state_equal = State((StateType.ACCEPT, Token.SYMBOL), name="state_equal")
-
-        state_no_2 = State(name="state_no_2")
-        err_state_unmatched_comm = State((StateType.ERROR, Error.UNMATCHED_COMMENT), name="err_unmatched_comm")
-        state_symb_type_2 = State((StateType.ACCEPT, Token.SYMBOL), name="state_symb_type_2")
-
-        state_comm_slash = State(name="state_comm_slash")
-        state_comm_star = State(name="state_comm_star")
-        state_no_3 = State(name="state_no_3")
-        state_unclosed_comm = State((StateType.ERROR, Error.UNCLOSED_COMMENT), push_back_needed=True, name="state_unclosed_comm")
-        state_comment = State((StateType.ACCEPT, Token.COMMENT), name="state_comment")
-
-        state_no_4 = State(name="state_no_4")
-        state_txt_id = State((StateType.ACCEPT, Token.ID), push_back_needed=True, name="state_txt_id")
+        state_no_1 = State()
+        state_num = State((StateType.ACCEPT, Token.NUM), push_back_needed=True)
+        err_state_inv_num = State((StateType.ERROR, Error.INVALID_NUM))
         
-        automaton.add_state(state_no_1) 
+        state_symbol = State((StateType.ACCEPT, Token.SYMBOL))
+        state_assign = State()
+        state_equal = State((StateType.ACCEPT, Token.SYMBOL)) # For == symbol
+        
+        state_no_2 = State()
+        err_state_unmatched_comm = State((StateType.ERROR, Error.UNMATCHED_COMMENT))
+        state_symb_type_2 = State((StateType.ACCEPT, Token.SYMBOL), push_back_needed=True)
+        
+        state_comm_slash = State()
+        state_comm_star = State()
+        state_no_3 = State()
+        state_unclosed_comm = State((StateType.ERROR, Error.UNCLOSED_COMMENT))
+        state_comment = State((StateType.ACCEPT, Token.COMMENT))
+        
+        state_no_4 = State()
+        state_txt_id = State((StateType.ACCEPT, Token.ID) ,push_back_needed= True)
+        
+        automaton.add_state(state_no_1)
         automaton.add_state(state_num)
         automaton.add_state(err_state_inv_num)
         
@@ -75,7 +74,6 @@ class AutomataBuilder:
         
         #State Transitions
         alph_eof = Alphabet()
-        alph_eof.include((chr(26),chr(26)))
         #EOF = chr(26)
         
         automaton.add_transition(start_state, end_state, alph_eof)
@@ -166,12 +164,4 @@ class AutomataBuilder:
         automaton.add_transition(state_no_4, state_symb_type_2, alph_sym_chars)
         automaton.add_transition(state_no_1, state_symb_type_2, alph_sym_chars)
         
-        # fr_states = []
-        # fr_states.append(state_comm_star)
-        # next_States = (automaton.next_states(fr_states, chr(26)))
-        # for s in next_States:
-        #     print("eof:state: ",str(s.get_name()))
-        
         return automaton
-
-    

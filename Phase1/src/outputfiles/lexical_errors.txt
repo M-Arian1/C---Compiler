@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 1.	(/*,	Unclosed Comment)	
+=======
+2.	(*/,	Unmatched Comment)	
+>>>>>>> parent of e72117f (T7 still not fixed)
