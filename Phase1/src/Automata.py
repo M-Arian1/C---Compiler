@@ -14,18 +14,26 @@ class StateType(Enum):
     ERROR = 2
 
 class State:
-    def __init__(self, type =(StateType.INTER,), push_back_needed = False):
+    def __init__(self, type=(StateType.INTER,), push_back_needed=False, name=""):
         self.type = type
         self.push_back_needed = push_back_needed
+        self.name = name  # new attribute
 
     def is_terminal(self):
         return self.type[0] in (StateType.ACCEPT, StateType.ERROR)
     
     def is_push_back_needed(self):
-        return self.is_push_back_needed
+        return self.push_back_needed
     
     def get_state_type(self):
         return self.type[0]
+    
+    def __repr__(self):
+        return f"State(name='{self.name}', type={self.type}, push_back_needed={self.push_back_needed})"
+    
+    def get_name(self):
+        return f"State(name='{self.name}'"
+
 
 
 class Alphabet:

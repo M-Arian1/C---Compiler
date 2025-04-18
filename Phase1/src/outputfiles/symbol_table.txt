@@ -5,8 +5,3 @@
 5.	while
 6.	return
 7.	void
-8.	f
-9.	a
-10.	g
-11.	b
-12.	output

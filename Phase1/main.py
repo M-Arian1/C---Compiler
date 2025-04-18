@@ -20,10 +20,18 @@ def get_next_token():
     
     while states:
         char = input_reader.get_next_char()
-        if not char or char == chr(26):  # Check for EOF
+        
+        if not char :  # Check for EOF
+            break
+        
+        #TODO : change
+        if char == chr(26):
             break
         
         new_states = C_minus_scanner.next_states(states, char)
+        
+        
+            
         if not new_states:
             input_reader.push_back(char)
             break
@@ -32,13 +40,17 @@ def get_next_token():
         token += char
         counter += 1
 
-    
+    # for next in states:
+    #         print(char, ":" ,next.get_name)
     if not states :
         input_reader.push_back(token[-1])
         token = token[:-1]
         return C_minus_scanner.default_panic_state, token, input_reader.get_line_no()
         
     final_state = states[0]
+    
+    for state in states:
+        print(state.get_name, token)
     if final_state.push_back_needed:
         input_reader.push_back(token[-1])
         token = token[:-1]
@@ -67,25 +79,31 @@ def main():
         state, token, line_no = get_next_token()
         if not token:
             continue
-            
         # Check for comments
-        if token.strip() == "/*":
+        if token.startswith("/*"):
             in_comment = True
             comment_buffer = token
-            continue
             
-        if in_comment:
+            
+        if in_comment == True:
             comment_buffer += token
-            if token.strip() == "*/":
+            if token.endswith("*/"):
                 in_comment = False
                 token_table.add_token(state_type=(StateType.ACCEPT, Token.COMMENT), token=comment_buffer, line_no=line_no)
                 comment_buffer = ""
-            continue
+            else:
+                in_comment = False
+                # error_table.add_record(token, state, line_no)
+                comment_buffer = ""
+        
             
         # Process token based on its content rather than relying solely on state
         token_stripped = token.strip()
+        # print(token_stripped)
+        # print(state.get_name)
         
         if state.type[0] == StateType.ERROR:
+            
             error_table.add_record(token, state, line_no)
         else:
             # Classic token classification approach
