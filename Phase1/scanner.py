@@ -17,34 +17,26 @@ from src.Tokens import Token
 
 
 def get_next_token():
+    #  Return type: 
+    #     1: True if it was an error, otherwise false
+    #     2: The token
+    #     3: The license
+    
     global C_minus_scanner
     global input_reader
     
     state = C_minus_scanner.getStartState()
     counter = 0
     token = ""
-    # print(state.get_name())
     
     while state.type[0] == StateType.INTER:
         char = input_reader.get_next_char()
         if not char :  # Check for EOF
             break
-        # if char == chr(26) :
-        #     stripped_tok = token.strip()
-        #     if (stripped_tok.startswith("/*")):
-                
-        #         final_state = State((StateType.ERROR, Error.UNCLOSED_COMMENT))
-                
-        #         return final_state, token, input_reader.get_line_no()
-        #     else:
-        #         break
-      
-       
-            
+
             
         
         new_state = C_minus_scanner.next_state(state, char)
-        # print(new_state.get_name(), token)
         if not new_state:
             input_reader.push_back(char)
             break
@@ -58,13 +50,13 @@ def get_next_token():
         
         input_reader.push_back(token[-1])
         token = token[:-1]
-        return C_minus_scanner.default_panic_state, token, input_reader.get_line_no()
+        return True, token, input_reader.get_line_no()
         
     final_state = state
     if final_state.push_back_needed:
         input_reader.push_back(token[-1])
         token = token[:-1]
-    return final_state, token, input_reader.get_line_no()
+    return False, token, input_reader.get_line_no()
 
 def is_comment_token(token):
     return token.strip().startswith('/*') and token.strip().endswith('*/')
