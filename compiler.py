@@ -2,7 +2,7 @@ from Grammar import Grammar                # Your Grammar class
 from GrammarBuilder import GrammarBuilder
 from Phase1.scanner import Scanner         # Corrected import for Scanner in Phase1 package
 from TransitionDiagram import DiagramBuilder  # Your builder for diagrams
-from Parser import DiagramParser           # The parser you implemented
+from TopDownParser import DiagramParser           # The parser you implemented
 
 def main():
     # Step 1: Initialize Scanner
