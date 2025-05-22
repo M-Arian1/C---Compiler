@@ -1,0 +1,48 @@
+Start: $
+Program: $
+DeclarationList: } $
+Declaration: int void } $
+DeclarationInitial: ; [ ( , ) ; < == + - * } $
+DeclarationPrime: ; [ ( } $
+VarDeclarationPrime: } $
+FunDeclarationPrime: } $
+TypeSpecifier: ID
+Params: )
+ParamList: )
+Param: , )
+ParamPrime: , )
+CompoundStmt: if while return break ; { ID NUM ( }
+StatementList: }
+Statement: if while return break ; { ID NUM (
+ExpressionStmt: if while return break ; { ID NUM (
+SelectionStmt: if while return break ; { ID NUM (
+IterationStmt: if while return break ; { ID NUM (
+ReturnStmtreturn: if while return break ; { ID NUM (
+ReturnStmtPrime: if while return break ; { ID NUM (
+Expression: ; ) ] ,
+B: ; ) ] ,
+H: ; ) ] ,
+SimpleExpressionZegond: ; ) ] ,
+SimpleExpressionPrime: ; ) ] ,
+C: ; ) ] ,
+Relop: + - ID NUM (
+AdditiveExpression: < == ; ) ] ,
+AdditiveExpressionPrime: < == ; ) ] ,
+AdditiveExpressionZegond: < == ; ) ] ,
+D: < == ; ) ] ,
+Addop: ID NUM (
+Term: + - < == ; ) ] ,
+TermPrime: < == ; ) ] ,
+TermZegond: < == ; ) ] ,
+G: + - < == ; ) ] ,
+SignedFactor: * + - < == ; ) ] ,
+SignedFactorPrime: * + - < == ; ) ] ,
+SignedFactorZegond: * + - < == ; ) ] ,
+Factor: * + - < == ; ) ] ,
+VarCallPrime: * + - < == ; ) ] ,
+VarPrime: * + - < == ; ) ] ,
+FactorPrime: * + - < == ; ) ] ,
+FactorZegond: * + - < == ; ) ] ,
+Args: )
+ArgList: )
+ArgListPrime: )

@@ -168,5 +168,3 @@ def main():
     sym_table.write_to_file(sym_table.sym_to_text(), "Phase1/src/outputfiles/symbol_table.txt")
     error_table.write_to_file(error_table.generate_error_text(), "Phase1/src/outputfiles/lexical_errors.txt")
 
-if __name__=="__main__":
-    main()
