@@ -50,13 +50,17 @@ def get_next_token():
         
         input_reader.push_back(token[-1])
         token = token[:-1]
-        return True, token, input_reader.get_line_no()
+        if(state.type[1] == Token.ID or state.type[1] == Token.NUM or state.type[1] == Token.SYMBOL or state.type[1] == Token.KEYWORD):
+            return True, token, input_reader.get_line_no()
+        else:
+            return get_next_token()
+        
         
     final_state = state
     if final_state.push_back_needed:
         input_reader.push_back(token[-1])
         token = token[:-1]
-    return False, token, input_reader.get_line_no()
+    return get_next_token()
 
 def is_comment_token(token):
     return token.strip().startswith('/*') and token.strip().endswith('*/')

@@ -33,7 +33,7 @@ class AutomataBuilder:
         automaton = Automaton(start_state, panic_alphabet)
         
         # STATES DEFINITION WITH NAMES
-        end_state = State(name="end_state",type = (StateType.END, ))
+        end_state = State(name="end_state",type = (StateType.END, Token.EOF))
         state_no_1 = State(name="state_no_1")
         state_num = State((StateType.ACCEPT, Token.NUM), push_back_needed=True, name="state_num")
         err_state_inv_num = State((StateType.ERROR, Error.INVALID_NUM), name="err_state_inv_num")
@@ -55,7 +55,10 @@ class AutomataBuilder:
         state_no_4 = State(name="state_no_4")
         state_txt_id = State((StateType.ACCEPT, Token.ID), push_back_needed=True, name="state_txt_id")
         
+    
+        
         # Add states to automaton
+        automaton.add_state(end_state)
         automaton.add_state(state_no_1)
         automaton.add_state(state_num)
         automaton.add_state(err_state_inv_num)

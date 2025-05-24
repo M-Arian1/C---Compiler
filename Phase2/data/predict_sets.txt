@@ -1,84 +1,83 @@
-Start → Program $: int void
-Program → DeclarationList: int void
-DeclarationList → Declaration DeclarationList: int void
-DeclarationList → epsilon: } $
+AdditiveExpression → Term D: + - ID NUM (
+AdditiveExpressionPrime → TermPrime D: + - ID NUM (
+AdditiveExpressionZegond → TermZegond D: + - ID NUM (
+Addop → +: +
+Addop → -: -
+ArgList → Expression ArgListPrime: + - ID NUM (
+ArgListPrime → , Expression ArgListPrime: ,
+ArgListPrime → ε: )
+Args → ArgList: + - ID NUM (
+Args → ε: )
+B → = Expression: =
+B → [ Expression ] H: [
+B → SimpleExpressionPrime: + - ID NUM (
+C → Relop AdditiveExpression: < ==
+C → ε: ; ) ] ,
+CompoundStmt → { DeclarationList StatementList }: {
+D → Addop Term D: + -
+D → ε: ; ) ] , < ==
 Declaration → DeclarationInitial DeclarationPrime: int void
 DeclarationInitial → TypeSpecifier ID: int void
+DeclarationList → Declaration DeclarationList: int void
+DeclarationList → ε: }
 DeclarationPrime → FunDeclarationPrime: (
 DeclarationPrime → VarDeclarationPrime: ; [
-VarDeclarationPrime → ;: ;
-VarDeclarationPrime → [ NUM ] ;: [
+Expression → ID B: ID
+Expression → SimpleExpressionZegond: + - NUM (
+ExpressionStmt → Expression ;: + - ID NUM (
+ExpressionStmt → break ;: break
+ExpressionStmt → ;: ;
+Factor → ( Expression ): (
+Factor → ID VarCallPrime: ID
+Factor → NUM: NUM
+FactorPrime → ( Args ): (
+FactorPrime → ε: * + - ; ) ] , < ==
+FactorZegond → ( Expression ): (
+FactorZegond → NUM: NUM
 FunDeclarationPrime → ( Params ) CompoundStmt: (
-TypeSpecifier → int: int
-TypeSpecifier → void: void
+G → * SignedFactor G: *
+G → ε: ; ) ] , < ==
+H → = Expression: =
+H → G D C: * + - ID NUM (
+IterationStmt → while ( Expression ) Statement: while
+Param → DeclarationInitial ParamPrime: int void
+ParamList → , Param ParamList: ,
+ParamList → ε: )
+ParamPrime → [ ]: [
+ParamPrime → ε: ) ,
 Params → int ID ParamPrime ParamList: int
 Params → void: void
-ParamList → , Param ParamList: ,
-ParamList → epsilon: )
-Param → DeclarationInitial ParamPrime: int
-ParamPrime → [ ]: [
-ParamPrime → epsilon: , )
-CompoundStmt → { DeclarationList StatementList }: {
-StatementList → Statement StatementList: if while return break ; { ID NUM (
-StatementList → epsilon: }
-Statement → ExpressionStmt: ID NUM ( break ;
+Program → DeclarationList: int void
+Relop → <: <
+Relop → ==: ==
+ReturnStmt → return ReturnStmtPrime: return
+ReturnStmtPrime → ;: ;
+ReturnStmtPrime → Expression ;: + - ID NUM (
+SelectionStmt → if ( Expression ) Statement else Statement: if
+SignedFactor → + Factor: +
+SignedFactor → - Factor: -
+SignedFactor → Factor: ID NUM (
+SignedFactorPrime → FactorPrime: ID NUM (
+SignedFactorZegond → + Factor: +
+SignedFactorZegond → - Factor: -
+SignedFactorZegond → FactorZegond: NUM (
+SimpleExpressionPrime → AdditiveExpressionPrime C: + - ID NUM (
+SimpleExpressionZegond → AdditiveExpressionZegond C: + - ID NUM (
+Statement → ExpressionStmt: + - ID NUM ( ; break
 Statement → CompoundStmt: {
 Statement → SelectionStmt: if
 Statement → IterationStmt: while
 Statement → ReturnStmt: return
-ExpressionStmt → Expression ;: ID NUM (
-ExpressionStmt → break ;: break
-ExpressionStmt → ;: ;
-SelectionStmt → if ( Expression ) Statement else Statement: if
-IterationStmt → while ( Expression ) Statement: while
-ReturnStmtreturn → ReturnStmtPrime: return
-ReturnStmtPrime → ;: ;
-ReturnStmtPrime → Expression ;: ID NUM (
-Expression → SimpleExpressionZegond: + - ID NUM (
-Expression → ID B: ID
-B → = Expression: =
-B → [ Expression ] H: [
-B → SimpleExpressionPrime: + - ID NUM (
-H → Expression: ID NUM (
-H → G D C: + - ID NUM ( *
-SimpleExpressionZegond → AdditiveExpressionZegond C: + - ID NUM (
-SimpleExpressionPrime → AdditiveExpressionPrime C: + - ID NUM (
-C → Relop AdditiveExpression: < ==
-C → epsilon: ; ) ] ,
-Relop → <: <
-Relop → ==: ==
-AdditiveExpression → Term D: + - ID NUM (
-AdditiveExpressionPrime → TermPrime D: + - ID NUM (
-AdditiveExpressionZegond → TermZegond D: + - ID NUM (
-D → Addop Term D: + -
-D → epsilon: < == ; ) ] ,
-Addop → +: +
-Addop → -: -
+StatementList → Statement StatementList: + - ID NUM ( ; break { if while return
+StatementList → ε: }
 Term → SignedFactor G: + - ID NUM (
 TermPrime → SignedFactorPrime G: + - ID NUM (
-TermZegond → SignedFactorZegond G: + - ID NUM (
-G → * SignedFactor G: *
-G → epsilon: + - < == ; ) ] ,
-SignedFactor → + Factor: +
-SignedFactor → - Factor: -
-SignedFactor → Factor: ID NUM (
-SignedFactorPrime → FactorPrime: ID NUM ( epsilon
-SignedFactorZegond → + Factor: +
-SignedFactorZegond → - Factor: -
-SignedFactorZegond → FactorZegond: ID NUM (
-Factor → ( Expression ): (
-Factor → ID VarCallPrime: ID
-Factor → NUM: NUM
+TermZegond → SignedFactorZegond G: + - NUM (
+TypeSpecifier → int: int
+TypeSpecifier → void: void
 VarCallPrime → ( Args ): (
-VarCallPrime → VarPrime: [
-VarPrime → epsilon: * + - < == ; ) ] ,
+VarCallPrime → VarPrime: * + - ; ) ] , < ==
+VarDeclarationPrime → ;: ;
+VarDeclarationPrime → [ NUM ] ;: [
 VarPrime → [ Expression ]: [
-FactorPrime → ( Args ): (
-FactorPrime → epsilon: * + - < == ; ) ] ,
-FactorZegond → ( Expression ): (
-FactorZegond → NUM: NUM
-Args → ArgList: ID NUM (
-Args → epsilon: )
-ArgList → Expression ArgListPrime: ID NUM (
-ArgListPrime → , Expression ArgListPrime: ,
-ArgListPrime → epsilon: )
+VarPrime → ε: * + - ; ) ] , < ==

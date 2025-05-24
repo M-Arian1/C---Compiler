@@ -1,48 +1,46 @@
-Start: $
-Program: $
-DeclarationList: } $
-Declaration: int void } $
-DeclarationInitial: ; [ ( , ) ; < == + - * } $
-DeclarationPrime: ; [ ( } $
-VarDeclarationPrime: } $
-FunDeclarationPrime: } $
-TypeSpecifier: ID
-Params: )
-ParamList: )
-Param: , )
-ParamPrime: , )
-CompoundStmt: if while return break ; { ID NUM ( }
-StatementList: }
-Statement: if while return break ; { ID NUM (
-ExpressionStmt: if while return break ; { ID NUM (
-SelectionStmt: if while return break ; { ID NUM (
-IterationStmt: if while return break ; { ID NUM (
-ReturnStmtreturn: if while return break ; { ID NUM (
-ReturnStmtPrime: if while return break ; { ID NUM (
-Expression: ; ) ] ,
-B: ; ) ] ,
-H: ; ) ] ,
-SimpleExpressionZegond: ; ) ] ,
-SimpleExpressionPrime: ; ) ] ,
-C: ; ) ] ,
-Relop: + - ID NUM (
-AdditiveExpression: < == ; ) ] ,
-AdditiveExpressionPrime: < == ; ) ] ,
-AdditiveExpressionZegond: < == ; ) ] ,
-D: < == ; ) ] ,
+AdditiveExpression: ; ) ] , < ==
+AdditiveExpressionPrime: ; ) ] , < ==
+AdditiveExpressionZegond: ; ) ] , < ==
 Addop: ID NUM (
-Term: + - < == ; ) ] ,
-TermPrime: < == ; ) ] ,
-TermZegond: < == ; ) ] ,
-G: + - < == ; ) ] ,
-SignedFactor: * + - < == ; ) ] ,
-SignedFactorPrime: * + - < == ; ) ] ,
-SignedFactorZegond: * + - < == ; ) ] ,
-Factor: * + - < == ; ) ] ,
-VarCallPrime: * + - < == ; ) ] ,
-VarPrime: * + - < == ; ) ] ,
-FactorPrime: * + - < == ; ) ] ,
-FactorZegond: * + - < == ; ) ] ,
-Args: )
 ArgList: )
 ArgListPrime: )
+Args: )
+B: ; ) ] , < ==
+C: ; ) ] , < ==
+CompoundStmt: ; ) ] , else
+D: ; ) ] , < ==
+Declaration: int void }
+DeclarationInitial: ; ( [ ]
+DeclarationList: }
+DeclarationPrime: int void }
+Expression: ; ) ] , < ==
+ExpressionStmt: } while if return else break ; {
+Factor: * + - ; ) ] , < ==
+FactorPrime: * + - ; ) ] , < ==
+FactorZegond: * + - ; ) ] , < ==
+FunDeclarationPrime: int void }
+G: ; ) ] , < ==
+H: ; ) ] , < ==
+Param: ) ,
+ParamList: )
+ParamPrime: ) ,
+Params: )
+Program: $
+Relop: ID NUM (
+ReturnStmt: ; } else while if return
+ReturnStmtPrime: } else while if return
+SelectionStmt: ; } else while if return
+SignedFactor: * + - ; ) ] , < ==
+SignedFactorPrime: * + - ; ) ] , < ==
+SignedFactorZegond: * + - ; ) ] , < ==
+SimpleExpressionPrime: ; ) ] , < ==
+SimpleExpressionZegond: ; ) ] , < ==
+Statement: ; } else while if return
+StatementList: }
+Term: ; ) ] , < ==
+TermPrime: ; ) ] , < ==
+TermZegond: ; ) ] , < ==
+TypeSpecifier: ID
+VarCallPrime: * + - ; ) ] , < ==
+VarDeclarationPrime: int void }
+VarPrime: * + - ; ) ] , < ==

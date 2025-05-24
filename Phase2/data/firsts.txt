@@ -1,48 +1,47 @@
-Start: int void
-Program: int void
-DeclarationList: int void epsilon
-Declaration: int void
-DeclarationInitial: int void
-DeclarationPrime: ( ; [
-VarDeclarationPrime: ; [
-FunDeclarationPrime: (
-TypeSpecifier: int void
-Params: int void
-ParamList: , epsilon
-Param: int
-ParamPrime: [ epsilon
-CompoundStmt: {
-StatementList: if while return break ; { ID NUM ( epsilon
-Statement: if while return break ; { ID NUM (
-ExpressionStmt: ID NUM ( break ; 
-SelectionStmt: if
-IterationStmt: while
-ReturnStmtreturn: ; ID NUM (
-ReturnStmtPrime: ; ID NUM (
-Expression: ID NUM (
-B: = [ + - ID NUM ( epsilon
-H: ID NUM ( + - * epsilon
-SimpleExpressionZegond: + - ID NUM (
-SimpleExpressionPrime: + - ID NUM (
-C: < == epsilon
-Relop: < ==
-AdditiveExpression: + - ID NUM (
+AdditiveExpression: ( ID NUM +
 AdditiveExpressionPrime: + - ID NUM (
 AdditiveExpressionZegond: + - ID NUM (
-D: + - epsilon
 Addop: + -
+ArgList: + - ID NUM (
+ArgListPrime: , ε
+Args: + - ID NUM ( ε
+B: = [ + - ID NUM (
+C: < == ε
+CompoundStmt: {
+D: + - ε
+Declaration: int void
+DeclarationInitial: int void
+DeclarationList: int void ε
+DeclarationPrime: ( ; [
+Expression: + - ID NUM (
+ExpressionStmt: ; break + - ID NUM (
+Factor: ID NUM (
+FactorPrime: ( ε
+FactorZegond: NUM (
+FunDeclarationPrime: (
+G: * ε
+H: = * + - ID NUM ( < ==
+IterationStmt: while
+Param: int void
+ParamList: , ε
+ParamPrime: [ ε
+Params: int void
+Program: int void
+Relop: < ==
+ReturnStmt: return
+ReturnStmtPrime: ; + - ID NUM (
+SelectionStmt: if
+SignedFactor: + - ID NUM (
+SignedFactorPrime: ID NUM ( ε
+SignedFactorZegond: + - NUM (
+SimpleExpressionPrime: + - ID NUM ( < == ε
+SimpleExpressionZegond: + - ID NUM ( < == ε
+Statement: ; break { if while return + - ID NUM (
+StatementList: ; break { if while return + - ID NUM ( ε
 Term: + - ID NUM (
 TermPrime: + - ID NUM (
-TermZegond: + - ID NUM (
-G: * epsilon
-SignedFactor: + - ID NUM (
-SignedFactorPrime: ID NUM ( epsilon
-SignedFactorZegond: + - ID NUM (
-Factor: ID NUM (
-VarCallPrime: ( [ epsilon
-VarPrime: [ epsilon
-FactorPrime: ( epsilon
-FactorZegond: NUM (
-Args: ID NUM ( epsilon
-ArgList: ID NUM (
-ArgListPrime: , epsilon
+TermZegond: + - NUM (
+TypeSpecifier: int void
+VarCallPrime: ( ε
+VarDeclarationPrime: ; [
+VarPrime: [ ε

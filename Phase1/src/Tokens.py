@@ -8,5 +8,6 @@ class Token(Enum):
     SYMBOL = "SYMBOL"
     WHITESPACE = "WHITESPACE"
     COMMENT = "COMMENT"
+    EOF = "EOF"
 
 
