@@ -1,2 +1,0 @@
-#1 : syntax error, illegal 1
-#1 : syntax error, illegal Token.EOF
