@@ -94,6 +94,7 @@ class DiagramParser:
                         break
 
                 elif edge.edge_type.value == EdgeType.NON_TERMINAL.value:
+                    print(edge.symbol)
                     predict = self.grammar.get_predict(edge.symbol)
                     follow = self.grammar.get_follow(edge.symbol)
                    

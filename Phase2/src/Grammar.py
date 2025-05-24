@@ -137,7 +137,56 @@ class Grammar:
             "ArgListPrime": [")"]
         }
         
-        self.predict_sets = {}
+        self.predict_sets = {
+        "Program": {"int", "void", "$"},
+        "DeclarationList": {"int", "void", "ID", ";", "NUM", "(", "}", "{", "break", "if", "while", "return", "+", "-", "$"},
+        "Declaration": {"int", "void"},
+        "DeclarationInitial": {"int", "void"},
+        "DeclarationPrime": {";", "[", "(", "ID", "NUM", "}", "{", "break", "if", "while", "return", "+", "-", "int", "void", "$"},
+        "VarDeclarationPrime": {";", "[", "ID", "NUM", "}", "{", "break", "if", "while", "return", "+", "-", "int", "void", "$"},
+        "FunDeclarationPrime": {"(", "ID", "NUM", "}", "{", "break", "if", "while", "return", "+", "-", "int", "void", "$"},
+        "TypeSpecifier": {"int", "void"},
+        "Params": {"int", "void"},
+        "ParamList": {",", ")"},
+        "Param": {"int", "void"},
+        "ParamPrime": {"[", ")"},
+        "CompoundStmt": {"{"},
+        "StatementList": {"ID", ";", "NUM", "(", "{", "break", "if", "while", "return", "+", "-", "}"},
+        "Statement": {"ID", ";", "NUM", "(", "{", "break", "if", "while", "return", "+", "-"},
+        "ExpressionStmt": {"ID", ";", "NUM", "(", "break", "+", "-"},
+        "SelectionStmt": {"if"},
+        "IterationStmt": {"while"},
+        "ReturnStmt": {"return"},
+        "ReturnStmtPrime": {"ID", ";", "NUM", "(", "+", "-"},
+        "Expression": {"ID", "NUM", "(", "+", "-"},
+        "B": {"=", "[", "(", "==", "+", "-", "<", "*", ";", "]", ")", ","},
+        "H": {"=", "*", "+", "-", "<", "==", ";", "]", ")", ","},
+        "SimpleExpressionZegond": {"NUM", "(", "+", "-", ";", "]", ")", ","},
+        "SimpleExpressionPrime": {"(", "+", "-", "<", "==", "*", ";", "]", ")", ","},
+        "C": {"<", "==", ";", "]", ")", ","},
+        "Relop": {"<", "=="},
+        "AdditiveExpression": {"ID", "NUM", "(", "+", "-"},
+        "AdditiveExpressionPrime": {"(", "+", "-", "*", ";", "]", ")", ",", "<", "=="},
+        "AdditiveExpressionZegond": {"NUM", "(", "+", "-", ";", "]", ")", ",", "<", "=="},
+        "D": {"+", "-", ";", "]", ")", ",", "<", "=="},
+        "Addop": {"+", "-"},
+        "Term": {"ID", "NUM", "(", "+", "-"},
+        "TermPrime": {"(", "*", ";", "]", ")", ",", "<", "==", "+", "-"},
+        "TermZegond": {"NUM", "(", "+", "-", ";", "]", ")", ",", "<", "==", "+", "-"},
+        "G": {"*", ";", "]", ")", ",", "<", "==", "+", "-"},
+        "SignedFactor": {"ID", "NUM", "(", "+", "-"},
+        "SignedFactorPrime": {"(", ";", "]", ")", ",", "<", "==", "+", "-", "*"},
+        "SignedFactorZegond": {"NUM", "(", "+", "-", ";", "]", ")", ",", "<", "==", "+", "-", "*"},
+        "Factor": {"ID", "NUM", "("},
+        "VarCallPrime": {"(", "[", ";", "]", ")", ",", "<", "==", "+", "-", "*"},
+        "VarPrime": {"[", ";", "]", ")", ",", "<", "==", "+", "-", "*"},
+        "FactorPrime": {"(", ";", "]", ")", ",", "<", "==", "+", "-", "*"},
+        "FactorZegond": {"NUM", "(", ";", "]", ")", ",", "<", "==", "+", "-", "*"},
+        "Args": {"ID", "NUM", "(", "+", "-", ")"},
+        "ArgList": {"ID", "NUM", "(", "+", "-"},
+        "ArgListPrime": {",", ")"}
+    }
+
 
     def get_or_create_nt(self, name):
         if name not in self.non_terminals:
@@ -184,7 +233,10 @@ class Grammar:
                     nt, items = line.strip().split(':')
                     sets[nt.strip()] = set(items.strip().split())
         return sets
-
+    def get_predict(self, symbol):
+        return self.predict_sets[symbol.value]
+    def get_follow(self, symbol):
+        return self.follow_sets[symbol.value]
     # def load_firsts(self, filename='firsts.txt'):
     #     self.first_sets = self.load_sets(filename)
 
