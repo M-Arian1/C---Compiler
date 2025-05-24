@@ -35,8 +35,13 @@ class Grammar:
     def __init__(self):
         self.rules = []                      # List of Rule objects
         self.rule_map = {}                   # Optional: maps NT name to list of Rules
-        self.non_terminals = {}              # {name: NonTerminal}
+        self.non_terminals = { }              # {name: NonTerminal}
         self.terminals = {}                  # {name: Terminal}
+        self.terminal_names = {
+            "+", "-", "*", "(", ")", "[", "]", "{", "}", ";", ",",
+            "<", "==", "=", "break", "if", "else", "int", "return",
+            "void", "while", "ID", "NUM", "EPSILON", "$"
+        }
         self.first_sets = {
         "Program": ["int", "void", "EPSILON"],
         "DeclarationList": ["int", "void", "EPSILON"],
@@ -186,7 +191,8 @@ class Grammar:
         "ArgList": {"ID", "NUM", "(", "+", "-"},
         "ArgListPrime": {",", ")"}
     }
-
+        for term in self.terminal_names:
+            self.get_or_create_terminal(term)
 
     def get_or_create_nt(self, name):
         if name not in self.non_terminals:
@@ -207,10 +213,10 @@ class Grammar:
         else:
             rhs = []
             for sym in rhs_symbols:
-                if sym in self.non_terminals or sym[0].isupper():
-                    rhs.append(self.get_or_create_nt(sym))
-                else:
+                if sym in self.terminal_names:
                     rhs.append(self.get_or_create_terminal(sym))
+                else:
+                    rhs.append(self.get_or_create_nt(sym))
             rule = Grammar.Rule(lhs, rhs)
 
         self.rules.append(rule)
@@ -234,26 +240,32 @@ class Grammar:
                     sets[nt.strip()] = set(items.strip().split())
         return sets
     def get_predict(self, symbol):
-        return self.predict_sets[symbol.value]
+        return self.predict_sets[symbol]
+    
     def get_follow(self, symbol):
-        return self.follow_sets[symbol.value]
+        return self.follow_sets[symbol]
     # def load_firsts(self, filename='firsts.txt'):
     #     self.first_sets = self.load_sets(filename)
 
     # def load_follows(self, filename='follow.txt'):
     #     self.follow_sets = self.load_sets(filename)
         
-    def finalize(self):
+    def finalize(self, all_lhs):
     # Ensure all RHS symbols are registered as either terminals or non-terminals
         for rule in self.rules:
+            new_rhs = []
             for sym in rule.rhs:
-                if isinstance(sym, str):  # In case strings slipped in
-                    if sym[0].isupper():
-                        self.get_or_create_nt(sym)
+                if isinstance(sym, str):
+                    if sym in all_lhs:
+                        sym_obj = self.get_or_create_nt(sym)
                     else:
-                        self.get_or_create_terminal(sym)
-
-
+                        sym_obj = self.get_or_create_terminal(sym)
+                    new_rhs.append(sym_obj)
+                else:
+                    new_rhs.append(sym)  # Already a Terminal or NonTerminal object
+            rule.rhs = new_rhs
+            
+            
     def print_grammar(self):
         print("=== Non-Terminals ===")
         for nt in self.non_terminals.values():
