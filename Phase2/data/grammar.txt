@@ -1,142 +1,83 @@
-Program ⟶ DeclarationList $
-
-DeclarationList ⟶ Declaration DeclarationList
-DeclarationList ⟶ ε
-
-Declaration ⟶ DeclarationInitial DeclarationPrime
-
-DeclarationInitial ⟶ TypeSpecifier ID
-
-DeclarationPrime ⟶ FunDeclarationPrime
-DeclarationPrime ⟶ VarDeclarationPrime
-
-VarDeclarationPrime ⟶ ;
-VarDeclarationPrime ⟶ [ NUM ] ;
-
-FunDeclarationPrime ⟶ ( Params ) CompoundStmt
-
-TypeSpecifier ⟶ int
-TypeSpecifier ⟶ void
-
-Params ⟶ int ID ParamPrime ParamList
-Params ⟶ void
-
-ParamList ⟶ , Param ParamList
-ParamList ⟶ ε
-
-Param ⟶ DeclarationInitial ParamPrime
-
-ParamPrime ⟶ [ ]
-ParamPrime ⟶ ε
-
-CompoundStmt ⟶ { DeclarationList StatementList }
-
-StatementList ⟶ Statement StatementList
-StatementList ⟶ ε
-
-Statement ⟶ ExpressionStmt
-Statement ⟶ CompoundStmt
-Statement ⟶ SelectionStmt
-Statement ⟶ IterationStmt
-Statement ⟶ ReturnStmt
-
-ExpressionStmt ⟶ Expression ;
-ExpressionStmt ⟶ break ;
-ExpressionStmt ⟶ ;
-
-SelectionStmt ⟶ if ( Expression ) Statement else Statement
-
-IterationStmt ⟶ while ( Expression ) Statement
-
-ReturnStmt ⟶ return ReturnStmtPrime
-
-ReturnStmtPrime ⟶ ;
-ReturnStmtPrime ⟶ Expression ;
-
-Expression ⟶ SimpleExpressionZegond
-Expression ⟶ ID B
-
-B ⟶ = Expression
-B ⟶ [ Expression ] H
-B ⟶ SimpleExpressionPrime
-
-H ⟶ Expression
-H ⟶ G D C
-
-SimpleExpressionZegond ⟶ AdditiveExpressionZegond C
-
-SimpleExpressionPrime ⟶ AdditiveExpressionPrime C
-
-C ⟶ Relop AdditiveExpression
-C ⟶ ε
-
-Relop ⟶ <
-Relop ⟶ ==
-
-AdditiveExpression ⟶ Term D
-
-AdditiveExpressionPrime ⟶ TermPrime D
-
-AdditiveExpressionZegond ⟶ TermZegond D
-
-D ⟶ Addop Term D
-D ⟶ ε
-
-Addop ⟶ +
-Addop ⟶ -
-
-Term ⟶ SignedFactor G
-
-TermPrime ⟶ SignedFactorPrime G
-
-TermZegond ⟶ SignedFactorZegond G
-
-G ⟶ * SignedFactor G
-G ⟶ ε
-
-SignedFactor ⟶ + Factor
-SignedFactor ⟶ - Factor
-SignedFactor ⟶ Factor
-
-SignedFactorPrime ⟶ FactorPrime
-
-SignedFactorZegond ⟶ + Factor
-SignedFactorZegond ⟶ - Factor
-SignedFactorZegond ⟶ FactorZegond
-
-Factor ⟶ ( Expression )
-Factor ⟶ ID VarCallPrime
-Factor ⟶ NUM
-
-VarCallPrime ⟶ ( Args )
-VarCallPrime ⟶ VarPrime
-
-VarPrime ⟶ ε
-VarPrime ⟶ [ Expression ]
-
-FactorPrime ⟶ ( Args )
-FactorPrime ⟶ ε
-
-FactorZegond ⟶ ( Expression )
-FactorZegond ⟶ NUM
-
-Args ⟶ ArgList
-Args ⟶ ε
-
-ArgList ⟶ Expression ArgListPrime
-
-ArgListPrime ⟶ , Expression ArgListPrime
-ArgListPrime ⟶ ε
-
-Program ⟶ var Variables begin Operators end
-
-Variables ⟶ Variable ; Variables
-Variables ⟶ ε
-
-Variable ⟶ identifier
-
-Operators ⟶ Operator ; Operators
-Operators ⟶ ε
-
-Operator ⟶ read ( Variable )
-Operator ⟶ write ( Variable )
+AdditiveExpression ~ Term D
+AdditiveExpressionPrime ~ TermPrime D
+AdditiveExpressionZegond ~ TermZegond D
+Addop ~ +
+Addop ~ -
+ArgList ~ Expression ArgListPrime
+ArgListPrime ~ , Expression ArgListPrime
+ArgListPrime ~ ε
+Args ~ ε
+Args ~ ArgList
+B ~ = Expression
+B ~ [ Expression ] H
+B ~ SimpleExpressionPrime
+C ~ ε
+C ~ Relop AdditiveExpression
+CompoundStmt ~ { DeclarationList StatementList }
+D ~ ε
+D ~ Addop Term D
+Declaration ~ DeclarationInitial DeclarationPrime
+DeclarationInitial ~ TypeSpecifier ID
+DeclarationList ~ 
+DeclarationList ~ Declaration DeclarationList
+DeclarationPrime ~ FunDeclarationPrime
+DeclarationPrime ~ VarDeclarationPrime
+Expression ~ ID B
+Expression ~ SimpleExpressionZegond
+ExpressionStmt ~ ε
+ExpressionStmt ~ ;
+ExpressionStmt ~ break ;
+Factor ~ ( Expression )
+Factor ~ ID VarCallPrime
+Factor ~ NUM
+FactorPrime ~ ε
+FactorPrime ~ ( Args )
+FactorZegond ~ ( Expression )
+FactorZegond ~ NUM
+FunDeclarationPrime ~ ( Params ) CompoundStmt
+G ~ ε
+G ~ * SignedFactor G
+H ~ = Expression
+H ~ G D C
+IterationStmt ~ while ( Expression ) Statement
+Param ~ DeclarationInitial ParamPrime
+ParamList ~ ε
+ParamList ~ , Param ParamList
+ParamPrime ~ 
+ParamPrime ~ [ ]
+Params ~ int ID ParamPrime ParamList
+Params ~ void
+Program ~ DeclarationList
+Relop ~ <
+Relop ~ ==
+ReturnStmt ~ return ReturnStmtPrime
+ReturnStmtPrime ~ ;
+ReturnStmtPrime ~ Expression ;
+SelectionStmt ~ if ( Expression ) Statement else Statement
+SignedFactor ~ + Factor
+SignedFactor ~ - Factor
+SignedFactor ~ Factor
+SignedFactorPrime ~ FactorPrime
+SignedFactorZegond ~ + Factor
+SignedFactorZegond ~ - Factor
+SignedFactorZegond ~ FactorZegond
+SimpleExpressionPrime ~ AdditiveExpressionPrime C
+SimpleExpressionZegond ~ AdditiveExpressionZegond C
+Statement ~ CompoundStmt
+Statement ~ ExpressionStmt
+Statement ~ IterationStmt
+Statement ~ ReturnStmt
+Statement ~ SelectionStmt
+StatementList ~ ε
+StatementList ~ Statement StatementList
+Term ~ SignedFactor G
+TermPrime ~ SignedFactorPrime G
+TermZegond ~ SignedFactorZegond G
+TypeSpecifier ~ int
+TypeSpecifier ~ void
+VarCallPrime ~ ( Args )
+VarCallPrime ~ VarPrime
+VarDeclarationPrime ~ ;
+VarDeclarationPrime ~ [ NUM ] ;
+VarPrime ~ ε
+VarPrime ~ [ Expression ]

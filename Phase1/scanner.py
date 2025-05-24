@@ -15,7 +15,6 @@ from src.InputReader import InputReader
 from src.Automata import StateType
 from src.Tokens import Token
 
-
 def get_next_token():
     #  Return type: 
     #     1: True if it was an error, otherwise false
@@ -51,7 +50,7 @@ def get_next_token():
         input_reader.push_back(token[-1])
         token = token[:-1]
         if(state.type[1] == Token.ID or state.type[1] == Token.NUM or state.type[1] == Token.SYMBOL or state.type[1] == Token.KEYWORD):
-            return True, token, input_reader.get_line_no()
+            return state.type[1], token, input_reader.get_line_no()
         else:
             return get_next_token()
         

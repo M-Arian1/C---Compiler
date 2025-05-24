@@ -1,5 +1,5 @@
 from enum import Enum
-
+from Phase1.src.Tokens import Token
 class EdgeType(Enum):
     TERMINAL = 'TERMINAL'
     NON_TERMINAL = 'NON_TERMINAL'
@@ -49,14 +49,16 @@ class DiagramParser:
         self.return_stack = []
         self.parse_tree = []
         self.error_log = open('syntax_errors.txt', 'w')
+        self.current_line_number = None
+        self.type = None
 
     def log_error(self, message):
-        self.error_log.write(f"#{self.scanner.line_number} : syntax error, {message}\n")
+        self.error_log.write(f"#{self.current_line_number} : syntax error, {message}\n")
 
     def match(self, terminal):
         if self.current_token == terminal:
             matched = self.current_token
-            self.current_token = self.scanner.get_next_token()
+            self.type, self.current_token, self.current_line_number = self.scanner.get_next_token()
             return matched
         else:
             self.log_error(f"missing {terminal}")
@@ -66,7 +68,7 @@ class DiagramParser:
         start_diagram = self.diagrams[start_symbol]
         self.execute_diagram(start_symbol, start_diagram)
         if self.current_token != '$':
-            self.log_error(f"illegal {self.current_token}")
+            self.log_error(f"illegal {self.type}")
         self.error_log.close()
         return self.parse_tree
 
@@ -78,7 +80,7 @@ class DiagramParser:
                 if edge.edge_type == EdgeType.TERMINAL:
                     if self.current_token == edge.symbol:
                         self.parse_tree.append(('match', edge.symbol))
-                        self.match(edge.symbol)
+                        self.match(edge.symbol, self.current_line_number )
                         state = edge.target
                         transitioned = True
                         break
@@ -104,7 +106,7 @@ class DiagramParser:
                         state = edge.target
                         transitioned = True
                         break
-                    else:
+                    else: #TODO: Handle with synch
                         self.log_error(f"illegal {self.current_token}")
                         self.current_token = self.scanner.get_next_token()
                         return  # Resynchronize by returning from current diagram

@@ -65,28 +65,30 @@ class DiagramBuilder:
             raise ValueError(f"Unknown symbol type: {symbol}")
 
     def build_all(self):
-        for nt_name, rule in self.grammar.rules.items():
-            self.diagrams[nt_name] = self.build_diagram(rule)
+        for nt_name, rules in self.grammar.rule_map.items():
+            print(f"Building diagram for: {nt_name}")
+            diagram = ParserDiagram(nt_name)
+            for rule in rules:
+                self.build_diagram(rule, diagram)
+            self.diagrams[nt_name] = diagram
         return self.diagrams
 
-    def build_diagram(self, rule):
-        diagram = ParserDiagram(rule.lhs.name)
-        for production in rule.rhs:
-            start = self.new_state()
-            current = start
-            diagram.add_state(start)
+    def build_diagram(self, rule, diagram):
+        production = rule.rhs
+        start = self.new_state()
+        current = start
+        diagram.add_state(start)
 
-            if production == ['epsilon']:
-                final = self.new_state(is_final=True)
-                diagram.add_state(final)
-                current.add_edge('epsilon', final, EdgeType.EPSILON)
-                continue
+        if not production:
+            final = self.new_state(is_final=True)
+            diagram.add_state(final)
+            current.add_edge('epsilon', final, EdgeType.EPSILON)
+            return
 
-            for i, symbol in enumerate(production):
-                is_last = (i == len(production) - 1)
-                edge_type = self.determine_edge_type(symbol)
-                final = self.new_state(is_final=is_last)
-                diagram.add_state(final)
-                current.add_edge(symbol, final, edge_type)
-                current = final
-        return diagram
+        for i, symbol in enumerate(production):
+            is_last = (i == len(production) - 1)
+            edge_type = self.determine_edge_type(symbol)
+            final = self.new_state(is_final=is_last)
+            diagram.add_state(final)
+            current.add_edge(symbol, final, edge_type)
+            current = final
