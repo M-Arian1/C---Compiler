@@ -13,18 +13,18 @@ from Phase2.src.TopDownParser import DiagramParser       # Diagram-based parser
 def main():
     print("Starting compiler...")
 
-    # Step 1: Load input
-    try:
-        with open('Phase1/src/inputfiles/input.txt', 'r') as f:
-            input_code = f.read()
-    except FileNotFoundError:
-        print("Error: input.txt not found.")
-        return
+    # # Step 1: Load input
+    # try:
+    #     with open('Phase1/src/inputfiles/input.txt', 'r') as f:
+    #         input_code = f.read()
+    # except FileNotFoundError:
+    #     print("Error: input.txt not found.")
+    #     return
 
-    print("Input code loaded...")
+    # print("Input code loaded...")
 
     # Step 2: Initialize scanner
-    scanner = Scanner(input_code)
+    scanner = Scanner()
     print("Scanner initialized...")
 
     # Step 3: Build grammar

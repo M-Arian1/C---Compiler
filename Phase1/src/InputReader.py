@@ -1,6 +1,8 @@
+import os
 class InputReader:
-    def __init__(self, filename = "input.txt", buffer_size = 100):
+    def __init__(self,filename="/Phase1/src/inputfiles/input.txt", buffer_size = 100):
         self.filename = filename
+       
         self.buffer_pointer = 0
         self.buffer_size = buffer_size
         self.buffer = ""

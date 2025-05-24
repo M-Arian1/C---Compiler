@@ -45,11 +45,10 @@ class DiagramParser:
         self.grammar = grammar
         self.diagrams = diagrams
         self.scanner = scanner
-        self.current_token = self.scanner.get_next_token()
+        self.current_state ,self.current_token, self.current_line_number = self.scanner.get_next_token()
         self.return_stack = []
         self.parse_tree = []
         self.error_log = open('syntax_errors.txt', 'w')
-        self.current_line_number = None
         self.type = None
 
     def log_error(self, message):
@@ -59,6 +58,7 @@ class DiagramParser:
         if self.current_token == terminal:
             matched = self.current_token
             self.type, self.current_token, self.current_line_number = self.scanner.get_next_token()
+            print(self.current_token)
             return matched
         else:
             self.log_error(f"missing {terminal}")
@@ -66,15 +66,16 @@ class DiagramParser:
 
     def parse(self, start_symbol):
         start_diagram = self.diagrams[start_symbol]
+        print(self.current_token)
         self.execute_diagram(start_symbol, start_diagram)
         if self.current_token != '$':
-            self.log_error(f"illegal {self.type}")
+            self.log_error(f"illegal {self.current_state.type[1]}")
         self.error_log.close()
         return self.parse_tree
 
     def execute_diagram(self, diagram_name, diagram):
         state = diagram.start_state
-        while True:
+        while self.scanner.input_reader_has_next():
             transitioned = False
             for edge in state.edges:
                 if edge.edge_type == EdgeType.TERMINAL:
@@ -128,5 +129,5 @@ class DiagramParser:
                     return
                 else:
                     self.log_error(f"illegal {self.current_token}")
-                    self.current_token = self.scanner.get_next_token()
+                    self.current_state,self.current_token ,self.current_line_number = self.scanner.get_next_token()
                     state = diagram.start_state

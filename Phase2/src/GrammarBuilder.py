@@ -14,7 +14,7 @@ class GrammarBuilder:
             for line in f:
                 
                 line = line.strip()
-                print(line)
+                # print(line)
                 if not line or '~' not in line:
                     # print("nl")
                     continue

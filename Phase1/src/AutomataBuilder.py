@@ -55,13 +55,12 @@ class AutomataBuilder:
         state_no_4 = State(name="state_no_4")
         state_txt_id = State((StateType.ACCEPT, Token.ID), push_back_needed=True, name="state_txt_id")
         
-    
-        
         # Add states to automaton
-        automaton.add_state(end_state)
         automaton.add_state(state_no_1)
         automaton.add_state(state_num)
         automaton.add_state(err_state_inv_num)
+        automaton.add_state(end_state)
+
         
         automaton.add_state(state_symbol)
         automaton.add_state(state_assign)

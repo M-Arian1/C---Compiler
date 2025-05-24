@@ -66,7 +66,7 @@ class DiagramBuilder:
 
     def build_all(self):
         for nt_name, rules in self.grammar.rule_map.items():
-            print(f"Building diagram for: {nt_name}")
+            # print(f"Building diagram for: {nt_name}")
             diagram = ParserDiagram(nt_name)
             for rule in rules:
                 self.build_diagram(rule, diagram)
