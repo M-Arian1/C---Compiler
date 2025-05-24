@@ -160,3 +160,22 @@ def main():
     sym_table.write_to_file(sym_table.sym_to_text(), "Phase1/src/outputfiles/symbol_table.txt")
     error_table.write_to_file(error_table.generate_error_text(), "Phase1/src/outputfiles/lexical_errors.txt")
 
+class Scanner:
+    def __init__(self, input_code):
+        self.tokens = self.tokenize(input_code)
+        self.index = 0
+
+    def tokenize(self, input_code):
+        # This is a placeholder. You should implement a real tokenizer or connect to your Phase1 scanner logic.
+        # For now, split by whitespace and add $ at the end.
+        tokens = input_code.replace('\n', ' ').replace('\t', ' ').split()
+        tokens.append('$')
+        return tokens
+
+    def get_next_token(self):
+        if self.index < len(self.tokens):
+            token = self.tokens[self.index]
+            self.index += 1
+            return token
+        return '$'
+

@@ -2,45 +2,28 @@ from enum import Enum
 
 # === Constants ===
 class EdgeType(Enum):
-    TERMINAL = 1
-    NON_TERMINAL = 2
-    ACTION = 3
-    EPSILON = 4
-
-
-class ParseTreeNode:
-    def __init__(self, label, parent=None):
-        self.label = label
-        self.children = []
-        self.parent = parent
-
-    def add_child(self, child_node):
-        self.children.append(child_node)
-
-    def __repr__(self):
-        return f"{self.label} -> {[str(c) for c in self.children]}"
+    TERMINAL = 'TERMINAL'
+    NON_TERMINAL = 'NON_TERMINAL'
+    ACTION = 'ACTION'
+    EPSILON = 'EPSILON'
 
 
 class ParserEdge:
-    def __init__(self, source, destination, edge_type, label, return_state=None):
+    def __init__(self, source, target, symbol, edge_type):
         self.source = source
-        self.destination = destination
+        self.target = target
+        self.symbol = symbol
         self.edge_type = edge_type
-        self.label = label
-        self.return_state = return_state
 
 
 class ParserState:
-    def __init__(self, ID, production_name, is_begin=False, is_final=False):
-        self.ID = ID
-        self.edges = []
-        self.production_name = production_name
-        self.is_begin = is_begin
+    def __init__(self, id, is_final=False):
+        self.id = id
         self.is_final = is_final
+        self.edges = []
 
-    def add_edge(self, destination, edge_type, label, return_state=None):
-        edge = ParserEdge(self, destination, edge_type, label, return_state)
-        self.edges.append(edge)
+    def add_edge(self, symbol, target, edge_type):
+        self.edges.append(ParserEdge(self, target, symbol, edge_type))
 
 
 class ParserDiagram:
@@ -51,7 +34,7 @@ class ParserDiagram:
         self.final_states = []
 
     def add_state(self, state):
-        if not self.states:
+        if self.start_state is None:
             self.start_state = state
         self.states.append(state)
         if state.is_final:
@@ -64,8 +47,8 @@ class DiagramBuilder:
         self.diagrams = {}
         self.state_counter = 0
 
-    def new_state(self, prod_name, is_begin=False, is_final=False):
-        state = ParserState(self.state_counter, prod_name, is_begin, is_final)
+    def new_state(self, is_final=False):
+        state = ParserState(self.state_counter, is_final)
         self.state_counter += 1
         return state
 
@@ -89,29 +72,21 @@ class DiagramBuilder:
     def build_diagram(self, rule):
         diagram = ParserDiagram(rule.lhs.name)
         for production in rule.rhs:
-            start = self.new_state(rule.lhs.name, is_begin=True)
+            start = self.new_state()
             current = start
             diagram.add_state(start)
 
             if production == ['epsilon']:
-                final = self.new_state(rule.lhs.name, is_final=True)
+                final = self.new_state(is_final=True)
                 diagram.add_state(final)
-                current.add_edge(final, EdgeType.EPSILON, 'epsilon')
+                current.add_edge('epsilon', final, EdgeType.EPSILON)
                 continue
 
             for i, symbol in enumerate(production):
                 is_last = (i == len(production) - 1)
                 edge_type = self.determine_edge_type(symbol)
-                final = self.new_state(rule.lhs.name, is_final=True) if is_last else self.new_state(rule.lhs.name)
+                final = self.new_state(is_final=is_last)
                 diagram.add_state(final)
-
-                if edge_type == EdgeType.NON_TERMINAL:
-                    # No immediate move; transition with return point
-                    current.add_edge(None, edge_type, symbol, return_state=final)
-                else:
-                    current.add_edge(final, edge_type, symbol)
-
-                if edge_type != EdgeType.NON_TERMINAL:
-                    current = final
-
+                current.add_edge(symbol, final, edge_type)
+                current = final
         return diagram
