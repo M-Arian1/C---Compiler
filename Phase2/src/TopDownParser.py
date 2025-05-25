@@ -185,6 +185,8 @@ class DiagramParser:
                 print("going to the start of while after matching with nt")
                 continue            #if reaches here: no match
             
+            print("EPSILON",epsilon_edge)
+            
             #check for epsilon
             if not transitioned and epsilon_edge is not None:
                 # Create epsilon node and add it to current node
@@ -210,6 +212,7 @@ class DiagramParser:
                     continue
                 elif edge.edge_type.value == EdgeType.NON_TERMINAL.value:
                     follow = self.grammar.get_follow(edge.get_name())
+                    
                     if self.check_in_set(follow):
                         print("##2222#222#####22####################################") 
                         print("token", self.current_token, "in", follow)       
