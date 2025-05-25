@@ -47,8 +47,7 @@ def main():
     try:
         parse_tree = parser.parse("Program")  # Entry point for parsing
         print("\nParse Tree:")
-        for step in parse_tree:
-            print(step)
+        print(parse_tree)  # This will use the ParseNode's __str__ method
         print("\nParsing completed successfully.")
     except Exception as e:
         print("Parsing failed with error:")
