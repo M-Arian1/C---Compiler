@@ -227,9 +227,9 @@ class DiagramParser:
                         continue
                     else: #TODO: Handle with synch
                         print("ILLEGAL","Token:", self.current_token, "Follow of :", edge.get_name(), follow)
-                        self.log_error(f"illegal {self.current_token}")
+                        self.log_error(f"illegal2 {self.current_token}")
                         # Create error node for illegal token
-                        error_node = ParseNode('error', f"illegal {self.current_token}")
+                        error_node = ParseNode('error', f"illegal3 {self.current_token}")
                         self.current_node.add_child(error_node)
                         self.current_state, self.current_token, self.current_line_number = self.scanner.get_next_token()
                         continue  # Resynchronize by returning from current diagram

@@ -108,7 +108,7 @@ class Grammar:
             "CompoundStmt": ["ID", ";", "NUM", "(", "}", "{", "int", "void", "break", "if", "else", "while", "return", "+", "-", "$"],
             "StatementList": ["}"],
             "Statement": ["ID", ";", "NUM", "(", "}", "{", "break", "if", "else", "while", "return", "+", "-"],
-            "ExpressionStmt": ["ID", ";", "NUM", "(", "}", "{", "break", "if", "else", "while", "return", "+", "-"],
+            "ExpressionStmt": ["ID", ";", "NUM", "(", "}", "{", "break", "if", "else", "while", "return", "+", "-", "$"],
             "SelectionStmt": ["ID", ";", "NUM", "(", "}", "{", "break", "if", "else", "while", "return", "+", "-"],
             "IterationStmt": ["ID", ";", "NUM", "(", "}", "{", "break", "if", "else", "while", "return", "+", "-"],
             "ReturnStmt": ["ID", ";", "NUM", "(", "}", "{", "break", "if", "else", "while", "return", "+", "-"],
@@ -240,10 +240,12 @@ class Grammar:
                     sets[nt.strip()] = set(items.strip().split())
         return sets
     def get_predict(self, symbol):
-        return self.predict_sets[symbol]
+        # Return an empty set if the symbol is not found in predict_sets
+        return self.predict_sets.get(symbol, set())
     
     def get_follow(self, symbol):
-        return self.follow_sets[symbol]
+        # Return an empty set if the symbol is not found in follow_sets
+        return self.follow_sets.get(symbol, set())
     # def load_firsts(self, filename='firsts.txt'):
     #     self.first_sets = self.load_sets(filename)
 
