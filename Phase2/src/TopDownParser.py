@@ -57,11 +57,15 @@ class DiagramParser:
         self.error_log.write(f"#{self.current_line_number} : syntax error, {message}\n")
     
     def match_token_to_symbol(self, symbol):
+        if symbol == "KEYWORD":
+            return self.current_state.type[1].value == Token.KEYWORD.value
         if symbol == "ID":
-            return self.current_state.type[1] == Token.ID
+            print("Matching ID token:", self.current_token, "to symbol:", symbol, "result:", self.current_state.type[1].value == Token.ID.value)
+            return self.current_state.type[1].value == Token.ID.value
         if symbol == "NUM":
-            return self.current_state.type[1] == Token.NUM
-        return self.current_token == symbol
+            return self.current_state.type[1].value == Token.NUM.value
+        print("Matching token:", self.current_token, "to symbol:", symbol, "result:", self.current_token == symbol)
+        return str(self.current_token) == str(symbol)
     
     
     def check_in_predict(self, edge):
@@ -74,6 +78,8 @@ class DiagramParser:
         
 
     def match(self, terminal):
+        print("############################################")
+        print("Matching token:", self.current_token, "to terminal:", terminal)
         if self.match_token_to_symbol(terminal):
             matched = self.current_token
             self.current_state, self.current_token, self.current_line_number = self.scanner.get_next_token()
@@ -119,7 +125,11 @@ class DiagramParser:
                     epsilon_edge = edge
                     
             for edge in terminal_transitions:
+                print("###1111111111111111111111111111111111111111")
+                print("token", self.current_token, "in", edge.symbol)
                 if self.match_token_to_symbol(edge.symbol):
+                    print("###8888888888888888888888888")
+                    print("Matched terminal:", edge.symbol)
                     # Create terminal node and add it to current node
                     terminal_node = ParseNode(edge.symbol, self.current_token)
                     self.current_node.add_child(terminal_node)
@@ -174,6 +184,8 @@ class DiagramParser:
                 error_edge = state.edges[0]
                 edge = error_edge
                 if edge.edge_type.value == EdgeType.TERMINAL.value:
+                    print("###11###11##########111############################")
+                    print("token", self.current_token, "in", edge.symbol)
                     self.log_error(f"missing {edge.symbol}")
                     # Create error node for missing terminal
                     error_node = ParseNode('error', f"missing {edge.symbol}")
@@ -184,6 +196,8 @@ class DiagramParser:
                 elif edge.edge_type.value == EdgeType.NON_TERMINAL.value:
                     follow = self.grammar.get_follow(edge.get_name())
                     if self.current_token in follow:
+                        print("##2222#222#####22####################################") 
+                        print("token", self.current_token, "in", follow)       
                         self.log_error(f"missing {edge.symbol}")
                         # Create error node for missing non-terminal
                         error_node = ParseNode('error', f"missing {edge.symbol}")
