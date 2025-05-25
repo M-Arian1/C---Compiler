@@ -1,10 +1,9 @@
 #1 : syntax error, missing int
 #1 : syntax error, missing ID
-#1 : syntax error, missing (
-#1 : syntax error, missing int
-#1 : syntax error, missing ID
+#1 : syntax error, missing DeclarationPrime
 #1 : syntax error, illegal int
-#1 : syntax error, missing )
-#1 : syntax error, illegal (<src.Automata.State object at 0x1009a9700>, 'main', 1)
-#1 : syntax error, illegal (<src.Automata.State object at 0x1009b4b90>, '=', 1)
-#1 : syntax error, illegal ID
+#1 : syntax error, illegal main
+#1 : syntax error, illegal =
+#1 : syntax error, illegal 2
+#1 : syntax error, illegal ;
+#1 : syntax error, illegal EOF
