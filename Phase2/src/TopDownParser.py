@@ -82,6 +82,7 @@ class DiagramParser:
         if self.match_token_to_symbol(terminal):
             matched = self.current_token
             self.current_state, self.current_token, self.current_line_number = self.scanner.get_next_token()
+            print("Matched terminal:", terminal, "with token:", matched , " IN match function")
             # print(self.current_token)
             return matched
         else:
@@ -126,7 +127,7 @@ class DiagramParser:
             for edge in terminal_transitions:
                 print("###1111111111111111111111111111111111111111")
                 print("token", self.current_token, "in", edge.symbol)
-                
+                print(edge.edge_info())
                 if self.match_token_to_symbol(edge.symbol):
                     print("###8888888888888888888888888")
                     print("Matched terminal:", edge.symbol)
@@ -136,15 +137,19 @@ class DiagramParser:
                     edge.edge_info()
                     print("token", self.current_token)
                     self.match(edge.symbol)
+                    print("salam")
                     state = edge.target
+                    print(edge.edge_info(), state.get_id())
                     transitioned = True
                     terminal_matched = True
                     break
                     
             if terminal_matched:
+                print("terminal matched, continuing to next state")
                 continue
               # No match in terminals
             for edge in non_terminal_transitions:
+                print("###22222222222222222222222222222222222222")
                 predict = self.grammar.get_predict(edge.get_name())
                 if self.check_in_set(predict):
                     print("ERROR: token", self.current_token, "in", predict)
