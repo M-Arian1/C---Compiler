@@ -82,6 +82,7 @@ class DiagramParser:
         if self.match_token_to_symbol(terminal):
             matched = self.current_token
             self.current_state, self.current_token, self.current_line_number = self.scanner.get_next_token()
+            print("TOKEN took from SCANNER", self.current_token,"type", self.current_state.type[1].value)
             print("Matched terminal:", terminal, "with token:", matched , " IN match function")
             # print(self.current_token)
             return matched
@@ -97,10 +98,12 @@ class DiagramParser:
         self.current_node = self.parse_tree
         self.execute_diagram(start_symbol, start_diagram)
         # self.current_state, self.current_token, self.current_line_number = self.scanner.get_next_token()
-        # print("final token in parse", self.current_token)
+        print("final token in parse", self.current_token, "CHECK", self.current_token == chr(26))
+        
         if self.current_token != '$':
             print("final token:", self.current_token)
-            self.log_error(f"illegal {self.current_state.type[1].value}")
+            self.log_error(f"illegal f {self.current_state.type[1].value}")
+            self.log_error(self.current_token)
         self.error_log.close()
         return self.parse_tree
     
@@ -238,80 +241,5 @@ class DiagramParser:
                 if state.is_final:
                     print("reached final state")
                     return
-                # else:
-                #     self.log_error(f"illegal {self.current_token}")
-                #     self.current_state, self.current_token, self.current_line_number = self.scanner.get_next_token()
-                #     state = diagram.start_state
-
-                
-                
-                
-                                
-            # for edge in state.edges:
-            #     print( diagram_name, edge.edge_type.value ==  EdgeType.NON_TERMINAL.value)
-            #     edge.edge_info()
-            #     if edge.edge_type.value == EdgeType.TERMINAL.value:
-                    
-            #         if self.current_token == edge.symbol:
-            #             self.parse_tree.append(('match', edge.symbol))
-            #             edge.edge_info()
-            #             print("token",self.current_token)
-            #             self.match(edge.symbol)
-            #             state = edge.target
-            #             transitioned = True
-            #             break
-            #         else:
-            #             self.log_error(f"missing {edge.symbol}")
-            #             state = edge.target
-            #             transitioned = True
-            #             break
-
-            #     elif edge.edge_type.value == EdgeType.NON_TERMINAL.value:
-            #         print(edge.symbol)
-            #         predict = self.grammar.get_predict(edge.get_name())
-            #         follow = self.grammar.get_follow(edge.get_name())
-                   
-            #         if self.current_token in predict:
-            #             self.parse_tree.append(('enter', edge.symbol))
-            #             self.return_stack.append(edge.target)
-            #             edge.edge_info()
-            #             print("token",self.current_token)
-
-            #             self.execute_diagram(edge.symbol, self.diagrams[str(edge.symbol)])
-            #             state = self.return_stack.pop()
-            #             transitioned = True
-            #             break
-            #         elif self.current_token in follow:
-            #             self.log_error(f"missing {edge.symbol}")
-            #             state = edge.target
-            #             transitioned = True
-            #             break
-            #         else: #TODO: Handle with synch
-            #             self.log_error(f"illegal {self.current_token}")
-            #             self.current_token = self.scanner.get_next_token()
-            #             return  # Resynchronize by returning from current diagram
-
-            #     elif edge.edge_type == EdgeType.EPSILON:
-            #         epsilon_edge = edge
-            #         continue
-
-                # elif edge.edge_type.value == EdgeType.ACTION.value:
-                    
-                #     self.parse_tree.append(('action', edge.symbol))
-                #     state = edge.target
-                #     transitioned = True
-                #     break
-                
-            # if not transitioned and epsilon_edge is not None:
-            # # Only now take the epsilon transition
-            #     self.parse_tree.append(('epsilon',))
-            #     state = epsilon_edge.target
-            #     continue
-
-            # if not transitioned:
-            #     if state.is_final:
-            #         return
-            #     else:
-            #         self.log_error(f"illegal {self.current_token}")
-            #         self.current_state, self.current_token, self.current_line_number = self.scanner.get_next_token()
-            #         state = diagram.start_state
+                              
+     

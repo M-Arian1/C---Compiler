@@ -423,8 +423,6 @@ Diagram for Non-Terminal: VarPrime
   State 167
     --[] (TERMINAL)]--> State 165
 Starting parsing...
-IN SCANNER, with token 
-int in line 2 state
 int
 We now are in : Program
 start while 104
@@ -433,17 +431,19 @@ start while 104
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: DeclarationList {'(', '}', '{', 'NUM', 'return', 'while', '-', 'void', '+', 'int', 'break', 'if', ';', 'ID', '$'}
-XX Matching token: int KEYWORD to symbol: ( result: False
+predict: DeclarationList {'return', 'break', '$', '}', '{', 'void', 'while', '+', '(', 'if', 'int', 'NUM', ';', '-', 'ID'}
+XX Matching token: int KEYWORD to symbol: return result: False
+XX Matching token: int KEYWORD to symbol: break result: False
+XX Matching token: int KEYWORD to symbol: $ result: False
 XX Matching token: int KEYWORD to symbol: } result: False
 XX Matching token: int KEYWORD to symbol: { result: False
-XX Matching token: int KEYWORD to symbol: return result: False
-XX Matching token: int KEYWORD to symbol: while result: False
-XX Matching token: int KEYWORD to symbol: - result: False
 XX Matching token: int KEYWORD to symbol: void result: False
+XX Matching token: int KEYWORD to symbol: while result: False
 XX Matching token: int KEYWORD to symbol: + result: False
+XX Matching token: int KEYWORD to symbol: ( result: False
+XX Matching token: int KEYWORD to symbol: if result: False
 XX Matching token: int KEYWORD to symbol: int result: True
-NON TERMINASLS: token int in {'(', '}', '{', 'NUM', 'return', 'while', '-', 'void', '+', 'int', 'break', 'if', ';', 'ID', '$'}
+NON TERMINASLS: token int in {'return', 'break', '$', '}', '{', 'void', 'while', '+', '(', 'if', 'int', 'NUM', ';', '-', 'ID'}
 from : 104 with DeclarationList to 106 Type: EdgeType.NON_TERMINAL
 token int
 target before pushing 106
@@ -454,10 +454,9 @@ start while 44
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: Declaration {'void', 'int'}
-XX Matching token: int KEYWORD to symbol: void result: False
+predict: Declaration {'int', 'void'}
 XX Matching token: int KEYWORD to symbol: int result: True
-NON TERMINASLS: token int in {'void', 'int'}
+NON TERMINASLS: token int in {'int', 'void'}
 from : 44 with Declaration to 46 Type: EdgeType.NON_TERMINAL
 token int
 target before pushing 46
@@ -468,10 +467,9 @@ start while 38
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: DeclarationInitial {'void', 'int'}
-XX Matching token: int KEYWORD to symbol: void result: False
+predict: DeclarationInitial {'int', 'void'}
 XX Matching token: int KEYWORD to symbol: int result: True
-NON TERMINASLS: token int in {'void', 'int'}
+NON TERMINASLS: token int in {'int', 'void'}
 from : 38 with DeclarationInitial to 40 Type: EdgeType.NON_TERMINAL
 token int
 target before pushing 40
@@ -482,10 +480,9 @@ start while 41
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: TypeSpecifier {'void', 'int'}
-XX Matching token: int KEYWORD to symbol: void result: False
+predict: TypeSpecifier {'int', 'void'}
 XX Matching token: int KEYWORD to symbol: int result: True
-NON TERMINASLS: token int in {'void', 'int'}
+NON TERMINASLS: token int in {'int', 'void'}
 from : 41 with TypeSpecifier to 43 Type: EdgeType.NON_TERMINAL
 token int
 target before pushing 43
@@ -506,7 +503,7 @@ token int
 ############################################
 Matching token: int to terminal: int
 XX Matching token: int KEYWORD to symbol: int result: False
-IN SCANNER, with token  add in line 2 state
+TOKEN took from SCANNER add type ID
 Matched terminal: int with token: int  IN match function
 salam
 from : 153 with int to 154 Type: EdgeType.TERMINAL
@@ -537,7 +534,7 @@ token add
 ############################################
 Matching token: add to terminal: ID
 ID Matching ID token: add to symbol: ID result: True
-IN SCANNER, with token ( in line 2 state
+TOKEN took from SCANNER ( type SYMBOL
 Matched terminal: ID with token: add  IN match function
 salam
 from : 43 with ID to 42 Type: EdgeType.TERMINAL
@@ -558,9 +555,11 @@ start while 40
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: DeclarationPrime {'(', '[', ';'}
+predict: DeclarationPrime {'[', ';', '('}
+XX Matching token: ( SYMBOL to symbol: [ result: False
+XX Matching token: ( SYMBOL to symbol: ; result: False
 XX Matching token: ( SYMBOL to symbol: ( result: True
-NON TERMINASLS: token ( in {'(', '[', ';'}
+NON TERMINASLS: token ( in {'[', ';', '('}
 from : 40 with DeclarationPrime to 39 Type: EdgeType.NON_TERMINAL
 token (
 target before pushing 39
@@ -594,7 +593,7 @@ token (
 ############################################
 Matching token: ( to terminal: (
 XX Matching token: ( SYMBOL to symbol: ( result: False
-IN SCANNER, with token int in line 2 state
+TOKEN took from SCANNER int type KEYWORD
 Matched terminal: ( with token: (  IN match function
 salam
 from : 69 with ( to 71 Type: EdgeType.TERMINAL
@@ -606,10 +605,9 @@ start while 71
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: Params {'void', 'int'}
-XX Matching token: int KEYWORD to symbol: void result: False
+predict: Params {'int', 'void'}
 XX Matching token: int KEYWORD to symbol: int result: True
-NON TERMINASLS: token int in {'void', 'int'}
+NON TERMINASLS: token int in {'int', 'void'}
 from : 71 with Params to 72 Type: EdgeType.NON_TERMINAL
 token int
 target before pushing 72
@@ -630,7 +628,7 @@ token int
 ############################################
 Matching token: int to terminal: int
 XX Matching token: int KEYWORD to symbol: int result: False
-IN SCANNER, with token  a in line 2 state
+TOKEN took from SCANNER a type ID
 Matched terminal: int with token: int  IN match function
 salam
 from : 99 with int to 101 Type: EdgeType.TERMINAL
@@ -652,7 +650,7 @@ token a
 ############################################
 Matching token: a to terminal: ID
 ID Matching ID token: a to symbol: ID result: True
-IN SCANNER, with token , in line 2 state
+TOKEN took from SCANNER , type SYMBOL
 Matched terminal: ID with token: a  IN match function
 salam
 from : 101 with ID to 102 Type: EdgeType.TERMINAL
@@ -682,7 +680,7 @@ from : 96 with [ to 98 Type: EdgeType.TERMINAL
 None
 XX Matching token: , SYMBOL to symbol: [ result: False
 hereeee
-EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x100c75f60>
+EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x102c75fd0>
 epsilon edge
 start while 97
 0
@@ -722,7 +720,7 @@ token ,
 ############################################
 Matching token: , to terminal: ,
 XX Matching token: , SYMBOL to symbol: , result: False
-IN SCANNER, with token  int in line 2 state
+TOKEN took from SCANNER int type KEYWORD
 Matched terminal: , with token: ,  IN match function
 salam
 from : 92 with , to 94 Type: EdgeType.TERMINAL
@@ -734,10 +732,9 @@ start while 94
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: Param {'void', 'int'}
-XX Matching token: int KEYWORD to symbol: void result: False
+predict: Param {'int', 'void'}
 XX Matching token: int KEYWORD to symbol: int result: True
-NON TERMINASLS: token int in {'void', 'int'}
+NON TERMINASLS: token int in {'int', 'void'}
 from : 94 with Param to 95 Type: EdgeType.NON_TERMINAL
 token int
 target before pushing 95
@@ -748,10 +745,9 @@ start while 89
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: DeclarationInitial {'void', 'int'}
-XX Matching token: int KEYWORD to symbol: void result: False
+predict: DeclarationInitial {'int', 'void'}
 XX Matching token: int KEYWORD to symbol: int result: True
-NON TERMINASLS: token int in {'void', 'int'}
+NON TERMINASLS: token int in {'int', 'void'}
 from : 89 with DeclarationInitial to 91 Type: EdgeType.NON_TERMINAL
 token int
 target before pushing 91
@@ -762,10 +758,9 @@ start while 41
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: TypeSpecifier {'void', 'int'}
-XX Matching token: int KEYWORD to symbol: void result: False
+predict: TypeSpecifier {'int', 'void'}
 XX Matching token: int KEYWORD to symbol: int result: True
-NON TERMINASLS: token int in {'void', 'int'}
+NON TERMINASLS: token int in {'int', 'void'}
 from : 41 with TypeSpecifier to 43 Type: EdgeType.NON_TERMINAL
 token int
 target before pushing 43
@@ -786,7 +781,7 @@ token int
 ############################################
 Matching token: int to terminal: int
 XX Matching token: int KEYWORD to symbol: int result: False
-IN SCANNER, with token  b in line 2 state
+TOKEN took from SCANNER b type ID
 Matched terminal: int with token: int  IN match function
 salam
 from : 153 with int to 154 Type: EdgeType.TERMINAL
@@ -817,7 +812,7 @@ token b
 ############################################
 Matching token: b to terminal: ID
 ID Matching ID token: b to symbol: ID result: True
-IN SCANNER, with token ) in line 2 state
+TOKEN took from SCANNER ) type SYMBOL
 Matched terminal: ID with token: b  IN match function
 salam
 from : 43 with ID to 42 Type: EdgeType.TERMINAL
@@ -857,7 +852,7 @@ from : 96 with [ to 98 Type: EdgeType.TERMINAL
 None
 XX Matching token: ) SYMBOL to symbol: [ result: False
 hereeee
-EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x100c75f60>
+EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x102c75fd0>
 epsilon edge
 start while 97
 0
@@ -901,7 +896,7 @@ from : 92 with , to 94 Type: EdgeType.TERMINAL
 None
 XX Matching token: ) SYMBOL to symbol: , result: False
 hereeee
-EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x100c75d30>
+EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x102c75da0>
 epsilon edge
 start while 93
 0
@@ -946,7 +941,7 @@ token )
 ############################################
 Matching token: ) to terminal: )
 XX Matching token: ) SYMBOL to symbol: ) result: False
-IN SCANNER, with token  { in line 2 state
+TOKEN took from SCANNER { type SYMBOL
 Matched terminal: ) with token: )  IN match function
 salam
 from : 72 with ) to 73 Type: EdgeType.TERMINAL
@@ -981,8 +976,7 @@ token {
 ############################################
 Matching token: { to terminal: {
 XX Matching token: { SYMBOL to symbol: { result: False
-IN SCANNER, with token 
-    return in line 3 state
+TOKEN took from SCANNER return type KEYWORD
 Matched terminal: { with token: {  IN match function
 salam
 from : 29 with { to 31 Type: EdgeType.TERMINAL
@@ -994,12 +988,9 @@ start while 31
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: DeclarationList {'(', '}', '{', 'NUM', 'return', 'while', '-', 'void', '+', 'int', 'break', 'if', ';', 'ID', '$'}
-XX Matching token: return KEYWORD to symbol: ( result: False
-XX Matching token: return KEYWORD to symbol: } result: False
-XX Matching token: return KEYWORD to symbol: { result: False
+predict: DeclarationList {'return', 'break', '$', '}', '{', 'void', 'while', '+', '(', 'if', 'int', 'NUM', ';', '-', 'ID'}
 XX Matching token: return KEYWORD to symbol: return result: True
-NON TERMINASLS: token return in {'(', '}', '{', 'NUM', 'return', 'while', '-', 'void', '+', 'int', 'break', 'if', ';', 'ID', '$'}
+NON TERMINASLS: token return in {'return', 'break', '$', '}', '{', 'void', 'while', '+', '(', 'if', 'int', 'NUM', ';', '-', 'ID'}
 from : 31 with DeclarationList to 32 Type: EdgeType.NON_TERMINAL
 token return
 target before pushing 32
@@ -1010,10 +1001,10 @@ start while 44
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: Declaration {'void', 'int'}
-XX Matching token: return KEYWORD to symbol: void result: False
+predict: Declaration {'int', 'void'}
 XX Matching token: return KEYWORD to symbol: int result: False
-EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x100c747c0>
+XX Matching token: return KEYWORD to symbol: void result: False
+EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x102c74830>
 epsilon edge
 start while 45
 0
@@ -1030,12 +1021,9 @@ start while 32
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: StatementList {'(', '}', '{', 'NUM', 'return', 'while', '-', '+', 'break', 'if', ';', 'ID'}
-XX Matching token: return KEYWORD to symbol: ( result: False
-XX Matching token: return KEYWORD to symbol: } result: False
-XX Matching token: return KEYWORD to symbol: { result: False
+predict: StatementList {'return', 'break', '}', '{', 'while', '+', '(', 'if', 'NUM', ';', '-', 'ID'}
 XX Matching token: return KEYWORD to symbol: return result: True
-NON TERMINASLS: token return in {'(', '}', '{', 'NUM', 'return', 'while', '-', '+', 'break', 'if', ';', 'ID'}
+NON TERMINASLS: token return in {'return', 'break', '}', '{', 'while', '+', '(', 'if', 'NUM', ';', '-', 'ID'}
 from : 32 with StatementList to 33 Type: EdgeType.NON_TERMINAL
 token return
 target before pushing 33
@@ -1046,11 +1034,9 @@ start while 141
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: Statement {'(', '{', 'NUM', 'return', 'while', '-', '+', 'break', 'if', ';', 'ID'}
-XX Matching token: return KEYWORD to symbol: ( result: False
-XX Matching token: return KEYWORD to symbol: { result: False
+predict: Statement {'return', 'break', '{', 'while', '+', '(', 'if', 'NUM', ';', '-', 'ID'}
 XX Matching token: return KEYWORD to symbol: return result: True
-NON TERMINASLS: token return in {'(', '{', 'NUM', 'return', 'while', '-', '+', 'break', 'if', ';', 'ID'}
+NON TERMINASLS: token return in {'return', 'break', '{', 'while', '+', '(', 'if', 'NUM', ';', '-', 'ID'}
 from : 141 with Statement to 143 Type: EdgeType.NON_TERMINAL
 token return
 target before pushing 143
@@ -1064,13 +1050,13 @@ hereeee
 predict: CompoundStmt {'{'}
 XX Matching token: return KEYWORD to symbol: { result: False
 ###22222222222222222222222222222222222222
-predict: ExpressionStmt {'(', 'NUM', '+', 'break', ';', 'ID', '-'}
-XX Matching token: return KEYWORD to symbol: ( result: False
-XX Matching token: return KEYWORD to symbol: + result: False
-XX Matching token: return KEYWORD to symbol: break result: False
+predict: ExpressionStmt {'NUM', ';', 'break', '-', '+', '(', 'ID'}
 XX Matching token: return KEYWORD to symbol: ; result: False
-ID Matching ID token: return to symbol: ID result: False
+XX Matching token: return KEYWORD to symbol: break result: False
 XX Matching token: return KEYWORD to symbol: - result: False
+XX Matching token: return KEYWORD to symbol: + result: False
+XX Matching token: return KEYWORD to symbol: ( result: False
+ID Matching ID token: return to symbol: ID result: False
 ###22222222222222222222222222222222222222
 predict: IterationStmt {'while'}
 XX Matching token: return KEYWORD to symbol: while result: False
@@ -1098,7 +1084,7 @@ token return
 ############################################
 Matching token: return to terminal: return
 XX Matching token: return KEYWORD to symbol: return result: False
-IN SCANNER, with token  a in line 3 state
+TOKEN took from SCANNER a type ID
 Matched terminal: return with token: return  IN match function
 salam
 from : 109 with return to 111 Type: EdgeType.TERMINAL
@@ -1110,12 +1096,13 @@ start while 111
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: ReturnStmtPrime {'(', 'NUM', '+', ';', 'ID', '-'}
-XX Matching token: a ID to symbol: ( result: False
-XX Matching token: a ID to symbol: + result: False
+predict: ReturnStmtPrime {'NUM', ';', '-', '+', '(', 'ID'}
 XX Matching token: a ID to symbol: ; result: False
+XX Matching token: a ID to symbol: - result: False
+XX Matching token: a ID to symbol: + result: False
+XX Matching token: a ID to symbol: ( result: False
 ID Matching ID token: a to symbol: ID result: True
-NON TERMINASLS: token a in {'(', 'NUM', '+', ';', 'ID', '-'}
+NON TERMINASLS: token a in {'NUM', ';', '-', '+', '(', 'ID'}
 from : 111 with ReturnStmtPrime to 110 Type: EdgeType.NON_TERMINAL
 token a
 target before pushing 110
@@ -1131,11 +1118,12 @@ None
 XX Matching token: a ID to symbol: ; result: False
 hereeee
 ###22222222222222222222222222222222222222
-predict: Expression {'(', 'NUM', '+', 'ID', '-'}
-XX Matching token: a ID to symbol: ( result: False
+predict: Expression {'NUM', '-', '+', '(', 'ID'}
+XX Matching token: a ID to symbol: - result: False
 XX Matching token: a ID to symbol: + result: False
+XX Matching token: a ID to symbol: ( result: False
 ID Matching ID token: a to symbol: ID result: True
-NON TERMINASLS: token a in {'(', 'NUM', '+', 'ID', '-'}
+NON TERMINASLS: token a in {'NUM', '-', '+', '(', 'ID'}
 from : 112 with Expression to 114 Type: EdgeType.NON_TERMINAL
 token a
 target before pushing 114
@@ -1156,7 +1144,7 @@ token a
 ############################################
 Matching token: a to terminal: ID
 ID Matching ID token: a to symbol: ID result: True
-IN SCANNER, with token  + in line 3 state
+TOKEN took from SCANNER + type SYMBOL
 Matched terminal: ID with token: a  IN match function
 salam
 from : 49 with ID to 51 Type: EdgeType.TERMINAL
@@ -1168,17 +1156,11 @@ start while 51
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: B {'(', '=', '==', ']', ',', ')', '-', '<', '+', '[', ';', '*'}
-XX Matching token: + SYMBOL to symbol: ( result: False
-XX Matching token: + SYMBOL to symbol: = result: False
-XX Matching token: + SYMBOL to symbol: == result: False
-XX Matching token: + SYMBOL to symbol: ] result: False
+predict: B {',', '[', '+', '(', '<', '==', ']', ';', '=', ')', '-', '*'}
 XX Matching token: + SYMBOL to symbol: , result: False
-XX Matching token: + SYMBOL to symbol: ) result: False
-XX Matching token: + SYMBOL to symbol: - result: False
-XX Matching token: + SYMBOL to symbol: < result: False
+XX Matching token: + SYMBOL to symbol: [ result: False
 XX Matching token: + SYMBOL to symbol: + result: True
-NON TERMINASLS: token + in {'(', '=', '==', ']', ',', ')', '-', '<', '+', '[', ';', '*'}
+NON TERMINASLS: token + in {',', '[', '+', '(', '<', '==', ']', ';', '=', ')', '-', '*'}
 from : 51 with B to 50 Type: EdgeType.NON_TERMINAL
 token +
 target before pushing 50
@@ -1199,16 +1181,10 @@ None
 XX Matching token: + SYMBOL to symbol: [ result: False
 hereeee
 ###22222222222222222222222222222222222222
-predict: SimpleExpressionPrime {'(', '==', ']', ',', ')', '-', '<', '+', ';', '*'}
-XX Matching token: + SYMBOL to symbol: ( result: False
-XX Matching token: + SYMBOL to symbol: == result: False
-XX Matching token: + SYMBOL to symbol: ] result: False
+predict: SimpleExpressionPrime {',', '+', '(', '<', '==', ']', ';', ')', '-', '*'}
 XX Matching token: + SYMBOL to symbol: , result: False
-XX Matching token: + SYMBOL to symbol: ) result: False
-XX Matching token: + SYMBOL to symbol: - result: False
-XX Matching token: + SYMBOL to symbol: < result: False
 XX Matching token: + SYMBOL to symbol: + result: True
-NON TERMINASLS: token + in {'(', '==', ']', ',', ')', '-', '<', '+', ';', '*'}
+NON TERMINASLS: token + in {',', '+', '(', '<', '==', ']', ';', ')', '-', '*'}
 from : 20 with SimpleExpressionPrime to 21 Type: EdgeType.NON_TERMINAL
 token +
 target before pushing 21
@@ -1219,16 +1195,10 @@ start while 133
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: AdditiveExpressionPrime {'(', '==', ']', ',', ')', '-', '<', '+', ';', '*'}
-XX Matching token: + SYMBOL to symbol: ( result: False
-XX Matching token: + SYMBOL to symbol: == result: False
-XX Matching token: + SYMBOL to symbol: ] result: False
+predict: AdditiveExpressionPrime {',', '+', '(', '<', '==', ']', ';', ')', '-', '*'}
 XX Matching token: + SYMBOL to symbol: , result: False
-XX Matching token: + SYMBOL to symbol: ) result: False
-XX Matching token: + SYMBOL to symbol: - result: False
-XX Matching token: + SYMBOL to symbol: < result: False
 XX Matching token: + SYMBOL to symbol: + result: True
-NON TERMINASLS: token + in {'(', '==', ']', ',', ')', '-', '<', '+', ';', '*'}
+NON TERMINASLS: token + in {',', '+', '(', '<', '==', ']', ';', ')', '-', '*'}
 from : 133 with AdditiveExpressionPrime to 135 Type: EdgeType.NON_TERMINAL
 token +
 target before pushing 135
@@ -1239,16 +1209,10 @@ start while 3
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: TermPrime {'(', '==', ']', ',', ')', '-', '<', '+', ';', '*'}
-XX Matching token: + SYMBOL to symbol: ( result: False
-XX Matching token: + SYMBOL to symbol: == result: False
-XX Matching token: + SYMBOL to symbol: ] result: False
+predict: TermPrime {',', '+', '(', '<', '==', ']', ';', ')', '-', '*'}
 XX Matching token: + SYMBOL to symbol: , result: False
-XX Matching token: + SYMBOL to symbol: ) result: False
-XX Matching token: + SYMBOL to symbol: - result: False
-XX Matching token: + SYMBOL to symbol: < result: False
 XX Matching token: + SYMBOL to symbol: + result: True
-NON TERMINASLS: token + in {'(', '==', ']', ',', ')', '-', '<', '+', ';', '*'}
+NON TERMINASLS: token + in {',', '+', '(', '<', '==', ']', ';', ')', '-', '*'}
 from : 3 with TermPrime to 5 Type: EdgeType.NON_TERMINAL
 token +
 target before pushing 5
@@ -1259,16 +1223,10 @@ start while 147
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: SignedFactorPrime {'(', '==', ']', ',', ')', '-', '<', '+', ';', '*'}
-XX Matching token: + SYMBOL to symbol: ( result: False
-XX Matching token: + SYMBOL to symbol: == result: False
-XX Matching token: + SYMBOL to symbol: ] result: False
+predict: SignedFactorPrime {',', '+', '(', '<', '==', ']', ';', ')', '-', '*'}
 XX Matching token: + SYMBOL to symbol: , result: False
-XX Matching token: + SYMBOL to symbol: ) result: False
-XX Matching token: + SYMBOL to symbol: - result: False
-XX Matching token: + SYMBOL to symbol: < result: False
 XX Matching token: + SYMBOL to symbol: + result: True
-NON TERMINASLS: token + in {'(', '==', ']', ',', ')', '-', '<', '+', ';', '*'}
+NON TERMINASLS: token + in {',', '+', '(', '<', '==', ']', ';', ')', '-', '*'}
 from : 147 with SignedFactorPrime to 149 Type: EdgeType.NON_TERMINAL
 token +
 target before pushing 149
@@ -1279,16 +1237,10 @@ start while 127
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: FactorPrime {'(', '==', ']', ',', ')', '-', '<', '+', ';', '*'}
-XX Matching token: + SYMBOL to symbol: ( result: False
-XX Matching token: + SYMBOL to symbol: == result: False
-XX Matching token: + SYMBOL to symbol: ] result: False
+predict: FactorPrime {',', '+', '(', '<', '==', ']', ';', ')', '-', '*'}
 XX Matching token: + SYMBOL to symbol: , result: False
-XX Matching token: + SYMBOL to symbol: ) result: False
-XX Matching token: + SYMBOL to symbol: - result: False
-XX Matching token: + SYMBOL to symbol: < result: False
 XX Matching token: + SYMBOL to symbol: + result: True
-NON TERMINASLS: token + in {'(', '==', ']', ',', ')', '-', '<', '+', ';', '*'}
+NON TERMINASLS: token + in {',', '+', '(', '<', '==', ']', ';', ')', '-', '*'}
 from : 127 with FactorPrime to 128 Type: EdgeType.NON_TERMINAL
 token +
 target before pushing 128
@@ -1303,7 +1255,7 @@ from : 61 with ( to 63 Type: EdgeType.TERMINAL
 None
 XX Matching token: + SYMBOL to symbol: ( result: False
 hereeee
-EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x100c75010>
+EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x102c75080>
 epsilon edge
 start while 62
 0
@@ -1329,15 +1281,10 @@ start while 149
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: G {'==', ']', ',', ')', '-', '<', '+', ';', '*'}
-XX Matching token: + SYMBOL to symbol: == result: False
-XX Matching token: + SYMBOL to symbol: ] result: False
+predict: G {',', '+', '<', '==', ']', ';', ')', '-', '*'}
 XX Matching token: + SYMBOL to symbol: , result: False
-XX Matching token: + SYMBOL to symbol: ) result: False
-XX Matching token: + SYMBOL to symbol: - result: False
-XX Matching token: + SYMBOL to symbol: < result: False
 XX Matching token: + SYMBOL to symbol: + result: True
-NON TERMINASLS: token + in {'==', ']', ',', ')', '-', '<', '+', ';', '*'}
+NON TERMINASLS: token + in {',', '+', '<', '==', ']', ';', ')', '-', '*'}
 from : 149 with G to 148 Type: EdgeType.NON_TERMINAL
 token +
 target before pushing 148
@@ -1352,7 +1299,7 @@ from : 74 with * to 76 Type: EdgeType.TERMINAL
 None
 XX Matching token: + SYMBOL to symbol: * result: False
 hereeee
-EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x100c75550>
+EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x102c755c0>
 epsilon edge
 start while 75
 0
@@ -1378,15 +1325,10 @@ start while 5
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: D {'==', ']', ',', ')', '-', '<', '+', ';'}
-XX Matching token: + SYMBOL to symbol: == result: False
-XX Matching token: + SYMBOL to symbol: ] result: False
+predict: D {',', '+', '<', '==', ';', ')', '-', ']'}
 XX Matching token: + SYMBOL to symbol: , result: False
-XX Matching token: + SYMBOL to symbol: ) result: False
-XX Matching token: + SYMBOL to symbol: - result: False
-XX Matching token: + SYMBOL to symbol: < result: False
 XX Matching token: + SYMBOL to symbol: + result: True
-NON TERMINASLS: token + in {'==', ']', ',', ')', '-', '<', '+', ';'}
+NON TERMINASLS: token + in {',', '+', '<', '==', ';', ')', '-', ']'}
 from : 5 with D to 4 Type: EdgeType.NON_TERMINAL
 token +
 target before pushing 4
@@ -1397,9 +1339,10 @@ start while 34
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: Addop {'+', '-'}
+predict: Addop {'-', '+'}
+XX Matching token: + SYMBOL to symbol: - result: False
 XX Matching token: + SYMBOL to symbol: + result: True
-NON TERMINASLS: token + in {'+', '-'}
+NON TERMINASLS: token + in {'-', '+'}
 from : 34 with Addop to 36 Type: EdgeType.NON_TERMINAL
 token +
 target before pushing 36
@@ -1420,7 +1363,7 @@ token +
 ############################################
 Matching token: + to terminal: +
 XX Matching token: + SYMBOL to symbol: + result: False
-IN SCANNER, with token  b in line 3 state
+TOKEN took from SCANNER b type ID
 Matched terminal: + with token: +  IN match function
 salam
 from : 9 with + to 10 Type: EdgeType.TERMINAL
@@ -1441,11 +1384,12 @@ start while 36
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: Term {'(', 'NUM', '+', 'ID', '-'}
-XX Matching token: b ID to symbol: ( result: False
+predict: Term {'NUM', '-', '+', '(', 'ID'}
+XX Matching token: b ID to symbol: - result: False
 XX Matching token: b ID to symbol: + result: False
+XX Matching token: b ID to symbol: ( result: False
 ID Matching ID token: b to symbol: ID result: True
-NON TERMINASLS: token b in {'(', 'NUM', '+', 'ID', '-'}
+NON TERMINASLS: token b in {'NUM', '-', '+', '(', 'ID'}
 from : 36 with Term to 37 Type: EdgeType.NON_TERMINAL
 token b
 target before pushing 37
@@ -1456,11 +1400,12 @@ start while 144
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: SignedFactor {'(', 'NUM', '+', 'ID', '-'}
-XX Matching token: b ID to symbol: ( result: False
+predict: SignedFactor {'NUM', '-', '+', '(', 'ID'}
+XX Matching token: b ID to symbol: - result: False
 XX Matching token: b ID to symbol: + result: False
+XX Matching token: b ID to symbol: ( result: False
 ID Matching ID token: b to symbol: ID result: True
-NON TERMINASLS: token b in {'(', 'NUM', '+', 'ID', '-'}
+NON TERMINASLS: token b in {'NUM', '-', '+', '(', 'ID'}
 from : 144 with SignedFactor to 146 Type: EdgeType.NON_TERMINAL
 token b
 target before pushing 146
@@ -1481,10 +1426,10 @@ None
 XX Matching token: b ID to symbol: - result: False
 hereeee
 ###22222222222222222222222222222222222222
-predict: Factor {'(', 'NUM', 'ID'}
+predict: Factor {'NUM', '(', 'ID'}
 XX Matching token: b ID to symbol: ( result: False
 ID Matching ID token: b to symbol: ID result: True
-NON TERMINASLS: token b in {'(', 'NUM', 'ID'}
+NON TERMINASLS: token b in {'NUM', '(', 'ID'}
 from : 123 with Factor to 124 Type: EdgeType.NON_TERMINAL
 token b
 target before pushing 124
@@ -1510,7 +1455,7 @@ token b
 ############################################
 Matching token: b to terminal: ID
 ID Matching ID token: b to symbol: ID result: True
-IN SCANNER, with token ; in line 3 state
+TOKEN took from SCANNER ; type SYMBOL
 Matched terminal: ID with token: b  IN match function
 salam
 from : 56 with ID to 60 Type: EdgeType.TERMINAL
@@ -1522,18 +1467,16 @@ start while 60
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: VarCallPrime {'(', '==', ']', ',', ')', '-', '<', '+', '[', ';', '*'}
+predict: VarCallPrime {',', '[', '+', '(', '<', '==', ']', ';', ')', '-', '*'}
+XX Matching token: ; SYMBOL to symbol: , result: False
+XX Matching token: ; SYMBOL to symbol: [ result: False
+XX Matching token: ; SYMBOL to symbol: + result: False
 XX Matching token: ; SYMBOL to symbol: ( result: False
+XX Matching token: ; SYMBOL to symbol: < result: False
 XX Matching token: ; SYMBOL to symbol: == result: False
 XX Matching token: ; SYMBOL to symbol: ] result: False
-XX Matching token: ; SYMBOL to symbol: , result: False
-XX Matching token: ; SYMBOL to symbol: ) result: False
-XX Matching token: ; SYMBOL to symbol: - result: False
-XX Matching token: ; SYMBOL to symbol: < result: False
-XX Matching token: ; SYMBOL to symbol: + result: False
-XX Matching token: ; SYMBOL to symbol: [ result: False
 XX Matching token: ; SYMBOL to symbol: ; result: True
-NON TERMINASLS: token ; in {'(', '==', ']', ',', ')', '-', '<', '+', '[', ';', '*'}
+NON TERMINASLS: token ; in {',', '[', '+', '(', '<', '==', ']', ';', ')', '-', '*'}
 from : 60 with VarCallPrime to 57 Type: EdgeType.NON_TERMINAL
 token ;
 target before pushing 57
@@ -1549,17 +1492,15 @@ None
 XX Matching token: ; SYMBOL to symbol: ( result: False
 hereeee
 ###22222222222222222222222222222222222222
-predict: VarPrime {'==', ']', ',', ')', '-', '<', '+', '[', ';', '*'}
+predict: VarPrime {',', '[', '+', '<', '==', ']', ';', ')', '-', '*'}
+XX Matching token: ; SYMBOL to symbol: , result: False
+XX Matching token: ; SYMBOL to symbol: [ result: False
+XX Matching token: ; SYMBOL to symbol: + result: False
+XX Matching token: ; SYMBOL to symbol: < result: False
 XX Matching token: ; SYMBOL to symbol: == result: False
 XX Matching token: ; SYMBOL to symbol: ] result: False
-XX Matching token: ; SYMBOL to symbol: , result: False
-XX Matching token: ; SYMBOL to symbol: ) result: False
-XX Matching token: ; SYMBOL to symbol: - result: False
-XX Matching token: ; SYMBOL to symbol: < result: False
-XX Matching token: ; SYMBOL to symbol: + result: False
-XX Matching token: ; SYMBOL to symbol: [ result: False
 XX Matching token: ; SYMBOL to symbol: ; result: True
-NON TERMINASLS: token ; in {'==', ']', ',', ')', '-', '<', '+', '[', ';', '*'}
+NON TERMINASLS: token ; in {',', '[', '+', '<', '==', ']', ';', ')', '-', '*'}
 from : 155 with VarPrime to 156 Type: EdgeType.NON_TERMINAL
 token ;
 target before pushing 156
@@ -1574,7 +1515,7 @@ from : 164 with [ to 166 Type: EdgeType.TERMINAL
 None
 XX Matching token: ; SYMBOL to symbol: [ result: False
 hereeee
-EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x100c8c4b0>
+EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x102c88520>
 epsilon edge
 start while 165
 0
@@ -1618,16 +1559,14 @@ start while 146
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: G {'==', ']', ',', ')', '-', '<', '+', ';', '*'}
+predict: G {',', '+', '<', '==', ']', ';', ')', '-', '*'}
+XX Matching token: ; SYMBOL to symbol: , result: False
+XX Matching token: ; SYMBOL to symbol: + result: False
+XX Matching token: ; SYMBOL to symbol: < result: False
 XX Matching token: ; SYMBOL to symbol: == result: False
 XX Matching token: ; SYMBOL to symbol: ] result: False
-XX Matching token: ; SYMBOL to symbol: , result: False
-XX Matching token: ; SYMBOL to symbol: ) result: False
-XX Matching token: ; SYMBOL to symbol: - result: False
-XX Matching token: ; SYMBOL to symbol: < result: False
-XX Matching token: ; SYMBOL to symbol: + result: False
 XX Matching token: ; SYMBOL to symbol: ; result: True
-NON TERMINASLS: token ; in {'==', ']', ',', ')', '-', '<', '+', ';', '*'}
+NON TERMINASLS: token ; in {',', '+', '<', '==', ']', ';', ')', '-', '*'}
 from : 146 with G to 145 Type: EdgeType.NON_TERMINAL
 token ;
 target before pushing 145
@@ -1642,7 +1581,7 @@ from : 74 with * to 76 Type: EdgeType.TERMINAL
 None
 XX Matching token: ; SYMBOL to symbol: * result: False
 hereeee
-EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x100c75550>
+EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x102c755c0>
 epsilon edge
 start while 75
 0
@@ -1668,16 +1607,13 @@ start while 37
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: D {'==', ']', ',', ')', '-', '<', '+', ';'}
-XX Matching token: ; SYMBOL to symbol: == result: False
-XX Matching token: ; SYMBOL to symbol: ] result: False
+predict: D {',', '+', '<', '==', ';', ')', '-', ']'}
 XX Matching token: ; SYMBOL to symbol: , result: False
-XX Matching token: ; SYMBOL to symbol: ) result: False
-XX Matching token: ; SYMBOL to symbol: - result: False
-XX Matching token: ; SYMBOL to symbol: < result: False
 XX Matching token: ; SYMBOL to symbol: + result: False
+XX Matching token: ; SYMBOL to symbol: < result: False
+XX Matching token: ; SYMBOL to symbol: == result: False
 XX Matching token: ; SYMBOL to symbol: ; result: True
-NON TERMINASLS: token ; in {'==', ']', ',', ')', '-', '<', '+', ';'}
+NON TERMINASLS: token ; in {',', '+', '<', '==', ';', ')', '-', ']'}
 from : 37 with D to 35 Type: EdgeType.NON_TERMINAL
 token ;
 target before pushing 35
@@ -1688,10 +1624,10 @@ start while 34
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: Addop {'+', '-'}
-XX Matching token: ; SYMBOL to symbol: + result: False
+predict: Addop {'-', '+'}
 XX Matching token: ; SYMBOL to symbol: - result: False
-EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x100c74440>
+XX Matching token: ; SYMBOL to symbol: + result: False
+EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x102c744b0>
 epsilon edge
 start while 35
 0
@@ -1726,12 +1662,10 @@ start while 135
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: C {'==', ']', ')', ';', ',', '<'}
-XX Matching token: ; SYMBOL to symbol: == result: False
+predict: C {']', ';', ',', ')', '==', '<'}
 XX Matching token: ; SYMBOL to symbol: ] result: False
-XX Matching token: ; SYMBOL to symbol: ) result: False
 XX Matching token: ; SYMBOL to symbol: ; result: True
-NON TERMINASLS: token ; in {'==', ']', ')', ';', ',', '<'}
+NON TERMINASLS: token ; in {']', ';', ',', ')', '==', '<'}
 from : 135 with C to 134 Type: EdgeType.NON_TERMINAL
 token ;
 target before pushing 134
@@ -1745,7 +1679,7 @@ hereeee
 predict: Relop {'==', '<'}
 XX Matching token: ; SYMBOL to symbol: == result: False
 XX Matching token: ; SYMBOL to symbol: < result: False
-EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x100c25d50>
+EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x102c2a5d0>
 epsilon edge
 start while 27
 0
@@ -1799,8 +1733,7 @@ token ;
 ############################################
 Matching token: ; to terminal: ;
 XX Matching token: ; SYMBOL to symbol: ; result: False
-IN SCANNER, with token 
-} in line 4 state
+TOKEN took from SCANNER } type SYMBOL
 Matched terminal: ; with token: ;  IN match function
 salam
 from : 114 with ; to 113 Type: EdgeType.TERMINAL
@@ -1842,10 +1775,11 @@ start while 143
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: StatementList {'(', '}', '{', 'NUM', 'return', 'while', '-', '+', 'break', 'if', ';', 'ID'}
-XX Matching token: } SYMBOL to symbol: ( result: False
+predict: StatementList {'return', 'break', '}', '{', 'while', '+', '(', 'if', 'NUM', ';', '-', 'ID'}
+XX Matching token: } SYMBOL to symbol: return result: False
+XX Matching token: } SYMBOL to symbol: break result: False
 XX Matching token: } SYMBOL to symbol: } result: True
-NON TERMINASLS: token } in {'(', '}', '{', 'NUM', 'return', 'while', '-', '+', 'break', 'if', ';', 'ID'}
+NON TERMINASLS: token } in {'return', 'break', '}', '{', 'while', '+', '(', 'if', 'NUM', ';', '-', 'ID'}
 from : 143 with StatementList to 142 Type: EdgeType.NON_TERMINAL
 token }
 target before pushing 142
@@ -1856,18 +1790,18 @@ start while 141
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: Statement {'(', '{', 'NUM', 'return', 'while', '-', '+', 'break', 'if', ';', 'ID'}
-XX Matching token: } SYMBOL to symbol: ( result: False
-XX Matching token: } SYMBOL to symbol: { result: False
+predict: Statement {'return', 'break', '{', 'while', '+', '(', 'if', 'NUM', ';', '-', 'ID'}
 XX Matching token: } SYMBOL to symbol: return result: False
-XX Matching token: } SYMBOL to symbol: while result: False
-XX Matching token: } SYMBOL to symbol: - result: False
-XX Matching token: } SYMBOL to symbol: + result: False
 XX Matching token: } SYMBOL to symbol: break result: False
+XX Matching token: } SYMBOL to symbol: { result: False
+XX Matching token: } SYMBOL to symbol: while result: False
+XX Matching token: } SYMBOL to symbol: + result: False
+XX Matching token: } SYMBOL to symbol: ( result: False
 XX Matching token: } SYMBOL to symbol: if result: False
 XX Matching token: } SYMBOL to symbol: ; result: False
+XX Matching token: } SYMBOL to symbol: - result: False
 ID Matching ID token: } to symbol: ID result: False
-EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x100c77850>
+EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x102c778c0>
 epsilon edge
 start while 142
 0
@@ -1903,9 +1837,7 @@ token }
 ############################################
 Matching token: } to terminal: }
 XX Matching token: } SYMBOL to symbol: } result: False
-IN SCANNER, with token 
-
-void in line 6 state
+TOKEN took from SCANNER void type KEYWORD
 Matched terminal: } with token: }  IN match function
 salam
 from : 33 with } to 30 Type: EdgeType.TERMINAL
@@ -1957,15 +1889,14 @@ start while 46
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: DeclarationList {'(', '}', '{', 'NUM', 'return', 'while', '-', 'void', '+', 'int', 'break', 'if', ';', 'ID', '$'}
-XX Matching token: void KEYWORD to symbol: ( result: False
+predict: DeclarationList {'return', 'break', '$', '}', '{', 'void', 'while', '+', '(', 'if', 'int', 'NUM', ';', '-', 'ID'}
+XX Matching token: void KEYWORD to symbol: return result: False
+XX Matching token: void KEYWORD to symbol: break result: False
+XX Matching token: void KEYWORD to symbol: $ result: False
 XX Matching token: void KEYWORD to symbol: } result: False
 XX Matching token: void KEYWORD to symbol: { result: False
-XX Matching token: void KEYWORD to symbol: return result: False
-XX Matching token: void KEYWORD to symbol: while result: False
-XX Matching token: void KEYWORD to symbol: - result: False
 XX Matching token: void KEYWORD to symbol: void result: True
-NON TERMINASLS: token void in {'(', '}', '{', 'NUM', 'return', 'while', '-', 'void', '+', 'int', 'break', 'if', ';', 'ID', '$'}
+NON TERMINASLS: token void in {'return', 'break', '$', '}', '{', 'void', 'while', '+', '(', 'if', 'int', 'NUM', ';', '-', 'ID'}
 from : 46 with DeclarationList to 45 Type: EdgeType.NON_TERMINAL
 token void
 target before pushing 45
@@ -1976,9 +1907,10 @@ start while 44
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: Declaration {'void', 'int'}
+predict: Declaration {'int', 'void'}
+XX Matching token: void KEYWORD to symbol: int result: False
 XX Matching token: void KEYWORD to symbol: void result: True
-NON TERMINASLS: token void in {'void', 'int'}
+NON TERMINASLS: token void in {'int', 'void'}
 from : 44 with Declaration to 46 Type: EdgeType.NON_TERMINAL
 token void
 target before pushing 46
@@ -1989,9 +1921,10 @@ start while 38
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: DeclarationInitial {'void', 'int'}
+predict: DeclarationInitial {'int', 'void'}
+XX Matching token: void KEYWORD to symbol: int result: False
 XX Matching token: void KEYWORD to symbol: void result: True
-NON TERMINASLS: token void in {'void', 'int'}
+NON TERMINASLS: token void in {'int', 'void'}
 from : 38 with DeclarationInitial to 40 Type: EdgeType.NON_TERMINAL
 token void
 target before pushing 40
@@ -2002,9 +1935,10 @@ start while 41
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: TypeSpecifier {'void', 'int'}
+predict: TypeSpecifier {'int', 'void'}
+XX Matching token: void KEYWORD to symbol: int result: False
 XX Matching token: void KEYWORD to symbol: void result: True
-NON TERMINASLS: token void in {'void', 'int'}
+NON TERMINASLS: token void in {'int', 'void'}
 from : 41 with TypeSpecifier to 43 Type: EdgeType.NON_TERMINAL
 token void
 target before pushing 43
@@ -2030,7 +1964,7 @@ token void
 ############################################
 Matching token: void to terminal: void
 XX Matching token: void KEYWORD to symbol: void result: False
-IN SCANNER, with token  main in line 6 state
+TOKEN took from SCANNER main type ID
 Matched terminal: void with token: void  IN match function
 salam
 from : 153 with void to 154 Type: EdgeType.TERMINAL
@@ -2061,7 +1995,7 @@ token main
 ############################################
 Matching token: main to terminal: ID
 ID Matching ID token: main to symbol: ID result: True
-IN SCANNER, with token ( in line 6 state
+TOKEN took from SCANNER ( type SYMBOL
 Matched terminal: ID with token: main  IN match function
 salam
 from : 43 with ID to 42 Type: EdgeType.TERMINAL
@@ -2082,9 +2016,11 @@ start while 40
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: DeclarationPrime {'(', '[', ';'}
+predict: DeclarationPrime {'[', ';', '('}
+XX Matching token: ( SYMBOL to symbol: [ result: False
+XX Matching token: ( SYMBOL to symbol: ; result: False
 XX Matching token: ( SYMBOL to symbol: ( result: True
-NON TERMINASLS: token ( in {'(', '[', ';'}
+NON TERMINASLS: token ( in {'[', ';', '('}
 from : 40 with DeclarationPrime to 39 Type: EdgeType.NON_TERMINAL
 token (
 target before pushing 39
@@ -2118,7 +2054,7 @@ token (
 ############################################
 Matching token: ( to terminal: (
 XX Matching token: ( SYMBOL to symbol: ( result: False
-IN SCANNER, with token void in line 6 state
+TOKEN took from SCANNER void type KEYWORD
 Matched terminal: ( with token: (  IN match function
 salam
 from : 69 with ( to 71 Type: EdgeType.TERMINAL
@@ -2130,9 +2066,10 @@ start while 71
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: Params {'void', 'int'}
+predict: Params {'int', 'void'}
+XX Matching token: void KEYWORD to symbol: int result: False
 XX Matching token: void KEYWORD to symbol: void result: True
-NON TERMINASLS: token void in {'void', 'int'}
+NON TERMINASLS: token void in {'int', 'void'}
 from : 71 with Params to 72 Type: EdgeType.NON_TERMINAL
 token void
 target before pushing 72
@@ -2158,7 +2095,7 @@ token void
 ############################################
 Matching token: void to terminal: void
 XX Matching token: void KEYWORD to symbol: void result: False
-IN SCANNER, with token ) in line 6 state
+TOKEN took from SCANNER ) type SYMBOL
 Matched terminal: void with token: void  IN match function
 salam
 from : 99 with void to 100 Type: EdgeType.TERMINAL
@@ -2189,7 +2126,7 @@ token )
 ############################################
 Matching token: ) to terminal: )
 XX Matching token: ) SYMBOL to symbol: ) result: False
-IN SCANNER, with token  { in line 6 state
+TOKEN took from SCANNER { type SYMBOL
 Matched terminal: ) with token: )  IN match function
 salam
 from : 72 with ) to 73 Type: EdgeType.TERMINAL
@@ -2224,8 +2161,7 @@ token {
 ############################################
 Matching token: { to terminal: {
 XX Matching token: { SYMBOL to symbol: { result: False
-IN SCANNER, with token 
-    int in line 7 state
+TOKEN took from SCANNER int type KEYWORD
 Matched terminal: { with token: {  IN match function
 salam
 from : 29 with { to 31 Type: EdgeType.TERMINAL
@@ -2237,17 +2173,19 @@ start while 31
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: DeclarationList {'(', '}', '{', 'NUM', 'return', 'while', '-', 'void', '+', 'int', 'break', 'if', ';', 'ID', '$'}
-XX Matching token: int KEYWORD to symbol: ( result: False
+predict: DeclarationList {'return', 'break', '$', '}', '{', 'void', 'while', '+', '(', 'if', 'int', 'NUM', ';', '-', 'ID'}
+XX Matching token: int KEYWORD to symbol: return result: False
+XX Matching token: int KEYWORD to symbol: break result: False
+XX Matching token: int KEYWORD to symbol: $ result: False
 XX Matching token: int KEYWORD to symbol: } result: False
 XX Matching token: int KEYWORD to symbol: { result: False
-XX Matching token: int KEYWORD to symbol: return result: False
-XX Matching token: int KEYWORD to symbol: while result: False
-XX Matching token: int KEYWORD to symbol: - result: False
 XX Matching token: int KEYWORD to symbol: void result: False
+XX Matching token: int KEYWORD to symbol: while result: False
 XX Matching token: int KEYWORD to symbol: + result: False
+XX Matching token: int KEYWORD to symbol: ( result: False
+XX Matching token: int KEYWORD to symbol: if result: False
 XX Matching token: int KEYWORD to symbol: int result: True
-NON TERMINASLS: token int in {'(', '}', '{', 'NUM', 'return', 'while', '-', 'void', '+', 'int', 'break', 'if', ';', 'ID', '$'}
+NON TERMINASLS: token int in {'return', 'break', '$', '}', '{', 'void', 'while', '+', '(', 'if', 'int', 'NUM', ';', '-', 'ID'}
 from : 31 with DeclarationList to 32 Type: EdgeType.NON_TERMINAL
 token int
 target before pushing 32
@@ -2258,10 +2196,9 @@ start while 44
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: Declaration {'void', 'int'}
-XX Matching token: int KEYWORD to symbol: void result: False
+predict: Declaration {'int', 'void'}
 XX Matching token: int KEYWORD to symbol: int result: True
-NON TERMINASLS: token int in {'void', 'int'}
+NON TERMINASLS: token int in {'int', 'void'}
 from : 44 with Declaration to 46 Type: EdgeType.NON_TERMINAL
 token int
 target before pushing 46
@@ -2272,10 +2209,9 @@ start while 38
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: DeclarationInitial {'void', 'int'}
-XX Matching token: int KEYWORD to symbol: void result: False
+predict: DeclarationInitial {'int', 'void'}
 XX Matching token: int KEYWORD to symbol: int result: True
-NON TERMINASLS: token int in {'void', 'int'}
+NON TERMINASLS: token int in {'int', 'void'}
 from : 38 with DeclarationInitial to 40 Type: EdgeType.NON_TERMINAL
 token int
 target before pushing 40
@@ -2286,10 +2222,9 @@ start while 41
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: TypeSpecifier {'void', 'int'}
-XX Matching token: int KEYWORD to symbol: void result: False
+predict: TypeSpecifier {'int', 'void'}
 XX Matching token: int KEYWORD to symbol: int result: True
-NON TERMINASLS: token int in {'void', 'int'}
+NON TERMINASLS: token int in {'int', 'void'}
 from : 41 with TypeSpecifier to 43 Type: EdgeType.NON_TERMINAL
 token int
 target before pushing 43
@@ -2310,7 +2245,7 @@ token int
 ############################################
 Matching token: int to terminal: int
 XX Matching token: int KEYWORD to symbol: int result: False
-IN SCANNER, with token  result in line 7 state
+TOKEN took from SCANNER result type ID
 Matched terminal: int with token: int  IN match function
 salam
 from : 153 with int to 154 Type: EdgeType.TERMINAL
@@ -2341,7 +2276,7 @@ token result
 ############################################
 Matching token: result to terminal: ID
 ID Matching ID token: result to symbol: ID result: True
-IN SCANNER, with token ; in line 7 state
+TOKEN took from SCANNER ; type SYMBOL
 Matched terminal: ID with token: result  IN match function
 salam
 from : 43 with ID to 42 Type: EdgeType.TERMINAL
@@ -2362,11 +2297,10 @@ start while 40
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: DeclarationPrime {'(', '[', ';'}
-XX Matching token: ; SYMBOL to symbol: ( result: False
+predict: DeclarationPrime {'[', ';', '('}
 XX Matching token: ; SYMBOL to symbol: [ result: False
 XX Matching token: ; SYMBOL to symbol: ; result: True
-NON TERMINASLS: token ; in {'(', '[', ';'}
+NON TERMINASLS: token ; in {'[', ';', '('}
 from : 40 with DeclarationPrime to 39 Type: EdgeType.NON_TERMINAL
 token ;
 target before pushing 39
@@ -2404,8 +2338,7 @@ token ;
 ############################################
 Matching token: ; to terminal: ;
 XX Matching token: ; SYMBOL to symbol: ; result: False
-IN SCANNER, with token 
-    result in line 8 state
+TOKEN took from SCANNER result type ID
 Matched terminal: ; with token: ;  IN match function
 salam
 from : 159 with ; to 160 Type: EdgeType.TERMINAL
@@ -2444,21 +2377,22 @@ start while 46
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: DeclarationList {'(', '}', '{', 'NUM', 'return', 'while', '-', 'void', '+', 'int', 'break', 'if', ';', 'ID', '$'}
-XX Matching token: result ID to symbol: ( result: False
+predict: DeclarationList {'return', 'break', '$', '}', '{', 'void', 'while', '+', '(', 'if', 'int', 'NUM', ';', '-', 'ID'}
+XX Matching token: result ID to symbol: return result: False
+XX Matching token: result ID to symbol: break result: False
+XX Matching token: result ID to symbol: $ result: False
 XX Matching token: result ID to symbol: } result: False
 XX Matching token: result ID to symbol: { result: False
-XX Matching token: result ID to symbol: return result: False
-XX Matching token: result ID to symbol: while result: False
-XX Matching token: result ID to symbol: - result: False
 XX Matching token: result ID to symbol: void result: False
+XX Matching token: result ID to symbol: while result: False
 XX Matching token: result ID to symbol: + result: False
-XX Matching token: result ID to symbol: int result: False
-XX Matching token: result ID to symbol: break result: False
+XX Matching token: result ID to symbol: ( result: False
 XX Matching token: result ID to symbol: if result: False
+XX Matching token: result ID to symbol: int result: False
 XX Matching token: result ID to symbol: ; result: False
+XX Matching token: result ID to symbol: - result: False
 ID Matching ID token: result to symbol: ID result: True
-NON TERMINASLS: token result in {'(', '}', '{', 'NUM', 'return', 'while', '-', 'void', '+', 'int', 'break', 'if', ';', 'ID', '$'}
+NON TERMINASLS: token result in {'return', 'break', '$', '}', '{', 'void', 'while', '+', '(', 'if', 'int', 'NUM', ';', '-', 'ID'}
 from : 46 with DeclarationList to 45 Type: EdgeType.NON_TERMINAL
 token result
 target before pushing 45
@@ -2469,10 +2403,10 @@ start while 44
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: Declaration {'void', 'int'}
-XX Matching token: result ID to symbol: void result: False
+predict: Declaration {'int', 'void'}
 XX Matching token: result ID to symbol: int result: False
-EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x100c747c0>
+XX Matching token: result ID to symbol: void result: False
+EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x102c74830>
 epsilon edge
 start while 45
 0
@@ -2498,19 +2432,19 @@ start while 32
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: StatementList {'(', '}', '{', 'NUM', 'return', 'while', '-', '+', 'break', 'if', ';', 'ID'}
-XX Matching token: result ID to symbol: ( result: False
+predict: StatementList {'return', 'break', '}', '{', 'while', '+', '(', 'if', 'NUM', ';', '-', 'ID'}
+XX Matching token: result ID to symbol: return result: False
+XX Matching token: result ID to symbol: break result: False
 XX Matching token: result ID to symbol: } result: False
 XX Matching token: result ID to symbol: { result: False
-XX Matching token: result ID to symbol: return result: False
 XX Matching token: result ID to symbol: while result: False
-XX Matching token: result ID to symbol: - result: False
 XX Matching token: result ID to symbol: + result: False
-XX Matching token: result ID to symbol: break result: False
+XX Matching token: result ID to symbol: ( result: False
 XX Matching token: result ID to symbol: if result: False
 XX Matching token: result ID to symbol: ; result: False
+XX Matching token: result ID to symbol: - result: False
 ID Matching ID token: result to symbol: ID result: True
-NON TERMINASLS: token result in {'(', '}', '{', 'NUM', 'return', 'while', '-', '+', 'break', 'if', ';', 'ID'}
+NON TERMINASLS: token result in {'return', 'break', '}', '{', 'while', '+', '(', 'if', 'NUM', ';', '-', 'ID'}
 from : 32 with StatementList to 33 Type: EdgeType.NON_TERMINAL
 token result
 target before pushing 33
@@ -2521,18 +2455,18 @@ start while 141
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: Statement {'(', '{', 'NUM', 'return', 'while', '-', '+', 'break', 'if', ';', 'ID'}
-XX Matching token: result ID to symbol: ( result: False
-XX Matching token: result ID to symbol: { result: False
+predict: Statement {'return', 'break', '{', 'while', '+', '(', 'if', 'NUM', ';', '-', 'ID'}
 XX Matching token: result ID to symbol: return result: False
-XX Matching token: result ID to symbol: while result: False
-XX Matching token: result ID to symbol: - result: False
-XX Matching token: result ID to symbol: + result: False
 XX Matching token: result ID to symbol: break result: False
+XX Matching token: result ID to symbol: { result: False
+XX Matching token: result ID to symbol: while result: False
+XX Matching token: result ID to symbol: + result: False
+XX Matching token: result ID to symbol: ( result: False
 XX Matching token: result ID to symbol: if result: False
 XX Matching token: result ID to symbol: ; result: False
+XX Matching token: result ID to symbol: - result: False
 ID Matching ID token: result to symbol: ID result: True
-NON TERMINASLS: token result in {'(', '{', 'NUM', 'return', 'while', '-', '+', 'break', 'if', ';', 'ID'}
+NON TERMINASLS: token result in {'return', 'break', '{', 'while', '+', '(', 'if', 'NUM', ';', '-', 'ID'}
 from : 141 with Statement to 143 Type: EdgeType.NON_TERMINAL
 token result
 target before pushing 143
@@ -2546,13 +2480,14 @@ hereeee
 predict: CompoundStmt {'{'}
 XX Matching token: result ID to symbol: { result: False
 ###22222222222222222222222222222222222222
-predict: ExpressionStmt {'(', 'NUM', '+', 'break', ';', 'ID', '-'}
-XX Matching token: result ID to symbol: ( result: False
-XX Matching token: result ID to symbol: + result: False
-XX Matching token: result ID to symbol: break result: False
+predict: ExpressionStmt {'NUM', ';', 'break', '-', '+', '(', 'ID'}
 XX Matching token: result ID to symbol: ; result: False
+XX Matching token: result ID to symbol: break result: False
+XX Matching token: result ID to symbol: - result: False
+XX Matching token: result ID to symbol: + result: False
+XX Matching token: result ID to symbol: ( result: False
 ID Matching ID token: result to symbol: ID result: True
-NON TERMINASLS: token result in {'(', 'NUM', '+', 'break', ';', 'ID', '-'}
+NON TERMINASLS: token result in {'NUM', ';', 'break', '-', '+', '(', 'ID'}
 from : 139 with ExpressionStmt to 140 Type: EdgeType.NON_TERMINAL
 token result
 target before pushing 140
@@ -2573,11 +2508,12 @@ None
 XX Matching token: result ID to symbol: break result: False
 hereeee
 ###22222222222222222222222222222222222222
-predict: Expression {'(', 'NUM', '+', 'ID', '-'}
-XX Matching token: result ID to symbol: ( result: False
+predict: Expression {'NUM', '-', '+', '(', 'ID'}
+XX Matching token: result ID to symbol: - result: False
 XX Matching token: result ID to symbol: + result: False
+XX Matching token: result ID to symbol: ( result: False
 ID Matching ID token: result to symbol: ID result: True
-NON TERMINASLS: token result in {'(', 'NUM', '+', 'ID', '-'}
+NON TERMINASLS: token result in {'NUM', '-', '+', '(', 'ID'}
 from : 52 with Expression to 54 Type: EdgeType.NON_TERMINAL
 token result
 target before pushing 54
@@ -2598,7 +2534,7 @@ token result
 ############################################
 Matching token: result to terminal: ID
 ID Matching ID token: result to symbol: ID result: True
-IN SCANNER, with token  = in line 8 state
+TOKEN took from SCANNER = type SYMBOL
 Matched terminal: ID with token: result  IN match function
 salam
 from : 49 with ID to 51 Type: EdgeType.TERMINAL
@@ -2610,10 +2546,17 @@ start while 51
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: B {'(', '=', '==', ']', ',', ')', '-', '<', '+', '[', ';', '*'}
+predict: B {',', '[', '+', '(', '<', '==', ']', ';', '=', ')', '-', '*'}
+XX Matching token: = SYMBOL to symbol: , result: False
+XX Matching token: = SYMBOL to symbol: [ result: False
+XX Matching token: = SYMBOL to symbol: + result: False
 XX Matching token: = SYMBOL to symbol: ( result: False
+XX Matching token: = SYMBOL to symbol: < result: False
+XX Matching token: = SYMBOL to symbol: == result: False
+XX Matching token: = SYMBOL to symbol: ] result: False
+XX Matching token: = SYMBOL to symbol: ; result: False
 XX Matching token: = SYMBOL to symbol: = result: True
-NON TERMINASLS: token = in {'(', '=', '==', ']', ',', ')', '-', '<', '+', '[', ';', '*'}
+NON TERMINASLS: token = in {',', '[', '+', '(', '<', '==', ']', ';', '=', ')', '-', '*'}
 from : 51 with B to 50 Type: EdgeType.NON_TERMINAL
 token =
 target before pushing 50
@@ -2634,7 +2577,7 @@ token =
 ############################################
 Matching token: = to terminal: =
 XX Matching token: = SYMBOL to symbol: = result: False
-IN SCANNER, with token  add in line 8 state
+TOKEN took from SCANNER add type ID
 Matched terminal: = with token: =  IN match function
 salam
 from : 20 with = to 22 Type: EdgeType.TERMINAL
@@ -2646,11 +2589,12 @@ start while 22
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: Expression {'(', 'NUM', '+', 'ID', '-'}
-XX Matching token: add ID to symbol: ( result: False
+predict: Expression {'NUM', '-', '+', '(', 'ID'}
+XX Matching token: add ID to symbol: - result: False
 XX Matching token: add ID to symbol: + result: False
+XX Matching token: add ID to symbol: ( result: False
 ID Matching ID token: add to symbol: ID result: True
-NON TERMINASLS: token add in {'(', 'NUM', '+', 'ID', '-'}
+NON TERMINASLS: token add in {'NUM', '-', '+', '(', 'ID'}
 from : 22 with Expression to 21 Type: EdgeType.NON_TERMINAL
 token add
 target before pushing 21
@@ -2671,7 +2615,7 @@ token add
 ############################################
 Matching token: add to terminal: ID
 ID Matching ID token: add to symbol: ID result: True
-IN SCANNER, with token ( in line 8 state
+TOKEN took from SCANNER ( type SYMBOL
 Matched terminal: ID with token: add  IN match function
 salam
 from : 49 with ID to 51 Type: EdgeType.TERMINAL
@@ -2683,9 +2627,12 @@ start while 51
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: B {'(', '=', '==', ']', ',', ')', '-', '<', '+', '[', ';', '*'}
+predict: B {',', '[', '+', '(', '<', '==', ']', ';', '=', ')', '-', '*'}
+XX Matching token: ( SYMBOL to symbol: , result: False
+XX Matching token: ( SYMBOL to symbol: [ result: False
+XX Matching token: ( SYMBOL to symbol: + result: False
 XX Matching token: ( SYMBOL to symbol: ( result: True
-NON TERMINASLS: token ( in {'(', '=', '==', ']', ',', ')', '-', '<', '+', '[', ';', '*'}
+NON TERMINASLS: token ( in {',', '[', '+', '(', '<', '==', ']', ';', '=', ')', '-', '*'}
 from : 51 with B to 50 Type: EdgeType.NON_TERMINAL
 token (
 target before pushing 50
@@ -2706,9 +2653,11 @@ None
 XX Matching token: ( SYMBOL to symbol: [ result: False
 hereeee
 ###22222222222222222222222222222222222222
-predict: SimpleExpressionPrime {'(', '==', ']', ',', ')', '-', '<', '+', ';', '*'}
+predict: SimpleExpressionPrime {',', '+', '(', '<', '==', ']', ';', ')', '-', '*'}
+XX Matching token: ( SYMBOL to symbol: , result: False
+XX Matching token: ( SYMBOL to symbol: + result: False
 XX Matching token: ( SYMBOL to symbol: ( result: True
-NON TERMINASLS: token ( in {'(', '==', ']', ',', ')', '-', '<', '+', ';', '*'}
+NON TERMINASLS: token ( in {',', '+', '(', '<', '==', ']', ';', ')', '-', '*'}
 from : 20 with SimpleExpressionPrime to 21 Type: EdgeType.NON_TERMINAL
 token (
 target before pushing 21
@@ -2719,9 +2668,11 @@ start while 133
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: AdditiveExpressionPrime {'(', '==', ']', ',', ')', '-', '<', '+', ';', '*'}
+predict: AdditiveExpressionPrime {',', '+', '(', '<', '==', ']', ';', ')', '-', '*'}
+XX Matching token: ( SYMBOL to symbol: , result: False
+XX Matching token: ( SYMBOL to symbol: + result: False
 XX Matching token: ( SYMBOL to symbol: ( result: True
-NON TERMINASLS: token ( in {'(', '==', ']', ',', ')', '-', '<', '+', ';', '*'}
+NON TERMINASLS: token ( in {',', '+', '(', '<', '==', ']', ';', ')', '-', '*'}
 from : 133 with AdditiveExpressionPrime to 135 Type: EdgeType.NON_TERMINAL
 token (
 target before pushing 135
@@ -2732,9 +2683,11 @@ start while 3
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: TermPrime {'(', '==', ']', ',', ')', '-', '<', '+', ';', '*'}
+predict: TermPrime {',', '+', '(', '<', '==', ']', ';', ')', '-', '*'}
+XX Matching token: ( SYMBOL to symbol: , result: False
+XX Matching token: ( SYMBOL to symbol: + result: False
 XX Matching token: ( SYMBOL to symbol: ( result: True
-NON TERMINASLS: token ( in {'(', '==', ']', ',', ')', '-', '<', '+', ';', '*'}
+NON TERMINASLS: token ( in {',', '+', '(', '<', '==', ']', ';', ')', '-', '*'}
 from : 3 with TermPrime to 5 Type: EdgeType.NON_TERMINAL
 token (
 target before pushing 5
@@ -2745,9 +2698,11 @@ start while 147
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: SignedFactorPrime {'(', '==', ']', ',', ')', '-', '<', '+', ';', '*'}
+predict: SignedFactorPrime {',', '+', '(', '<', '==', ']', ';', ')', '-', '*'}
+XX Matching token: ( SYMBOL to symbol: , result: False
+XX Matching token: ( SYMBOL to symbol: + result: False
 XX Matching token: ( SYMBOL to symbol: ( result: True
-NON TERMINASLS: token ( in {'(', '==', ']', ',', ')', '-', '<', '+', ';', '*'}
+NON TERMINASLS: token ( in {',', '+', '(', '<', '==', ']', ';', ')', '-', '*'}
 from : 147 with SignedFactorPrime to 149 Type: EdgeType.NON_TERMINAL
 token (
 target before pushing 149
@@ -2758,9 +2713,11 @@ start while 127
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: FactorPrime {'(', '==', ']', ',', ')', '-', '<', '+', ';', '*'}
+predict: FactorPrime {',', '+', '(', '<', '==', ']', ';', ')', '-', '*'}
+XX Matching token: ( SYMBOL to symbol: , result: False
+XX Matching token: ( SYMBOL to symbol: + result: False
 XX Matching token: ( SYMBOL to symbol: ( result: True
-NON TERMINASLS: token ( in {'(', '==', ']', ',', ')', '-', '<', '+', ';', '*'}
+NON TERMINASLS: token ( in {',', '+', '(', '<', '==', ']', ';', ')', '-', '*'}
 from : 127 with FactorPrime to 128 Type: EdgeType.NON_TERMINAL
 token (
 target before pushing 128
@@ -2781,7 +2738,7 @@ token (
 ############################################
 Matching token: ( to terminal: (
 XX Matching token: ( SYMBOL to symbol: ( result: False
-IN SCANNER, with token 3 in line 8 state
+TOKEN took from SCANNER 3 type NUM
 Matched terminal: ( with token: (  IN match function
 salam
 from : 61 with ( to 63 Type: EdgeType.TERMINAL
@@ -2793,9 +2750,8 @@ start while 63
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: Args {'(', 'NUM', '+', 'ID', ')', '-'}
-XX Matching token: 3 NUM to symbol: ( result: False
-NON TERMINASLS: token 3 in {'(', 'NUM', '+', 'ID', ')', '-'}
+predict: Args {'NUM', ')', '-', '+', '(', 'ID'}
+NON TERMINASLS: token 3 in {'NUM', ')', '-', '+', '(', 'ID'}
 from : 63 with Args to 64 Type: EdgeType.NON_TERMINAL
 token 3
 target before pushing 64
@@ -2806,9 +2762,8 @@ start while 18
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: ArgList {'(', 'NUM', '+', 'ID', '-'}
-XX Matching token: 3 NUM to symbol: ( result: False
-NON TERMINASLS: token 3 in {'(', 'NUM', '+', 'ID', '-'}
+predict: ArgList {'NUM', '-', '+', '(', 'ID'}
+NON TERMINASLS: token 3 in {'NUM', '-', '+', '(', 'ID'}
 from : 18 with ArgList to 19 Type: EdgeType.NON_TERMINAL
 token 3
 target before pushing 19
@@ -2819,9 +2774,8 @@ start while 11
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: Expression {'(', 'NUM', '+', 'ID', '-'}
-XX Matching token: 3 NUM to symbol: ( result: False
-NON TERMINASLS: token 3 in {'(', 'NUM', '+', 'ID', '-'}
+predict: Expression {'NUM', '-', '+', '(', 'ID'}
+NON TERMINASLS: token 3 in {'NUM', '-', '+', '(', 'ID'}
 from : 11 with Expression to 13 Type: EdgeType.NON_TERMINAL
 token 3
 target before pushing 13
@@ -2837,10 +2791,9 @@ None
 ID Matching ID token: 3 to symbol: ID result: False
 hereeee
 ###22222222222222222222222222222222222222
-predict: SimpleExpressionZegond {'(', '+', 'NUM', '-'}
-XX Matching token: 3 NUM to symbol: ( result: False
-XX Matching token: 3 NUM to symbol: + result: False
-NON TERMINASLS: token 3 in {'(', '+', 'NUM', '-'}
+predict: SimpleExpressionZegond {'-', 'NUM', '+', '('}
+XX Matching token: 3 NUM to symbol: - result: False
+NON TERMINASLS: token 3 in {'-', 'NUM', '+', '('}
 from : 49 with SimpleExpressionZegond to 50 Type: EdgeType.NON_TERMINAL
 token 3
 target before pushing 50
@@ -2851,10 +2804,9 @@ start while 136
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: AdditiveExpressionZegond {'(', '+', 'NUM', '-'}
-XX Matching token: 3 NUM to symbol: ( result: False
-XX Matching token: 3 NUM to symbol: + result: False
-NON TERMINASLS: token 3 in {'(', '+', 'NUM', '-'}
+predict: AdditiveExpressionZegond {'-', 'NUM', '+', '('}
+XX Matching token: 3 NUM to symbol: - result: False
+NON TERMINASLS: token 3 in {'-', 'NUM', '+', '('}
 from : 136 with AdditiveExpressionZegond to 138 Type: EdgeType.NON_TERMINAL
 token 3
 target before pushing 138
@@ -2865,10 +2817,9 @@ start while 6
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: TermZegond {'(', '+', 'NUM', '-'}
-XX Matching token: 3 NUM to symbol: ( result: False
-XX Matching token: 3 NUM to symbol: + result: False
-NON TERMINASLS: token 3 in {'(', '+', 'NUM', '-'}
+predict: TermZegond {'-', 'NUM', '+', '('}
+XX Matching token: 3 NUM to symbol: - result: False
+NON TERMINASLS: token 3 in {'-', 'NUM', '+', '('}
 from : 6 with TermZegond to 8 Type: EdgeType.NON_TERMINAL
 token 3
 target before pushing 8
@@ -2879,10 +2830,9 @@ start while 150
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: SignedFactorZegond {'(', '+', 'NUM', '-'}
-XX Matching token: 3 NUM to symbol: ( result: False
-XX Matching token: 3 NUM to symbol: + result: False
-NON TERMINASLS: token 3 in {'(', '+', 'NUM', '-'}
+predict: SignedFactorZegond {'-', 'NUM', '+', '('}
+XX Matching token: 3 NUM to symbol: - result: False
+NON TERMINASLS: token 3 in {'-', 'NUM', '+', '('}
 from : 150 with SignedFactorZegond to 152 Type: EdgeType.NON_TERMINAL
 token 3
 target before pushing 152
@@ -2903,9 +2853,8 @@ None
 XX Matching token: 3 NUM to symbol: - result: False
 hereeee
 ###22222222222222222222222222222222222222
-predict: FactorZegond {'(', 'NUM'}
-XX Matching token: 3 NUM to symbol: ( result: False
-NON TERMINASLS: token 3 in {'(', 'NUM'}
+predict: FactorZegond {'NUM', '('}
+NON TERMINASLS: token 3 in {'NUM', '('}
 from : 129 with FactorZegond to 130 Type: EdgeType.NON_TERMINAL
 token 3
 target before pushing 130
@@ -2929,7 +2878,7 @@ from : 65 with NUM to 66 Type: EdgeType.TERMINAL
 token 3
 ############################################
 Matching token: 3 to terminal: NUM
-IN SCANNER, with token , in line 8 state
+TOKEN took from SCANNER , type SYMBOL
 Matched terminal: NUM with token: 3  IN match function
 salam
 from : 65 with NUM to 66 Type: EdgeType.TERMINAL
@@ -2959,11 +2908,9 @@ start while 152
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: G {'==', ']', ',', ')', '-', '<', '+', ';', '*'}
-XX Matching token: , SYMBOL to symbol: == result: False
-XX Matching token: , SYMBOL to symbol: ] result: False
+predict: G {',', '+', '<', '==', ']', ';', ')', '-', '*'}
 XX Matching token: , SYMBOL to symbol: , result: True
-NON TERMINASLS: token , in {'==', ']', ',', ')', '-', '<', '+', ';', '*'}
+NON TERMINASLS: token , in {',', '+', '<', '==', ']', ';', ')', '-', '*'}
 from : 152 with G to 151 Type: EdgeType.NON_TERMINAL
 token ,
 target before pushing 151
@@ -2978,7 +2925,7 @@ from : 74 with * to 76 Type: EdgeType.TERMINAL
 None
 XX Matching token: , SYMBOL to symbol: * result: False
 hereeee
-EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x100c75550>
+EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x102c755c0>
 epsilon edge
 start while 75
 0
@@ -3004,11 +2951,9 @@ start while 8
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: D {'==', ']', ',', ')', '-', '<', '+', ';'}
-XX Matching token: , SYMBOL to symbol: == result: False
-XX Matching token: , SYMBOL to symbol: ] result: False
+predict: D {',', '+', '<', '==', ';', ')', '-', ']'}
 XX Matching token: , SYMBOL to symbol: , result: True
-NON TERMINASLS: token , in {'==', ']', ',', ')', '-', '<', '+', ';'}
+NON TERMINASLS: token , in {',', '+', '<', '==', ';', ')', '-', ']'}
 from : 8 with D to 7 Type: EdgeType.NON_TERMINAL
 token ,
 target before pushing 7
@@ -3019,10 +2964,10 @@ start while 34
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: Addop {'+', '-'}
-XX Matching token: , SYMBOL to symbol: + result: False
+predict: Addop {'-', '+'}
 XX Matching token: , SYMBOL to symbol: - result: False
-EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x100c74440>
+XX Matching token: , SYMBOL to symbol: + result: False
+EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x102c744b0>
 epsilon edge
 start while 35
 0
@@ -3048,13 +2993,11 @@ start while 138
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: C {'==', ']', ')', ';', ',', '<'}
-XX Matching token: , SYMBOL to symbol: == result: False
+predict: C {']', ';', ',', ')', '==', '<'}
 XX Matching token: , SYMBOL to symbol: ] result: False
-XX Matching token: , SYMBOL to symbol: ) result: False
 XX Matching token: , SYMBOL to symbol: ; result: False
 XX Matching token: , SYMBOL to symbol: , result: True
-NON TERMINASLS: token , in {'==', ']', ')', ';', ',', '<'}
+NON TERMINASLS: token , in {']', ';', ',', ')', '==', '<'}
 from : 138 with C to 137 Type: EdgeType.NON_TERMINAL
 token ,
 target before pushing 137
@@ -3068,7 +3011,7 @@ hereeee
 predict: Relop {'==', '<'}
 XX Matching token: , SYMBOL to symbol: == result: False
 XX Matching token: , SYMBOL to symbol: < result: False
-EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x100c25d50>
+EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x102c2a5d0>
 epsilon edge
 start while 27
 0
@@ -3126,7 +3069,7 @@ token ,
 ############################################
 Matching token: , to terminal: ,
 XX Matching token: , SYMBOL to symbol: , result: False
-IN SCANNER, with token  7 in line 8 state
+TOKEN took from SCANNER 7 type NUM
 Matched terminal: , with token: ,  IN match function
 salam
 from : 14 with , to 16 Type: EdgeType.TERMINAL
@@ -3138,9 +3081,8 @@ start while 16
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: Expression {'(', 'NUM', '+', 'ID', '-'}
-XX Matching token: 7 NUM to symbol: ( result: False
-NON TERMINASLS: token 7 in {'(', 'NUM', '+', 'ID', '-'}
+predict: Expression {'NUM', '-', '+', '(', 'ID'}
+NON TERMINASLS: token 7 in {'NUM', '-', '+', '(', 'ID'}
 from : 16 with Expression to 17 Type: EdgeType.NON_TERMINAL
 token 7
 target before pushing 17
@@ -3156,10 +3098,9 @@ None
 ID Matching ID token: 7 to symbol: ID result: False
 hereeee
 ###22222222222222222222222222222222222222
-predict: SimpleExpressionZegond {'(', '+', 'NUM', '-'}
-XX Matching token: 7 NUM to symbol: ( result: False
-XX Matching token: 7 NUM to symbol: + result: False
-NON TERMINASLS: token 7 in {'(', '+', 'NUM', '-'}
+predict: SimpleExpressionZegond {'-', 'NUM', '+', '('}
+XX Matching token: 7 NUM to symbol: - result: False
+NON TERMINASLS: token 7 in {'-', 'NUM', '+', '('}
 from : 49 with SimpleExpressionZegond to 50 Type: EdgeType.NON_TERMINAL
 token 7
 target before pushing 50
@@ -3170,10 +3111,9 @@ start while 136
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: AdditiveExpressionZegond {'(', '+', 'NUM', '-'}
-XX Matching token: 7 NUM to symbol: ( result: False
-XX Matching token: 7 NUM to symbol: + result: False
-NON TERMINASLS: token 7 in {'(', '+', 'NUM', '-'}
+predict: AdditiveExpressionZegond {'-', 'NUM', '+', '('}
+XX Matching token: 7 NUM to symbol: - result: False
+NON TERMINASLS: token 7 in {'-', 'NUM', '+', '('}
 from : 136 with AdditiveExpressionZegond to 138 Type: EdgeType.NON_TERMINAL
 token 7
 target before pushing 138
@@ -3184,10 +3124,9 @@ start while 6
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: TermZegond {'(', '+', 'NUM', '-'}
-XX Matching token: 7 NUM to symbol: ( result: False
-XX Matching token: 7 NUM to symbol: + result: False
-NON TERMINASLS: token 7 in {'(', '+', 'NUM', '-'}
+predict: TermZegond {'-', 'NUM', '+', '('}
+XX Matching token: 7 NUM to symbol: - result: False
+NON TERMINASLS: token 7 in {'-', 'NUM', '+', '('}
 from : 6 with TermZegond to 8 Type: EdgeType.NON_TERMINAL
 token 7
 target before pushing 8
@@ -3198,10 +3137,9 @@ start while 150
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: SignedFactorZegond {'(', '+', 'NUM', '-'}
-XX Matching token: 7 NUM to symbol: ( result: False
-XX Matching token: 7 NUM to symbol: + result: False
-NON TERMINASLS: token 7 in {'(', '+', 'NUM', '-'}
+predict: SignedFactorZegond {'-', 'NUM', '+', '('}
+XX Matching token: 7 NUM to symbol: - result: False
+NON TERMINASLS: token 7 in {'-', 'NUM', '+', '('}
 from : 150 with SignedFactorZegond to 152 Type: EdgeType.NON_TERMINAL
 token 7
 target before pushing 152
@@ -3222,9 +3160,8 @@ None
 XX Matching token: 7 NUM to symbol: - result: False
 hereeee
 ###22222222222222222222222222222222222222
-predict: FactorZegond {'(', 'NUM'}
-XX Matching token: 7 NUM to symbol: ( result: False
-NON TERMINASLS: token 7 in {'(', 'NUM'}
+predict: FactorZegond {'NUM', '('}
+NON TERMINASLS: token 7 in {'NUM', '('}
 from : 129 with FactorZegond to 130 Type: EdgeType.NON_TERMINAL
 token 7
 target before pushing 130
@@ -3248,7 +3185,7 @@ from : 65 with NUM to 66 Type: EdgeType.TERMINAL
 token 7
 ############################################
 Matching token: 7 to terminal: NUM
-IN SCANNER, with token ) in line 8 state
+TOKEN took from SCANNER ) type SYMBOL
 Matched terminal: NUM with token: 7  IN match function
 salam
 from : 65 with NUM to 66 Type: EdgeType.TERMINAL
@@ -3278,12 +3215,15 @@ start while 152
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: G {'==', ']', ',', ')', '-', '<', '+', ';', '*'}
+predict: G {',', '+', '<', '==', ']', ';', ')', '-', '*'}
+XX Matching token: ) SYMBOL to symbol: , result: False
+XX Matching token: ) SYMBOL to symbol: + result: False
+XX Matching token: ) SYMBOL to symbol: < result: False
 XX Matching token: ) SYMBOL to symbol: == result: False
 XX Matching token: ) SYMBOL to symbol: ] result: False
-XX Matching token: ) SYMBOL to symbol: , result: False
+XX Matching token: ) SYMBOL to symbol: ; result: False
 XX Matching token: ) SYMBOL to symbol: ) result: True
-NON TERMINASLS: token ) in {'==', ']', ',', ')', '-', '<', '+', ';', '*'}
+NON TERMINASLS: token ) in {',', '+', '<', '==', ']', ';', ')', '-', '*'}
 from : 152 with G to 151 Type: EdgeType.NON_TERMINAL
 token )
 target before pushing 151
@@ -3298,7 +3238,7 @@ from : 74 with * to 76 Type: EdgeType.TERMINAL
 None
 XX Matching token: ) SYMBOL to symbol: * result: False
 hereeee
-EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x100c75550>
+EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x102c755c0>
 epsilon edge
 start while 75
 0
@@ -3324,12 +3264,14 @@ start while 8
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: D {'==', ']', ',', ')', '-', '<', '+', ';'}
-XX Matching token: ) SYMBOL to symbol: == result: False
-XX Matching token: ) SYMBOL to symbol: ] result: False
+predict: D {',', '+', '<', '==', ';', ')', '-', ']'}
 XX Matching token: ) SYMBOL to symbol: , result: False
+XX Matching token: ) SYMBOL to symbol: + result: False
+XX Matching token: ) SYMBOL to symbol: < result: False
+XX Matching token: ) SYMBOL to symbol: == result: False
+XX Matching token: ) SYMBOL to symbol: ; result: False
 XX Matching token: ) SYMBOL to symbol: ) result: True
-NON TERMINASLS: token ) in {'==', ']', ',', ')', '-', '<', '+', ';'}
+NON TERMINASLS: token ) in {',', '+', '<', '==', ';', ')', '-', ']'}
 from : 8 with D to 7 Type: EdgeType.NON_TERMINAL
 token )
 target before pushing 7
@@ -3340,10 +3282,10 @@ start while 34
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: Addop {'+', '-'}
-XX Matching token: ) SYMBOL to symbol: + result: False
+predict: Addop {'-', '+'}
 XX Matching token: ) SYMBOL to symbol: - result: False
-EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x100c74440>
+XX Matching token: ) SYMBOL to symbol: + result: False
+EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x102c744b0>
 epsilon edge
 start while 35
 0
@@ -3369,11 +3311,12 @@ start while 138
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: C {'==', ']', ')', ';', ',', '<'}
-XX Matching token: ) SYMBOL to symbol: == result: False
+predict: C {']', ';', ',', ')', '==', '<'}
 XX Matching token: ) SYMBOL to symbol: ] result: False
+XX Matching token: ) SYMBOL to symbol: ; result: False
+XX Matching token: ) SYMBOL to symbol: , result: False
 XX Matching token: ) SYMBOL to symbol: ) result: True
-NON TERMINASLS: token ) in {'==', ']', ')', ';', ',', '<'}
+NON TERMINASLS: token ) in {']', ';', ',', ')', '==', '<'}
 from : 138 with C to 137 Type: EdgeType.NON_TERMINAL
 token )
 target before pushing 137
@@ -3387,7 +3330,7 @@ hereeee
 predict: Relop {'==', '<'}
 XX Matching token: ) SYMBOL to symbol: == result: False
 XX Matching token: ) SYMBOL to symbol: < result: False
-EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x100c25d50>
+EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x102c2a5d0>
 epsilon edge
 start while 27
 0
@@ -3440,7 +3383,7 @@ from : 14 with , to 16 Type: EdgeType.TERMINAL
 None
 XX Matching token: ) SYMBOL to symbol: , result: False
 hereeee
-EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x100c735b0>
+EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x102c73770>
 epsilon edge
 start while 15
 0
@@ -3494,7 +3437,7 @@ token )
 ############################################
 Matching token: ) to terminal: )
 XX Matching token: ) SYMBOL to symbol: ) result: False
-IN SCANNER, with token ; in line 8 state
+TOKEN took from SCANNER ; type SYMBOL
 Matched terminal: ) with token: )  IN match function
 salam
 from : 64 with ) to 62 Type: EdgeType.TERMINAL
@@ -3524,16 +3467,14 @@ start while 149
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: G {'==', ']', ',', ')', '-', '<', '+', ';', '*'}
+predict: G {',', '+', '<', '==', ']', ';', ')', '-', '*'}
+XX Matching token: ; SYMBOL to symbol: , result: False
+XX Matching token: ; SYMBOL to symbol: + result: False
+XX Matching token: ; SYMBOL to symbol: < result: False
 XX Matching token: ; SYMBOL to symbol: == result: False
 XX Matching token: ; SYMBOL to symbol: ] result: False
-XX Matching token: ; SYMBOL to symbol: , result: False
-XX Matching token: ; SYMBOL to symbol: ) result: False
-XX Matching token: ; SYMBOL to symbol: - result: False
-XX Matching token: ; SYMBOL to symbol: < result: False
-XX Matching token: ; SYMBOL to symbol: + result: False
 XX Matching token: ; SYMBOL to symbol: ; result: True
-NON TERMINASLS: token ; in {'==', ']', ',', ')', '-', '<', '+', ';', '*'}
+NON TERMINASLS: token ; in {',', '+', '<', '==', ']', ';', ')', '-', '*'}
 from : 149 with G to 148 Type: EdgeType.NON_TERMINAL
 token ;
 target before pushing 148
@@ -3548,7 +3489,7 @@ from : 74 with * to 76 Type: EdgeType.TERMINAL
 None
 XX Matching token: ; SYMBOL to symbol: * result: False
 hereeee
-EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x100c75550>
+EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x102c755c0>
 epsilon edge
 start while 75
 0
@@ -3574,16 +3515,13 @@ start while 5
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: D {'==', ']', ',', ')', '-', '<', '+', ';'}
-XX Matching token: ; SYMBOL to symbol: == result: False
-XX Matching token: ; SYMBOL to symbol: ] result: False
+predict: D {',', '+', '<', '==', ';', ')', '-', ']'}
 XX Matching token: ; SYMBOL to symbol: , result: False
-XX Matching token: ; SYMBOL to symbol: ) result: False
-XX Matching token: ; SYMBOL to symbol: - result: False
-XX Matching token: ; SYMBOL to symbol: < result: False
 XX Matching token: ; SYMBOL to symbol: + result: False
+XX Matching token: ; SYMBOL to symbol: < result: False
+XX Matching token: ; SYMBOL to symbol: == result: False
 XX Matching token: ; SYMBOL to symbol: ; result: True
-NON TERMINASLS: token ; in {'==', ']', ',', ')', '-', '<', '+', ';'}
+NON TERMINASLS: token ; in {',', '+', '<', '==', ';', ')', '-', ']'}
 from : 5 with D to 4 Type: EdgeType.NON_TERMINAL
 token ;
 target before pushing 4
@@ -3594,10 +3532,10 @@ start while 34
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: Addop {'+', '-'}
-XX Matching token: ; SYMBOL to symbol: + result: False
+predict: Addop {'-', '+'}
 XX Matching token: ; SYMBOL to symbol: - result: False
-EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x100c74440>
+XX Matching token: ; SYMBOL to symbol: + result: False
+EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x102c744b0>
 epsilon edge
 start while 35
 0
@@ -3623,12 +3561,10 @@ start while 135
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: C {'==', ']', ')', ';', ',', '<'}
-XX Matching token: ; SYMBOL to symbol: == result: False
+predict: C {']', ';', ',', ')', '==', '<'}
 XX Matching token: ; SYMBOL to symbol: ] result: False
-XX Matching token: ; SYMBOL to symbol: ) result: False
 XX Matching token: ; SYMBOL to symbol: ; result: True
-NON TERMINASLS: token ; in {'==', ']', ')', ';', ',', '<'}
+NON TERMINASLS: token ; in {']', ';', ',', ')', '==', '<'}
 from : 135 with C to 134 Type: EdgeType.NON_TERMINAL
 token ;
 target before pushing 134
@@ -3642,7 +3578,7 @@ hereeee
 predict: Relop {'==', '<'}
 XX Matching token: ; SYMBOL to symbol: == result: False
 XX Matching token: ; SYMBOL to symbol: < result: False
-EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x100c25d50>
+EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x102c2a5d0>
 epsilon edge
 start while 27
 0
@@ -3714,8 +3650,7 @@ token ;
 ############################################
 Matching token: ; to terminal: ;
 XX Matching token: ; SYMBOL to symbol: ; result: False
-IN SCANNER, with token 
-} in line 9 state
+TOKEN took from SCANNER } type SYMBOL
 Matched terminal: ; with token: ;  IN match function
 salam
 from : 54 with ; to 53 Type: EdgeType.TERMINAL
@@ -3754,10 +3689,11 @@ start while 143
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: StatementList {'(', '}', '{', 'NUM', 'return', 'while', '-', '+', 'break', 'if', ';', 'ID'}
-XX Matching token: } SYMBOL to symbol: ( result: False
+predict: StatementList {'return', 'break', '}', '{', 'while', '+', '(', 'if', 'NUM', ';', '-', 'ID'}
+XX Matching token: } SYMBOL to symbol: return result: False
+XX Matching token: } SYMBOL to symbol: break result: False
 XX Matching token: } SYMBOL to symbol: } result: True
-NON TERMINASLS: token } in {'(', '}', '{', 'NUM', 'return', 'while', '-', '+', 'break', 'if', ';', 'ID'}
+NON TERMINASLS: token } in {'return', 'break', '}', '{', 'while', '+', '(', 'if', 'NUM', ';', '-', 'ID'}
 from : 143 with StatementList to 142 Type: EdgeType.NON_TERMINAL
 token }
 target before pushing 142
@@ -3768,18 +3704,18 @@ start while 141
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: Statement {'(', '{', 'NUM', 'return', 'while', '-', '+', 'break', 'if', ';', 'ID'}
-XX Matching token: } SYMBOL to symbol: ( result: False
-XX Matching token: } SYMBOL to symbol: { result: False
+predict: Statement {'return', 'break', '{', 'while', '+', '(', 'if', 'NUM', ';', '-', 'ID'}
 XX Matching token: } SYMBOL to symbol: return result: False
-XX Matching token: } SYMBOL to symbol: while result: False
-XX Matching token: } SYMBOL to symbol: - result: False
-XX Matching token: } SYMBOL to symbol: + result: False
 XX Matching token: } SYMBOL to symbol: break result: False
+XX Matching token: } SYMBOL to symbol: { result: False
+XX Matching token: } SYMBOL to symbol: while result: False
+XX Matching token: } SYMBOL to symbol: + result: False
+XX Matching token: } SYMBOL to symbol: ( result: False
 XX Matching token: } SYMBOL to symbol: if result: False
 XX Matching token: } SYMBOL to symbol: ; result: False
+XX Matching token: } SYMBOL to symbol: - result: False
 ID Matching ID token: } to symbol: ID result: False
-EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x100c77850>
+EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x102c778c0>
 epsilon edge
 start while 142
 0
@@ -3815,8 +3751,7 @@ token }
 ############################################
 Matching token: } to terminal: }
 XX Matching token: } SYMBOL to symbol: } result: False
-IN SCANNER, with token 
- in line 10 state
+TOKEN took from SCANNER $ type EOF
 Matched terminal: } with token: }  IN match function
 salam
 from : 33 with } to 30 Type: EdgeType.TERMINAL
@@ -3827,8 +3762,8 @@ going to the start of while after matching with nt
 state after popping 48
 ###22222222222222222222222222222222222222
 predict: VarDeclarationPrime {'[', ';'}
-XX Matching token:  EOF to symbol: [ result: False
-XX Matching token:  EOF to symbol: ; result: False
+XX Matching token: $ EOF to symbol: [ result: False
+XX Matching token: $ EOF to symbol: ; result: False
 going to the start of while after matching with nt
 state after popping 39
 going to the start of while after matching with nt
@@ -3838,7 +3773,7 @@ state after popping 45
 going to the start of while after matching with nt
 state after popping 106
 going to the start of while after matching with nt
-final token: 
+final token in parse $ CHECK False
 
 Parse Tree:
 Program

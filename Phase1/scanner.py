@@ -241,19 +241,20 @@ class Scanner:
     def get_next_token(self):
         state, token, line_no = self.get_next_token_from_source()
         keywords = ['break', 'else', 'if', 'int', 'while', 'return', 'void']
-        print("IN SCANNER, with token", token, "in line", line_no,"state")
+        # print("IN SCANNER, with token", token, "in line", line_no,"state")
         if   state.type[1].value  == Token.SYMBOL.value or  state.type[1].value  == Token.NUM.value:
             token_stripped = token.strip()
+            
             return state, token_stripped, line_no
         
-        elif state.type[1].value == Token.ID.value or Token.KEYWORD :
+        elif state.type[1].value == Token.ID.value or  state.type[1].value == Token.KEYWORD.value :
             token_stripped = token.strip()
             if token_stripped in keywords:
                 state = (State((StateType.ACCEPT, Token.KEYWORD), push_back_needed=True, name="state_txt_id"))
             return state, token_stripped, line_no
         
                 
-        elif state.type[1].value == Token.EOF.value:
+        elif token.strip() == chr(26):
             return state, '$', line_no
         else: #error or ws or comment
             return self.get_next_token()
