@@ -68,9 +68,8 @@ class DiagramParser:
         return str(self.current_token) == str(symbol)
     
     
-    def check_in_predict(self, edge):
-        predict = self.grammar.get_predict(edge.get_name())
-        for p in predict:
+    def check_in_set(self, set):
+        for p in set:
             if self.match_token_to_symbol(p):
                 return True
             
@@ -127,6 +126,7 @@ class DiagramParser:
             for edge in terminal_transitions:
                 print("###1111111111111111111111111111111111111111")
                 print("token", self.current_token, "in", edge.symbol)
+                
                 if self.match_token_to_symbol(edge.symbol):
                     print("###8888888888888888888888888")
                     print("Matched terminal:", edge.symbol)
@@ -146,8 +146,8 @@ class DiagramParser:
               # No match in terminals
             for edge in non_terminal_transitions:
                 predict = self.grammar.get_predict(edge.get_name())
-                if self.check_in_predict(edge):
-                    print("token", self.current_token, "in", predict)
+                if self.check_in_set(predict):
+                    print("ERROR: token", self.current_token, "in", predict)
                     # Create non-terminal node
                     non_terminal_node = ParseNode(edge.symbol)
                     self.current_node.add_child(non_terminal_node)
@@ -195,7 +195,7 @@ class DiagramParser:
                     continue
                 elif edge.edge_type.value == EdgeType.NON_TERMINAL.value:
                     follow = self.grammar.get_follow(edge.get_name())
-                    if self.current_token in follow:
+                    if self.check_in_set(follow):
                         print("##2222#222#####22####################################") 
                         print("token", self.current_token, "in", follow)       
                         self.log_error(f"missing {edge.symbol}")
