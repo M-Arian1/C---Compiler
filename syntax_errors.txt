@@ -1,4 +1,7 @@
 #1 : syntax error, missing ID
 #1 : syntax error, missing DeclarationPrime
-#1 : syntax error, missing DeclarationList
-#1 : syntax error, illegal ID
+#1 : syntax error, illegal a
+#1 : syntax error, illegal =
+#1 : syntax error, illegal 2
+#1 : syntax error, illegal ;
+#1 : syntax error, illegal EOF

@@ -64,7 +64,7 @@ class DiagramParser:
             return self.current_state.type[1].value == Token.ID.value
         if symbol == "NUM":
             return self.current_state.type[1].value == Token.NUM.value
-        print("NUM Matching token:", self.current_token, "to symbol:", symbol, "result:", self.current_token == symbol)
+        print("XX Matching token:", self.current_token, self.current_state.type[1].value, "to symbol:", symbol, "result:", self.current_token == symbol)
         return str(self.current_token) == str(symbol)
     
     
@@ -150,15 +150,15 @@ class DiagramParser:
                     
             if terminal_matched:
                 print("terminal matched, continuing to next state")
-                
                 continue 
               # No match in terminals
             print("hereeee")
             for edge in non_terminal_transitions:
                 print("###22222222222222222222222222222222222222")
                 predict = self.grammar.get_predict(edge.get_name())
+                print("predict:", edge.get_name(), predict)
                 if self.check_in_set(predict):
-                    print("ERROR: token", self.current_token, "in", predict)
+                    print("NON TERMINASLS: token", self.current_token, "in", predict)
                     # Create non-terminal node
                     non_terminal_node = ParseNode(edge.symbol)
                     self.current_node.add_child(non_terminal_node)
@@ -170,18 +170,20 @@ class DiagramParser:
                     self.return_stack.append(edge.target)
                     edge.edge_info()
                     print("token", self.current_token)
-                    
+                    print("target before pushing", edge.target.get_id())
                     self.execute_diagram(edge.symbol, self.diagrams[str(edge.symbol)])
                     
                     # Restore the current node after recursion
                     self.current_node = parent_node
                     state = self.return_stack.pop()
+                    print("state after popping", state.get_id())
                     transitioned = True
                     non_terminal_matched = True
                     continue
             
-            # if non_terminal_matched and epsilon_edge is None:
-            #     continue            #if reaches here: no match
+            if non_terminal_matched:
+                print("going to the start of while after matching with nt")
+                continue            #if reaches here: no match
             
             #check for epsilon
             if not transitioned and epsilon_edge is not None:
