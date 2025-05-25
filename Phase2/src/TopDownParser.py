@@ -53,9 +53,26 @@ class DiagramParser:
 
     def log_error(self, message):
         self.error_log.write(f"#{self.current_line_number} : syntax error, {message}\n")
+    
+    def match_token_to_symbol(self, symbol):
+        if symbol == "ID":
+            return self.current_state.type[1] == Token.ID
+        if symbol == "NUM":
+            return self.current_state.type[1] == Token.NUM
+        return self.current_token == symbol
+    
+    
+    def check_in_predict(self, edge):
+        predict = self.grammar.get_predict(edge.get_name())
+        for p in predict:
+            if self.match_token_to_symbol(p):
+                return True
+            
+        return False
+        
 
     def match(self, terminal):
-        if self.current_token == terminal or self.current_state.type[1] == Token.ID or self.current_state.type[1] == Token.NUM:
+        if self.match_token_to_symbol(terminal):
             matched = self.current_token
             self.current_state, self.current_token, self.current_line_number = self.scanner.get_next_token()
             # print(self.current_token)
@@ -72,7 +89,9 @@ class DiagramParser:
             self.log_error(f"illegal {self.current_state.type[1].value}")
         self.error_log.close()
         return self.parse_tree
+    
 
+            
     def execute_diagram(self, diagram_name, diagram):
         print("We now are in :",diagram_name)
         state = diagram.start_state
@@ -81,6 +100,8 @@ class DiagramParser:
             epsilon_edge = None
             terminal_transitions = []
             non_terminal_transitions = []
+            terminal_matched = False
+            non_terminal_matched = False
             for edge in state.edges:
                 if edge.edge_type.value == EdgeType.TERMINAL.value:
                     terminal_transitions.append(edge)
@@ -89,19 +110,23 @@ class DiagramParser:
                 elif edge.edge_type == EdgeType.EPSILON:
                     epsilon_edge = edge
             for edge in terminal_transitions:
-                if self.current_token == edge.symbol:
+                if self.match_token_to_symbol( edge.symbol):
                         self.parse_tree.append(('match', edge.symbol))
                         edge.edge_info()
                         print("token",self.current_token)
                         self.match(edge.symbol)
                         state = edge.target
                         transitioned = True
-                        continue #return or apped to parse tree
-                    
+                        terminal_matched = True
+                        break #return or apped to parse tree
+            if terminal_matched:
+                continue
+            
             # No match in terminals
             for edge in non_terminal_transitions:
                 predict = self.grammar.get_predict(edge.get_name())
-                if self.current_token in predict:
+                if self.check_in_predict(edge):
+                        print("token", self.current_token, "in", predict  )
                         self.parse_tree.append(('enter', edge.symbol))
                         self.return_stack.append(edge.target)
                         edge.edge_info()
@@ -110,8 +135,11 @@ class DiagramParser:
                         self.execute_diagram(edge.symbol, self.diagrams[str(edge.symbol)])
                         state = self.return_stack.pop()
                         transitioned = True
+                        non_terminal_matched = True
                         continue
             
+            # if non_terminal_matched and epsilon_edge is None:
+            #     continue
             #if reaches here: no match
             
             #check for epsilon
@@ -126,7 +154,7 @@ class DiagramParser:
                 error_edge = state.edges[0]
                 edge = error_edge 
                 if edge.edge_type.value == EdgeType.TERMINAL.value:
-                    self.log_error(f"missing {edge.symbol}")
+                    self.log_error(f"missing  {edge.symbol}")
                     state = error_edge.target
                     transitioned = True
                     continue #?
