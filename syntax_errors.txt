@@ -1,5 +1,1 @@
-#4 : syntax error, illegal2 x
-#4 : syntax error, illegal2 =
-#4 : syntax error, illegal2 10
-#5 : syntax error, illegal2 }
 #6 : syntax error, illegal EOF

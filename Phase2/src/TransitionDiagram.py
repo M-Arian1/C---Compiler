@@ -63,7 +63,7 @@ class DiagramBuilder:
             return EdgeType.TERMINAL
         elif isinstance(symbol, self.grammar.NonTerminal):
             return EdgeType.NON_TERMINAL
-        elif symbol == 'epsilon':
+        elif symbol == 'epsilon' or symbol == 'ε':
             return EdgeType.EPSILON
         else:
             raise ValueError(f"Unknown symbol type: {symbol}")
@@ -86,8 +86,8 @@ class DiagramBuilder:
 
         for rule in rules:
             production = rule.rhs
-
-            if not production:  # ε-production
+            # print("PRODUCTION", production, "len", (len(production)),)
+            if len(production) == 1 and str(production[0]) == 'ε':  # ε-production
                 start.add_edge('epsilon', final, EdgeType.EPSILON)
                 continue
 

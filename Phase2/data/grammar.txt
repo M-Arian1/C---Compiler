@@ -18,13 +18,13 @@ D ~ ε
 D ~ Addop Term D
 Declaration ~ DeclarationInitial DeclarationPrime
 DeclarationInitial ~ TypeSpecifier ID
-DeclarationList ~ 
+DeclarationList ~ ε
 DeclarationList ~ Declaration DeclarationList
 DeclarationPrime ~ FunDeclarationPrime
 DeclarationPrime ~ VarDeclarationPrime
 Expression ~ ID B
 Expression ~ SimpleExpressionZegond
-ExpressionStmt ~ ε
+ExpressionStmt ~ Expression ;
 ExpressionStmt ~ ;
 ExpressionStmt ~ break ;
 Factor ~ ( Expression )
@@ -43,7 +43,7 @@ IterationStmt ~ while ( Expression ) Statement
 Param ~ DeclarationInitial ParamPrime
 ParamList ~ ε
 ParamList ~ , Param ParamList
-ParamPrime ~ 
+ParamPrime ~ ε
 ParamPrime ~ [ ]
 Params ~ int ID ParamPrime ParamList
 Params ~ void

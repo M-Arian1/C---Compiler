@@ -41,7 +41,7 @@ Diagram for Non-Terminal: ArgList
 Diagram for Non-Terminal: ArgListPrime
   State 14
     --[, (TERMINAL)]--> State 16
-    --[ε (NON_TERMINAL)]--> State 15
+    --[epsilon (EPSILON)]--> State 15
   State 15 (final)
   State 16
     --[Expression (NON_TERMINAL)]--> State 17
@@ -50,7 +50,7 @@ Diagram for Non-Terminal: ArgListPrime
 
 Diagram for Non-Terminal: Args
   State 18
-    --[ε (NON_TERMINAL)]--> State 19
+    --[epsilon (EPSILON)]--> State 19
     --[ArgList (NON_TERMINAL)]--> State 19
   State 19 (final)
 
@@ -71,7 +71,7 @@ Diagram for Non-Terminal: B
 
 Diagram for Non-Terminal: C
   State 26
-    --[ε (NON_TERMINAL)]--> State 27
+    --[epsilon (EPSILON)]--> State 27
     --[Relop (NON_TERMINAL)]--> State 28
   State 27 (final)
   State 28
@@ -90,7 +90,7 @@ Diagram for Non-Terminal: CompoundStmt
 
 Diagram for Non-Terminal: D
   State 34
-    --[ε (NON_TERMINAL)]--> State 35
+    --[epsilon (EPSILON)]--> State 35
     --[Addop (NON_TERMINAL)]--> State 36
   State 35 (final)
   State 36
@@ -136,310 +136,307 @@ Diagram for Non-Terminal: Expression
 
 Diagram for Non-Terminal: ExpressionStmt
   State 52
-    --[ε (NON_TERMINAL)]--> State 53
+    --[Expression (NON_TERMINAL)]--> State 54
     --[; (TERMINAL)]--> State 53
-    --[break (TERMINAL)]--> State 54
+    --[break (TERMINAL)]--> State 55
   State 53 (final)
   State 54
     --[; (TERMINAL)]--> State 53
+  State 55
+    --[; (TERMINAL)]--> State 53
 
 Diagram for Non-Terminal: Factor
-  State 55
-    --[( (TERMINAL)]--> State 57
-    --[ID (TERMINAL)]--> State 59
-    --[NUM (TERMINAL)]--> State 56
-  State 56 (final)
-  State 57
-    --[Expression (NON_TERMINAL)]--> State 58
+  State 56
+    --[( (TERMINAL)]--> State 58
+    --[ID (TERMINAL)]--> State 60
+    --[NUM (TERMINAL)]--> State 57
+  State 57 (final)
   State 58
-    --[) (TERMINAL)]--> State 56
+    --[Expression (NON_TERMINAL)]--> State 59
   State 59
-    --[VarCallPrime (NON_TERMINAL)]--> State 56
+    --[) (TERMINAL)]--> State 57
+  State 60
+    --[VarCallPrime (NON_TERMINAL)]--> State 57
 
 Diagram for Non-Terminal: FactorPrime
-  State 60
-    --[ε (NON_TERMINAL)]--> State 61
-    --[( (TERMINAL)]--> State 62
-  State 61 (final)
-  State 62
-    --[Args (NON_TERMINAL)]--> State 63
+  State 61
+    --[epsilon (EPSILON)]--> State 62
+    --[( (TERMINAL)]--> State 63
+  State 62 (final)
   State 63
-    --[) (TERMINAL)]--> State 61
+    --[Args (NON_TERMINAL)]--> State 64
+  State 64
+    --[) (TERMINAL)]--> State 62
 
 Diagram for Non-Terminal: FactorZegond
-  State 64
-    --[( (TERMINAL)]--> State 66
-    --[NUM (TERMINAL)]--> State 65
-  State 65 (final)
-  State 66
-    --[Expression (NON_TERMINAL)]--> State 67
+  State 65
+    --[( (TERMINAL)]--> State 67
+    --[NUM (TERMINAL)]--> State 66
+  State 66 (final)
   State 67
-    --[) (TERMINAL)]--> State 65
+    --[Expression (NON_TERMINAL)]--> State 68
+  State 68
+    --[) (TERMINAL)]--> State 66
 
 Diagram for Non-Terminal: FunDeclarationPrime
-  State 68
-    --[( (TERMINAL)]--> State 70
-  State 69 (final)
-  State 70
-    --[Params (NON_TERMINAL)]--> State 71
+  State 69
+    --[( (TERMINAL)]--> State 71
+  State 70 (final)
   State 71
-    --[) (TERMINAL)]--> State 72
+    --[Params (NON_TERMINAL)]--> State 72
   State 72
-    --[CompoundStmt (NON_TERMINAL)]--> State 69
+    --[) (TERMINAL)]--> State 73
+  State 73
+    --[CompoundStmt (NON_TERMINAL)]--> State 70
 
 Diagram for Non-Terminal: G
-  State 73
-    --[ε (NON_TERMINAL)]--> State 74
-    --[* (TERMINAL)]--> State 75
-  State 74 (final)
-  State 75
-    --[SignedFactor (NON_TERMINAL)]--> State 76
+  State 74
+    --[epsilon (EPSILON)]--> State 75
+    --[* (TERMINAL)]--> State 76
+  State 75 (final)
   State 76
-    --[G (NON_TERMINAL)]--> State 74
+    --[SignedFactor (NON_TERMINAL)]--> State 77
+  State 77
+    --[G (NON_TERMINAL)]--> State 75
 
 Diagram for Non-Terminal: H
-  State 77
-    --[= (TERMINAL)]--> State 79
-    --[G (NON_TERMINAL)]--> State 80
-  State 78 (final)
-  State 79
-    --[Expression (NON_TERMINAL)]--> State 78
+  State 78
+    --[= (TERMINAL)]--> State 80
+    --[G (NON_TERMINAL)]--> State 81
+  State 79 (final)
   State 80
-    --[D (NON_TERMINAL)]--> State 81
+    --[Expression (NON_TERMINAL)]--> State 79
   State 81
-    --[C (NON_TERMINAL)]--> State 78
+    --[D (NON_TERMINAL)]--> State 82
+  State 82
+    --[C (NON_TERMINAL)]--> State 79
 
 Diagram for Non-Terminal: IterationStmt
-  State 82
-    --[while (TERMINAL)]--> State 84
-  State 83 (final)
-  State 84
-    --[( (TERMINAL)]--> State 85
+  State 83
+    --[while (TERMINAL)]--> State 85
+  State 84 (final)
   State 85
-    --[Expression (NON_TERMINAL)]--> State 86
+    --[( (TERMINAL)]--> State 86
   State 86
-    --[) (TERMINAL)]--> State 87
+    --[Expression (NON_TERMINAL)]--> State 87
   State 87
-    --[Statement (NON_TERMINAL)]--> State 83
+    --[) (TERMINAL)]--> State 88
+  State 88
+    --[Statement (NON_TERMINAL)]--> State 84
 
 Diagram for Non-Terminal: Param
-  State 88
-    --[DeclarationInitial (NON_TERMINAL)]--> State 90
-  State 89 (final)
-  State 90
-    --[ParamPrime (NON_TERMINAL)]--> State 89
+  State 89
+    --[DeclarationInitial (NON_TERMINAL)]--> State 91
+  State 90 (final)
+  State 91
+    --[ParamPrime (NON_TERMINAL)]--> State 90
 
 Diagram for Non-Terminal: ParamList
-  State 91
-    --[ε (NON_TERMINAL)]--> State 92
-    --[, (TERMINAL)]--> State 93
-  State 92 (final)
-  State 93
-    --[Param (NON_TERMINAL)]--> State 94
+  State 92
+    --[epsilon (EPSILON)]--> State 93
+    --[, (TERMINAL)]--> State 94
+  State 93 (final)
   State 94
-    --[ParamList (NON_TERMINAL)]--> State 92
+    --[Param (NON_TERMINAL)]--> State 95
+  State 95
+    --[ParamList (NON_TERMINAL)]--> State 93
 
 Diagram for Non-Terminal: ParamPrime
-  State 95
-    --[epsilon (EPSILON)]--> State 96
-    --[[ (TERMINAL)]--> State 97
-  State 96 (final)
-  State 97
-    --[] (TERMINAL)]--> State 96
+  State 96
+    --[epsilon (EPSILON)]--> State 97
+    --[[ (TERMINAL)]--> State 98
+  State 97 (final)
+  State 98
+    --[] (TERMINAL)]--> State 97
 
 Diagram for Non-Terminal: Params
-  State 98
-    --[int (TERMINAL)]--> State 100
-    --[void (TERMINAL)]--> State 99
-  State 99 (final)
-  State 100
-    --[ID (TERMINAL)]--> State 101
+  State 99
+    --[int (TERMINAL)]--> State 101
+    --[void (TERMINAL)]--> State 100
+  State 100 (final)
   State 101
-    --[ParamPrime (NON_TERMINAL)]--> State 102
+    --[ID (TERMINAL)]--> State 102
   State 102
-    --[ParamList (NON_TERMINAL)]--> State 99
+    --[ParamPrime (NON_TERMINAL)]--> State 103
+  State 103
+    --[ParamList (NON_TERMINAL)]--> State 100
 
 Diagram for Non-Terminal: Program
-  State 103
-    --[DeclarationList (NON_TERMINAL)]--> State 105
-  State 104 (final)
-  State 105
-    --[$ (TERMINAL)]--> State 104
+  State 104
+    --[DeclarationList (NON_TERMINAL)]--> State 106
+  State 105 (final)
+  State 106
+    --[$ (TERMINAL)]--> State 105
 
 Diagram for Non-Terminal: Relop
-  State 106
-    --[< (TERMINAL)]--> State 107
-    --[== (TERMINAL)]--> State 107
-  State 107 (final)
+  State 107
+    --[< (TERMINAL)]--> State 108
+    --[== (TERMINAL)]--> State 108
+  State 108 (final)
 
 Diagram for Non-Terminal: ReturnStmt
-  State 108
-    --[return (TERMINAL)]--> State 110
-  State 109 (final)
-  State 110
-    --[ReturnStmtPrime (NON_TERMINAL)]--> State 109
+  State 109
+    --[return (TERMINAL)]--> State 111
+  State 110 (final)
+  State 111
+    --[ReturnStmtPrime (NON_TERMINAL)]--> State 110
 
 Diagram for Non-Terminal: ReturnStmtPrime
-  State 111
-    --[; (TERMINAL)]--> State 112
-    --[Expression (NON_TERMINAL)]--> State 113
-  State 112 (final)
-  State 113
-    --[; (TERMINAL)]--> State 112
+  State 112
+    --[; (TERMINAL)]--> State 113
+    --[Expression (NON_TERMINAL)]--> State 114
+  State 113 (final)
+  State 114
+    --[; (TERMINAL)]--> State 113
 
 Diagram for Non-Terminal: SelectionStmt
-  State 114
-    --[if (TERMINAL)]--> State 116
-  State 115 (final)
-  State 116
-    --[( (TERMINAL)]--> State 117
+  State 115
+    --[if (TERMINAL)]--> State 117
+  State 116 (final)
   State 117
-    --[Expression (NON_TERMINAL)]--> State 118
+    --[( (TERMINAL)]--> State 118
   State 118
-    --[) (TERMINAL)]--> State 119
+    --[Expression (NON_TERMINAL)]--> State 119
   State 119
-    --[Statement (NON_TERMINAL)]--> State 120
+    --[) (TERMINAL)]--> State 120
   State 120
-    --[else (TERMINAL)]--> State 121
+    --[Statement (NON_TERMINAL)]--> State 121
   State 121
-    --[Statement (NON_TERMINAL)]--> State 115
+    --[else (TERMINAL)]--> State 122
+  State 122
+    --[Statement (NON_TERMINAL)]--> State 116
 
 Diagram for Non-Terminal: SignedFactor
-  State 122
-    --[+ (TERMINAL)]--> State 124
-    --[- (TERMINAL)]--> State 125
-    --[Factor (NON_TERMINAL)]--> State 123
-  State 123 (final)
-  State 124
-    --[Factor (NON_TERMINAL)]--> State 123
+  State 123
+    --[+ (TERMINAL)]--> State 125
+    --[- (TERMINAL)]--> State 126
+    --[Factor (NON_TERMINAL)]--> State 124
+  State 124 (final)
   State 125
-    --[Factor (NON_TERMINAL)]--> State 123
+    --[Factor (NON_TERMINAL)]--> State 124
+  State 126
+    --[Factor (NON_TERMINAL)]--> State 124
 
 Diagram for Non-Terminal: SignedFactorPrime
-  State 126
-    --[FactorPrime (NON_TERMINAL)]--> State 127
-  State 127 (final)
+  State 127
+    --[FactorPrime (NON_TERMINAL)]--> State 128
+  State 128 (final)
 
 Diagram for Non-Terminal: SignedFactorZegond
-  State 128
-    --[+ (TERMINAL)]--> State 130
-    --[- (TERMINAL)]--> State 131
-    --[FactorZegond (NON_TERMINAL)]--> State 129
-  State 129 (final)
-  State 130
-    --[Factor (NON_TERMINAL)]--> State 129
+  State 129
+    --[+ (TERMINAL)]--> State 131
+    --[- (TERMINAL)]--> State 132
+    --[FactorZegond (NON_TERMINAL)]--> State 130
+  State 130 (final)
   State 131
-    --[Factor (NON_TERMINAL)]--> State 129
+    --[Factor (NON_TERMINAL)]--> State 130
+  State 132
+    --[Factor (NON_TERMINAL)]--> State 130
 
 Diagram for Non-Terminal: SimpleExpressionPrime
-  State 132
-    --[AdditiveExpressionPrime (NON_TERMINAL)]--> State 134
-  State 133 (final)
-  State 134
-    --[C (NON_TERMINAL)]--> State 133
+  State 133
+    --[AdditiveExpressionPrime (NON_TERMINAL)]--> State 135
+  State 134 (final)
+  State 135
+    --[C (NON_TERMINAL)]--> State 134
 
 Diagram for Non-Terminal: SimpleExpressionZegond
-  State 135
-    --[AdditiveExpressionZegond (NON_TERMINAL)]--> State 137
-  State 136 (final)
-  State 137
-    --[C (NON_TERMINAL)]--> State 136
+  State 136
+    --[AdditiveExpressionZegond (NON_TERMINAL)]--> State 138
+  State 137 (final)
+  State 138
+    --[C (NON_TERMINAL)]--> State 137
 
 Diagram for Non-Terminal: Statement
-  State 138
-    --[CompoundStmt (NON_TERMINAL)]--> State 139
-    --[ExpressionStmt (NON_TERMINAL)]--> State 139
-    --[IterationStmt (NON_TERMINAL)]--> State 139
-    --[ReturnStmt (NON_TERMINAL)]--> State 139
-    --[SelectionStmt (NON_TERMINAL)]--> State 139
-  State 139 (final)
+  State 139
+    --[CompoundStmt (NON_TERMINAL)]--> State 140
+    --[ExpressionStmt (NON_TERMINAL)]--> State 140
+    --[IterationStmt (NON_TERMINAL)]--> State 140
+    --[ReturnStmt (NON_TERMINAL)]--> State 140
+    --[SelectionStmt (NON_TERMINAL)]--> State 140
+  State 140 (final)
 
 Diagram for Non-Terminal: StatementList
-  State 140
-    --[ε (NON_TERMINAL)]--> State 141
-    --[Statement (NON_TERMINAL)]--> State 142
-  State 141 (final)
-  State 142
-    --[StatementList (NON_TERMINAL)]--> State 141
+  State 141
+    --[epsilon (EPSILON)]--> State 142
+    --[Statement (NON_TERMINAL)]--> State 143
+  State 142 (final)
+  State 143
+    --[StatementList (NON_TERMINAL)]--> State 142
 
 Diagram for Non-Terminal: Term
-  State 143
-    --[SignedFactor (NON_TERMINAL)]--> State 145
-  State 144 (final)
-  State 145
-    --[G (NON_TERMINAL)]--> State 144
+  State 144
+    --[SignedFactor (NON_TERMINAL)]--> State 146
+  State 145 (final)
+  State 146
+    --[G (NON_TERMINAL)]--> State 145
 
 Diagram for Non-Terminal: TermPrime
-  State 146
-    --[SignedFactorPrime (NON_TERMINAL)]--> State 148
-  State 147 (final)
-  State 148
-    --[G (NON_TERMINAL)]--> State 147
+  State 147
+    --[SignedFactorPrime (NON_TERMINAL)]--> State 149
+  State 148 (final)
+  State 149
+    --[G (NON_TERMINAL)]--> State 148
 
 Diagram for Non-Terminal: TermZegond
-  State 149
-    --[SignedFactorZegond (NON_TERMINAL)]--> State 151
-  State 150 (final)
-  State 151
-    --[G (NON_TERMINAL)]--> State 150
+  State 150
+    --[SignedFactorZegond (NON_TERMINAL)]--> State 152
+  State 151 (final)
+  State 152
+    --[G (NON_TERMINAL)]--> State 151
 
 Diagram for Non-Terminal: TypeSpecifier
-  State 152
-    --[int (TERMINAL)]--> State 153
-    --[void (TERMINAL)]--> State 153
-  State 153 (final)
+  State 153
+    --[int (TERMINAL)]--> State 154
+    --[void (TERMINAL)]--> State 154
+  State 154 (final)
 
 Diagram for Non-Terminal: VarCallPrime
-  State 154
-    --[( (TERMINAL)]--> State 156
-    --[VarPrime (NON_TERMINAL)]--> State 155
-  State 155 (final)
-  State 156
-    --[Args (NON_TERMINAL)]--> State 157
+  State 155
+    --[( (TERMINAL)]--> State 157
+    --[VarPrime (NON_TERMINAL)]--> State 156
+  State 156 (final)
   State 157
-    --[) (TERMINAL)]--> State 155
+    --[Args (NON_TERMINAL)]--> State 158
+  State 158
+    --[) (TERMINAL)]--> State 156
 
 Diagram for Non-Terminal: VarDeclarationPrime
-  State 158
-    --[; (TERMINAL)]--> State 159
-    --[[ (TERMINAL)]--> State 160
-  State 159 (final)
-  State 160
-    --[NUM (TERMINAL)]--> State 161
+  State 159
+    --[; (TERMINAL)]--> State 160
+    --[[ (TERMINAL)]--> State 161
+  State 160 (final)
   State 161
-    --[] (TERMINAL)]--> State 162
+    --[NUM (TERMINAL)]--> State 162
   State 162
-    --[; (TERMINAL)]--> State 159
+    --[] (TERMINAL)]--> State 163
+  State 163
+    --[; (TERMINAL)]--> State 160
 
 Diagram for Non-Terminal: VarPrime
-  State 163
-    --[ε (NON_TERMINAL)]--> State 164
-    --[[ (TERMINAL)]--> State 165
-  State 164 (final)
-  State 165
-    --[Expression (NON_TERMINAL)]--> State 166
+  State 164
+    --[epsilon (EPSILON)]--> State 165
+    --[[ (TERMINAL)]--> State 166
+  State 165 (final)
   State 166
-    --[] (TERMINAL)]--> State 164
+    --[Expression (NON_TERMINAL)]--> State 167
+  State 167
+    --[] (TERMINAL)]--> State 165
 Starting parsing...
 void
 We now are in : Program
-start while 103
+start while 104
 0
 1
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: DeclarationList {'+', 'int', 'break', '}', '{', 'ID', '(', 'while', 'return', 'NUM', '-', ';', '$', 'if', 'void'}
-XX Matching token: void ID to symbol: + result: False
-XX Matching token: void ID to symbol: int result: False
-XX Matching token: void ID to symbol: break result: False
-XX Matching token: void ID to symbol: } result: False
-XX Matching token: void ID to symbol: { result: False
-ID Matching ID token: void to symbol: ID result: True
-NON TERMINASLS: token void in {'+', 'int', 'break', '}', '{', 'ID', '(', 'while', 'return', 'NUM', '-', ';', '$', 'if', 'void'}
-from : 103 with DeclarationList to 105 Type: EdgeType.NON_TERMINAL
+predict: DeclarationList {'void', '}', '(', '-', 'int', '$', 'if', '{', 'ID', 'break', 'return', 'while', ';', 'NUM', '+'}
+XX Matching token: void ID to symbol: void result: True
+NON TERMINASLS: token void in {'void', '}', '(', '-', 'int', '$', 'if', '{', 'ID', 'break', 'return', 'while', ';', 'NUM', '+'}
+from : 104 with DeclarationList to 106 Type: EdgeType.NON_TERMINAL
 token void
-target before pushing 105
+target before pushing 106
 We now are in : DeclarationList
 start while 44
 0
@@ -447,9 +444,10 @@ start while 44
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: Declaration {'void', 'int'}
+predict: Declaration {'int', 'void'}
+XX Matching token: void ID to symbol: int result: False
 XX Matching token: void ID to symbol: void result: True
-NON TERMINASLS: token void in {'void', 'int'}
+NON TERMINASLS: token void in {'int', 'void'}
 from : 44 with Declaration to 46 Type: EdgeType.NON_TERMINAL
 token void
 target before pushing 46
@@ -460,9 +458,10 @@ start while 38
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: DeclarationInitial {'void', 'int'}
+predict: DeclarationInitial {'int', 'void'}
+XX Matching token: void ID to symbol: int result: False
 XX Matching token: void ID to symbol: void result: True
-NON TERMINASLS: token void in {'void', 'int'}
+NON TERMINASLS: token void in {'int', 'void'}
 from : 38 with DeclarationInitial to 40 Type: EdgeType.NON_TERMINAL
 token void
 target before pushing 40
@@ -473,40 +472,41 @@ start while 41
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: TypeSpecifier {'void', 'int'}
+predict: TypeSpecifier {'int', 'void'}
+XX Matching token: void ID to symbol: int result: False
 XX Matching token: void ID to symbol: void result: True
-NON TERMINASLS: token void in {'void', 'int'}
+NON TERMINASLS: token void in {'int', 'void'}
 from : 41 with TypeSpecifier to 43 Type: EdgeType.NON_TERMINAL
 token void
 target before pushing 43
 We now are in : TypeSpecifier
-start while 152
+start while 153
 2
 0
 False
 ###1111111111111111111111111111111111111111
 token void in int
-from : 152 with int to 153 Type: EdgeType.TERMINAL
+from : 153 with int to 154 Type: EdgeType.TERMINAL
 None
 XX Matching token: void ID to symbol: int result: False
 ###1111111111111111111111111111111111111111
 token void in void
-from : 152 with void to 153 Type: EdgeType.TERMINAL
+from : 153 with void to 154 Type: EdgeType.TERMINAL
 None
 XX Matching token: void ID to symbol: void result: False
 ###8888888888888888888888888
 Matched terminal: void
-from : 152 with void to 153 Type: EdgeType.TERMINAL
+from : 153 with void to 154 Type: EdgeType.TERMINAL
 token void
 ############################################
 Matching token: void to terminal: void
 XX Matching token: void ID to symbol: void result: False
 Matched terminal: void with token: void  IN match function
 salam
-from : 152 with void to 153 Type: EdgeType.TERMINAL
-None 153
+from : 153 with void to 154 Type: EdgeType.TERMINAL
+None 154
 terminal matched, continuing to next state
-start while 153
+start while 154
 0
 0
 False
@@ -551,10 +551,11 @@ start while 40
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: DeclarationPrime {';', '(', '['}
+predict: DeclarationPrime {';', '[', '('}
 XX Matching token: ( SYMBOL to symbol: ; result: False
+XX Matching token: ( SYMBOL to symbol: [ result: False
 XX Matching token: ( SYMBOL to symbol: ( result: True
-NON TERMINASLS: token ( in {';', '(', '['}
+NON TERMINASLS: token ( in {';', '[', '('}
 from : 40 with DeclarationPrime to 39 Type: EdgeType.NON_TERMINAL
 token (
 target before pushing 39
@@ -572,97 +573,98 @@ from : 47 with FunDeclarationPrime to 48 Type: EdgeType.NON_TERMINAL
 token (
 target before pushing 48
 We now are in : FunDeclarationPrime
-start while 68
+start while 69
 1
 0
 False
 ###1111111111111111111111111111111111111111
 token ( in (
-from : 68 with ( to 70 Type: EdgeType.TERMINAL
+from : 69 with ( to 71 Type: EdgeType.TERMINAL
 None
 XX Matching token: ( SYMBOL to symbol: ( result: False
 ###8888888888888888888888888
 Matched terminal: (
-from : 68 with ( to 70 Type: EdgeType.TERMINAL
+from : 69 with ( to 71 Type: EdgeType.TERMINAL
 token (
 ############################################
 Matching token: ( to terminal: (
 XX Matching token: ( SYMBOL to symbol: ( result: False
 Matched terminal: ( with token: (  IN match function
 salam
-from : 68 with ( to 70 Type: EdgeType.TERMINAL
-None 70
+from : 69 with ( to 71 Type: EdgeType.TERMINAL
+None 71
 terminal matched, continuing to next state
-start while 70
+start while 71
 0
 1
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: Params {'void', 'int'}
+predict: Params {'int', 'void'}
+XX Matching token: void ID to symbol: int result: False
 XX Matching token: void ID to symbol: void result: True
-NON TERMINASLS: token void in {'void', 'int'}
-from : 70 with Params to 71 Type: EdgeType.NON_TERMINAL
+NON TERMINASLS: token void in {'int', 'void'}
+from : 71 with Params to 72 Type: EdgeType.NON_TERMINAL
 token void
-target before pushing 71
+target before pushing 72
 We now are in : Params
-start while 98
+start while 99
 2
 0
 False
 ###1111111111111111111111111111111111111111
 token void in int
-from : 98 with int to 100 Type: EdgeType.TERMINAL
+from : 99 with int to 101 Type: EdgeType.TERMINAL
 None
 XX Matching token: void ID to symbol: int result: False
 ###1111111111111111111111111111111111111111
 token void in void
-from : 98 with void to 99 Type: EdgeType.TERMINAL
+from : 99 with void to 100 Type: EdgeType.TERMINAL
 None
 XX Matching token: void ID to symbol: void result: False
 ###8888888888888888888888888
 Matched terminal: void
-from : 98 with void to 99 Type: EdgeType.TERMINAL
+from : 99 with void to 100 Type: EdgeType.TERMINAL
 token void
 ############################################
 Matching token: void to terminal: void
 XX Matching token: void ID to symbol: void result: False
 Matched terminal: void with token: void  IN match function
 salam
-from : 98 with void to 99 Type: EdgeType.TERMINAL
-None 99
+from : 99 with void to 100 Type: EdgeType.TERMINAL
+None 100
 terminal matched, continuing to next state
-start while 99
+start while 100
 0
 0
 False
 hereeee
 EPSILON None
 reached final state
-state after popping 71
+state after popping 72
 going to the start of while after matching with nt
-start while 71
+start while 72
 1
 0
 False
 ###1111111111111111111111111111111111111111
 token ) in )
-from : 71 with ) to 72 Type: EdgeType.TERMINAL
+from : 72 with ) to 73 Type: EdgeType.TERMINAL
 None
 XX Matching token: ) SYMBOL to symbol: ) result: False
 ###8888888888888888888888888
 Matched terminal: )
-from : 71 with ) to 72 Type: EdgeType.TERMINAL
+from : 72 with ) to 73 Type: EdgeType.TERMINAL
 token )
 ############################################
 Matching token: ) to terminal: )
 XX Matching token: ) SYMBOL to symbol: ) result: False
 Matched terminal: ) with token: )  IN match function
 salam
-from : 71 with ) to 72 Type: EdgeType.TERMINAL
-None 72
+from : 72 with ) to 73 Type: EdgeType.TERMINAL
+None 73
 terminal matched, continuing to next state
-start while 72
+start while 73
 0
 1
 False
@@ -671,9 +673,9 @@ hereeee
 predict: CompoundStmt {'{'}
 XX Matching token: { SYMBOL to symbol: { result: True
 NON TERMINASLS: token { in {'{'}
-from : 72 with CompoundStmt to 69 Type: EdgeType.NON_TERMINAL
+from : 73 with CompoundStmt to 70 Type: EdgeType.NON_TERMINAL
 token {
-target before pushing 69
+target before pushing 70
 We now are in : CompoundStmt
 start while 29
 1
@@ -702,10 +704,13 @@ start while 31
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: DeclarationList {'+', 'int', 'break', '}', '{', 'ID', '(', 'while', 'return', 'NUM', '-', ';', '$', 'if', 'void'}
-XX Matching token: int ID to symbol: + result: False
+predict: DeclarationList {'void', '}', '(', '-', 'int', '$', 'if', '{', 'ID', 'break', 'return', 'while', ';', 'NUM', '+'}
+XX Matching token: int ID to symbol: void result: False
+XX Matching token: int ID to symbol: } result: False
+XX Matching token: int ID to symbol: ( result: False
+XX Matching token: int ID to symbol: - result: False
 XX Matching token: int ID to symbol: int result: True
-NON TERMINASLS: token int in {'+', 'int', 'break', '}', '{', 'ID', '(', 'while', 'return', 'NUM', '-', ';', '$', 'if', 'void'}
+NON TERMINASLS: token int in {'void', '}', '(', '-', 'int', '$', 'if', '{', 'ID', 'break', 'return', 'while', ';', 'NUM', '+'}
 from : 31 with DeclarationList to 32 Type: EdgeType.NON_TERMINAL
 token int
 target before pushing 32
@@ -716,10 +721,9 @@ start while 44
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: Declaration {'void', 'int'}
-XX Matching token: int ID to symbol: void result: False
+predict: Declaration {'int', 'void'}
 XX Matching token: int ID to symbol: int result: True
-NON TERMINASLS: token int in {'void', 'int'}
+NON TERMINASLS: token int in {'int', 'void'}
 from : 44 with Declaration to 46 Type: EdgeType.NON_TERMINAL
 token int
 target before pushing 46
@@ -730,10 +734,9 @@ start while 38
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: DeclarationInitial {'void', 'int'}
-XX Matching token: int ID to symbol: void result: False
+predict: DeclarationInitial {'int', 'void'}
 XX Matching token: int ID to symbol: int result: True
-NON TERMINASLS: token int in {'void', 'int'}
+NON TERMINASLS: token int in {'int', 'void'}
 from : 38 with DeclarationInitial to 40 Type: EdgeType.NON_TERMINAL
 token int
 target before pushing 40
@@ -744,36 +747,35 @@ start while 41
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: TypeSpecifier {'void', 'int'}
-XX Matching token: int ID to symbol: void result: False
+predict: TypeSpecifier {'int', 'void'}
 XX Matching token: int ID to symbol: int result: True
-NON TERMINASLS: token int in {'void', 'int'}
+NON TERMINASLS: token int in {'int', 'void'}
 from : 41 with TypeSpecifier to 43 Type: EdgeType.NON_TERMINAL
 token int
 target before pushing 43
 We now are in : TypeSpecifier
-start while 152
+start while 153
 2
 0
 False
 ###1111111111111111111111111111111111111111
 token int in int
-from : 152 with int to 153 Type: EdgeType.TERMINAL
+from : 153 with int to 154 Type: EdgeType.TERMINAL
 None
 XX Matching token: int ID to symbol: int result: False
 ###8888888888888888888888888
 Matched terminal: int
-from : 152 with int to 153 Type: EdgeType.TERMINAL
+from : 153 with int to 154 Type: EdgeType.TERMINAL
 token int
 ############################################
 Matching token: int to terminal: int
 XX Matching token: int ID to symbol: int result: False
 Matched terminal: int with token: int  IN match function
 salam
-from : 152 with int to 153 Type: EdgeType.TERMINAL
-None 153
+from : 153 with int to 154 Type: EdgeType.TERMINAL
+None 154
 terminal matched, continuing to next state
-start while 153
+start while 154
 0
 0
 False
@@ -818,9 +820,9 @@ start while 40
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: DeclarationPrime {';', '(', '['}
+predict: DeclarationPrime {';', '[', '('}
 XX Matching token: ; SYMBOL to symbol: ; result: True
-NON TERMINASLS: token ; in {';', '(', '['}
+NON TERMINASLS: token ; in {';', '[', '('}
 from : 40 with DeclarationPrime to 39 Type: EdgeType.NON_TERMINAL
 token ;
 target before pushing 39
@@ -841,28 +843,28 @@ from : 47 with VarDeclarationPrime to 48 Type: EdgeType.NON_TERMINAL
 token ;
 target before pushing 48
 We now are in : VarDeclarationPrime
-start while 158
+start while 159
 2
 0
 False
 ###1111111111111111111111111111111111111111
 token ; in ;
-from : 158 with ; to 159 Type: EdgeType.TERMINAL
+from : 159 with ; to 160 Type: EdgeType.TERMINAL
 None
 XX Matching token: ; SYMBOL to symbol: ; result: False
 ###8888888888888888888888888
 Matched terminal: ;
-from : 158 with ; to 159 Type: EdgeType.TERMINAL
+from : 159 with ; to 160 Type: EdgeType.TERMINAL
 token ;
 ############################################
 Matching token: ; to terminal: ;
 XX Matching token: ; SYMBOL to symbol: ; result: False
 Matched terminal: ; with token: ;  IN match function
 salam
-from : 158 with ; to 159 Type: EdgeType.TERMINAL
-None 159
+from : 159 with ; to 160 Type: EdgeType.TERMINAL
+None 160
 terminal matched, continuing to next state
-start while 159
+start while 160
 0
 0
 False
@@ -895,14 +897,17 @@ start while 46
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: DeclarationList {'+', 'int', 'break', '}', '{', 'ID', '(', 'while', 'return', 'NUM', '-', ';', '$', 'if', 'void'}
-XX Matching token: x ID to symbol: + result: False
-XX Matching token: x ID to symbol: int result: False
-XX Matching token: x ID to symbol: break result: False
+predict: DeclarationList {'void', '}', '(', '-', 'int', '$', 'if', '{', 'ID', 'break', 'return', 'while', ';', 'NUM', '+'}
+XX Matching token: x ID to symbol: void result: False
 XX Matching token: x ID to symbol: } result: False
+XX Matching token: x ID to symbol: ( result: False
+XX Matching token: x ID to symbol: - result: False
+XX Matching token: x ID to symbol: int result: False
+XX Matching token: x ID to symbol: $ result: False
+XX Matching token: x ID to symbol: if result: False
 XX Matching token: x ID to symbol: { result: False
 ID Matching ID token: x to symbol: ID result: True
-NON TERMINASLS: token x in {'+', 'int', 'break', '}', '{', 'ID', '(', 'while', 'return', 'NUM', '-', ';', '$', 'if', 'void'}
+NON TERMINASLS: token x in {'void', '}', '(', '-', 'int', '$', 'if', '{', 'ID', 'break', 'return', 'while', ';', 'NUM', '+'}
 from : 46 with DeclarationList to 45 Type: EdgeType.NON_TERMINAL
 token x
 target before pushing 45
@@ -913,10 +918,10 @@ start while 44
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: Declaration {'void', 'int'}
-XX Matching token: x ID to symbol: void result: False
+predict: Declaration {'int', 'void'}
 XX Matching token: x ID to symbol: int result: False
-EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x1051e3cb0>
+XX Matching token: x ID to symbol: void result: False
+EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x102af40c0>
 epsilon edge
 start while 45
 0
@@ -942,36 +947,36 @@ start while 32
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: StatementList {'+', 'break', '}', '{', 'ID', '(', 'while', 'return', '-', ';', 'NUM', 'if'}
-XX Matching token: x ID to symbol: + result: False
-XX Matching token: x ID to symbol: break result: False
+predict: StatementList {'}', '(', '-', 'if', '{', 'ID', 'break', 'return', 'while', ';', 'NUM', '+'}
 XX Matching token: x ID to symbol: } result: False
+XX Matching token: x ID to symbol: ( result: False
+XX Matching token: x ID to symbol: - result: False
+XX Matching token: x ID to symbol: if result: False
 XX Matching token: x ID to symbol: { result: False
 ID Matching ID token: x to symbol: ID result: True
-NON TERMINASLS: token x in {'+', 'break', '}', '{', 'ID', '(', 'while', 'return', '-', ';', 'NUM', 'if'}
+NON TERMINASLS: token x in {'}', '(', '-', 'if', '{', 'ID', 'break', 'return', 'while', ';', 'NUM', '+'}
 from : 32 with StatementList to 33 Type: EdgeType.NON_TERMINAL
 token x
 target before pushing 33
 We now are in : StatementList
-start while 140
+start while 141
 0
-2
+1
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: ε set()
-###22222222222222222222222222222222222222
-predict: Statement {'+', 'break', '{', 'ID', '(', 'while', 'return', '-', ';', 'NUM', 'if'}
-XX Matching token: x ID to symbol: + result: False
-XX Matching token: x ID to symbol: break result: False
+predict: Statement {'(', '-', 'if', '{', 'ID', 'break', 'return', 'while', ';', 'NUM', '+'}
+XX Matching token: x ID to symbol: ( result: False
+XX Matching token: x ID to symbol: - result: False
+XX Matching token: x ID to symbol: if result: False
 XX Matching token: x ID to symbol: { result: False
 ID Matching ID token: x to symbol: ID result: True
-NON TERMINASLS: token x in {'+', 'break', '{', 'ID', '(', 'while', 'return', '-', ';', 'NUM', 'if'}
-from : 140 with Statement to 142 Type: EdgeType.NON_TERMINAL
+NON TERMINASLS: token x in {'(', '-', 'if', '{', 'ID', 'break', 'return', 'while', ';', 'NUM', '+'}
+from : 141 with Statement to 143 Type: EdgeType.NON_TERMINAL
 token x
-target before pushing 142
+target before pushing 143
 We now are in : Statement
-start while 138
+start while 139
 0
 5
 False
@@ -980,16 +985,16 @@ hereeee
 predict: CompoundStmt {'{'}
 XX Matching token: x ID to symbol: { result: False
 ###22222222222222222222222222222222222222
-predict: ExpressionStmt {'+', '-', 'break', ';', 'NUM', 'ID', '('}
-XX Matching token: x ID to symbol: + result: False
+predict: ExpressionStmt {'(', '-', ';', 'NUM', '+', 'ID', 'break'}
+XX Matching token: x ID to symbol: ( result: False
 XX Matching token: x ID to symbol: - result: False
-XX Matching token: x ID to symbol: break result: False
 XX Matching token: x ID to symbol: ; result: False
+XX Matching token: x ID to symbol: + result: False
 ID Matching ID token: x to symbol: ID result: True
-NON TERMINASLS: token x in {'+', '-', 'break', ';', 'NUM', 'ID', '('}
-from : 138 with ExpressionStmt to 139 Type: EdgeType.NON_TERMINAL
+NON TERMINASLS: token x in {'(', '-', ';', 'NUM', '+', 'ID', 'break'}
+from : 139 with ExpressionStmt to 140 Type: EdgeType.NON_TERMINAL
 token x
-target before pushing 139
+target before pushing 140
 We now are in : ExpressionStmt
 start while 52
 2
@@ -1002,74 +1007,399 @@ None
 XX Matching token: x ID to symbol: ; result: False
 ###1111111111111111111111111111111111111111
 token x in break
-from : 52 with break to 54 Type: EdgeType.TERMINAL
+from : 52 with break to 55 Type: EdgeType.TERMINAL
 None
 XX Matching token: x ID to symbol: break result: False
 hereeee
 ###22222222222222222222222222222222222222
-predict: ε set()
-EPSILON None
-state id: 52
-ILLEGAL Token: x Follow of : ε set()
-start while 52
+predict: Expression {'(', '-', 'NUM', '+', 'ID'}
+XX Matching token: x ID to symbol: ( result: False
+XX Matching token: x ID to symbol: - result: False
+XX Matching token: x ID to symbol: + result: False
+ID Matching ID token: x to symbol: ID result: True
+NON TERMINASLS: token x in {'(', '-', 'NUM', '+', 'ID'}
+from : 52 with Expression to 54 Type: EdgeType.NON_TERMINAL
+token x
+target before pushing 54
+We now are in : Expression
+start while 49
+1
+1
+False
+###1111111111111111111111111111111111111111
+token x in ID
+from : 49 with ID to 51 Type: EdgeType.TERMINAL
+None
+ID Matching ID token: x to symbol: ID result: True
+###8888888888888888888888888
+Matched terminal: ID
+from : 49 with ID to 51 Type: EdgeType.TERMINAL
+token x
+############################################
+Matching token: x to terminal: ID
+ID Matching ID token: x to symbol: ID result: True
+Matched terminal: ID with token: x  IN match function
+salam
+from : 49 with ID to 51 Type: EdgeType.TERMINAL
+None 51
+terminal matched, continuing to next state
+start while 51
+0
+1
+False
+hereeee
+###22222222222222222222222222222222222222
+predict: B {'(', '-', '==', ')', '=', '[', ']', '<', '*', ';', '+', ','}
+XX Matching token: = SYMBOL to symbol: ( result: False
+XX Matching token: = SYMBOL to symbol: - result: False
+XX Matching token: = SYMBOL to symbol: == result: False
+XX Matching token: = SYMBOL to symbol: ) result: False
+XX Matching token: = SYMBOL to symbol: = result: True
+NON TERMINASLS: token = in {'(', '-', '==', ')', '=', '[', ']', '<', '*', ';', '+', ','}
+from : 51 with B to 50 Type: EdgeType.NON_TERMINAL
+token =
+target before pushing 50
+We now are in : B
+start while 20
 2
 1
 False
 ###1111111111111111111111111111111111111111
-token = in ;
-from : 52 with ; to 53 Type: EdgeType.TERMINAL
+token = in =
+from : 20 with = to 22 Type: EdgeType.TERMINAL
 None
-XX Matching token: = SYMBOL to symbol: ; result: False
-###1111111111111111111111111111111111111111
-token = in break
-from : 52 with break to 54 Type: EdgeType.TERMINAL
-None
-XX Matching token: = SYMBOL to symbol: break result: False
+XX Matching token: = SYMBOL to symbol: = result: False
+###8888888888888888888888888
+Matched terminal: =
+from : 20 with = to 22 Type: EdgeType.TERMINAL
+token =
+############################################
+Matching token: = to terminal: =
+XX Matching token: = SYMBOL to symbol: = result: False
+Matched terminal: = with token: =  IN match function
+salam
+from : 20 with = to 22 Type: EdgeType.TERMINAL
+None 22
+terminal matched, continuing to next state
+start while 22
+0
+1
+False
 hereeee
 ###22222222222222222222222222222222222222
-predict: ε set()
-EPSILON None
-state id: 52
-ILLEGAL Token: = Follow of : ε set()
-start while 52
+predict: Expression {'(', '-', 'NUM', '+', 'ID'}
+XX Matching token: 10 NUM to symbol: ( result: False
+XX Matching token: 10 NUM to symbol: - result: False
+NON TERMINASLS: token 10 in {'(', '-', 'NUM', '+', 'ID'}
+from : 22 with Expression to 21 Type: EdgeType.NON_TERMINAL
+token 10
+target before pushing 21
+We now are in : Expression
+start while 49
+1
+1
+False
+###1111111111111111111111111111111111111111
+token 10 in ID
+from : 49 with ID to 51 Type: EdgeType.TERMINAL
+None
+ID Matching ID token: 10 to symbol: ID result: False
+hereeee
+###22222222222222222222222222222222222222
+predict: SimpleExpressionZegond {'NUM', '+', '(', '-'}
+NON TERMINASLS: token 10 in {'NUM', '+', '(', '-'}
+from : 49 with SimpleExpressionZegond to 50 Type: EdgeType.NON_TERMINAL
+token 10
+target before pushing 50
+We now are in : SimpleExpressionZegond
+start while 136
+0
+1
+False
+hereeee
+###22222222222222222222222222222222222222
+predict: AdditiveExpressionZegond {'NUM', '+', '(', '-'}
+NON TERMINASLS: token 10 in {'NUM', '+', '(', '-'}
+from : 136 with AdditiveExpressionZegond to 138 Type: EdgeType.NON_TERMINAL
+token 10
+target before pushing 138
+We now are in : AdditiveExpressionZegond
+start while 6
+0
+1
+False
+hereeee
+###22222222222222222222222222222222222222
+predict: TermZegond {'NUM', '+', '(', '-'}
+NON TERMINASLS: token 10 in {'NUM', '+', '(', '-'}
+from : 6 with TermZegond to 8 Type: EdgeType.NON_TERMINAL
+token 10
+target before pushing 8
+We now are in : TermZegond
+start while 150
+0
+1
+False
+hereeee
+###22222222222222222222222222222222222222
+predict: SignedFactorZegond {'NUM', '+', '(', '-'}
+NON TERMINASLS: token 10 in {'NUM', '+', '(', '-'}
+from : 150 with SignedFactorZegond to 152 Type: EdgeType.NON_TERMINAL
+token 10
+target before pushing 152
+We now are in : SignedFactorZegond
+start while 129
 2
 1
 False
 ###1111111111111111111111111111111111111111
-token 10 in ;
-from : 52 with ; to 53 Type: EdgeType.TERMINAL
+token 10 in +
+from : 129 with + to 131 Type: EdgeType.TERMINAL
 None
-XX Matching token: 10 NUM to symbol: ; result: False
+XX Matching token: 10 NUM to symbol: + result: False
 ###1111111111111111111111111111111111111111
-token 10 in break
-from : 52 with break to 54 Type: EdgeType.TERMINAL
+token 10 in -
+from : 129 with - to 132 Type: EdgeType.TERMINAL
 None
-XX Matching token: 10 NUM to symbol: break result: False
+XX Matching token: 10 NUM to symbol: - result: False
 hereeee
 ###22222222222222222222222222222222222222
-predict: ε set()
-EPSILON None
-state id: 52
-ILLEGAL Token: 10 Follow of : ε set()
-start while 52
+predict: FactorZegond {'NUM', '('}
+NON TERMINASLS: token 10 in {'NUM', '('}
+from : 129 with FactorZegond to 130 Type: EdgeType.NON_TERMINAL
+token 10
+target before pushing 130
+We now are in : FactorZegond
+start while 65
 2
+0
+False
+###1111111111111111111111111111111111111111
+token 10 in (
+from : 65 with ( to 67 Type: EdgeType.TERMINAL
+None
+XX Matching token: 10 NUM to symbol: ( result: False
+###1111111111111111111111111111111111111111
+token 10 in NUM
+from : 65 with NUM to 66 Type: EdgeType.TERMINAL
+None
+###8888888888888888888888888
+Matched terminal: NUM
+from : 65 with NUM to 66 Type: EdgeType.TERMINAL
+token 10
+############################################
+Matching token: 10 to terminal: NUM
+Matched terminal: NUM with token: 10  IN match function
+salam
+from : 65 with NUM to 66 Type: EdgeType.TERMINAL
+None 66
+terminal matched, continuing to next state
+start while 66
+0
+0
+False
+hereeee
+EPSILON None
+reached final state
+state after popping 130
+going to the start of while after matching with nt
+start while 130
+0
+0
+False
+hereeee
+EPSILON None
+reached final state
+state after popping 152
+going to the start of while after matching with nt
+start while 152
+0
 1
+False
+hereeee
+###22222222222222222222222222222222222222
+predict: G {'-', '==', ')', ']', '<', '*', ';', '+', ','}
+XX Matching token: ; SYMBOL to symbol: - result: False
+XX Matching token: ; SYMBOL to symbol: == result: False
+XX Matching token: ; SYMBOL to symbol: ) result: False
+XX Matching token: ; SYMBOL to symbol: ] result: False
+XX Matching token: ; SYMBOL to symbol: < result: False
+XX Matching token: ; SYMBOL to symbol: * result: False
+XX Matching token: ; SYMBOL to symbol: ; result: True
+NON TERMINASLS: token ; in {'-', '==', ')', ']', '<', '*', ';', '+', ','}
+from : 152 with G to 151 Type: EdgeType.NON_TERMINAL
+token ;
+target before pushing 151
+We now are in : G
+start while 74
+1
+0
+False
+###1111111111111111111111111111111111111111
+token ; in *
+from : 74 with * to 76 Type: EdgeType.TERMINAL
+None
+XX Matching token: ; SYMBOL to symbol: * result: False
+hereeee
+EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x102af4e50>
+epsilon edge
+start while 75
+0
+0
+False
+hereeee
+EPSILON None
+reached final state
+state after popping 151
+going to the start of while after matching with nt
+start while 151
+0
+0
+False
+hereeee
+EPSILON None
+reached final state
+state after popping 8
+going to the start of while after matching with nt
+start while 8
+0
+1
+False
+hereeee
+###22222222222222222222222222222222222222
+predict: D {'-', '==', ')', ']', '<', ';', '+', ','}
+XX Matching token: ; SYMBOL to symbol: - result: False
+XX Matching token: ; SYMBOL to symbol: == result: False
+XX Matching token: ; SYMBOL to symbol: ) result: False
+XX Matching token: ; SYMBOL to symbol: ] result: False
+XX Matching token: ; SYMBOL to symbol: < result: False
+XX Matching token: ; SYMBOL to symbol: ; result: True
+NON TERMINASLS: token ; in {'-', '==', ')', ']', '<', ';', '+', ','}
+from : 8 with D to 7 Type: EdgeType.NON_TERMINAL
+token ;
+target before pushing 7
+We now are in : D
+start while 34
+0
+1
+False
+hereeee
+###22222222222222222222222222222222222222
+predict: Addop {'+', '-'}
+XX Matching token: ; SYMBOL to symbol: + result: False
+XX Matching token: ; SYMBOL to symbol: - result: False
+EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x102a23cb0>
+epsilon edge
+start while 35
+0
+0
+False
+hereeee
+EPSILON None
+reached final state
+state after popping 7
+going to the start of while after matching with nt
+start while 7
+0
+0
+False
+hereeee
+EPSILON None
+reached final state
+state after popping 138
+going to the start of while after matching with nt
+start while 138
+0
+1
+False
+hereeee
+###22222222222222222222222222222222222222
+predict: C {']', '<', '==', ')', ';', ','}
+XX Matching token: ; SYMBOL to symbol: ] result: False
+XX Matching token: ; SYMBOL to symbol: < result: False
+XX Matching token: ; SYMBOL to symbol: == result: False
+XX Matching token: ; SYMBOL to symbol: ) result: False
+XX Matching token: ; SYMBOL to symbol: ; result: True
+NON TERMINASLS: token ; in {']', '<', '==', ')', ';', ','}
+from : 138 with C to 137 Type: EdgeType.NON_TERMINAL
+token ;
+target before pushing 137
+We now are in : C
+start while 26
+0
+1
+False
+hereeee
+###22222222222222222222222222222222222222
+predict: Relop {'==', '<'}
+XX Matching token: ; SYMBOL to symbol: == result: False
+XX Matching token: ; SYMBOL to symbol: < result: False
+EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x102ab1950>
+epsilon edge
+start while 27
+0
+0
+False
+hereeee
+EPSILON None
+reached final state
+state after popping 137
+going to the start of while after matching with nt
+start while 137
+0
+0
+False
+hereeee
+EPSILON None
+reached final state
+state after popping 50
+going to the start of while after matching with nt
+start while 50
+0
+0
+False
+hereeee
+EPSILON None
+reached final state
+state after popping 21
+going to the start of while after matching with nt
+start while 21
+0
+0
+False
+hereeee
+EPSILON None
+reached final state
+state after popping 50
+going to the start of while after matching with nt
+start while 50
+0
+0
+False
+hereeee
+EPSILON None
+reached final state
+state after popping 54
+going to the start of while after matching with nt
+start while 54
+1
+0
 False
 ###1111111111111111111111111111111111111111
 token ; in ;
-from : 52 with ; to 53 Type: EdgeType.TERMINAL
+from : 54 with ; to 53 Type: EdgeType.TERMINAL
 None
 XX Matching token: ; SYMBOL to symbol: ; result: False
 ###8888888888888888888888888
 Matched terminal: ;
-from : 52 with ; to 53 Type: EdgeType.TERMINAL
+from : 54 with ; to 53 Type: EdgeType.TERMINAL
 token ;
 ############################################
 Matching token: ; to terminal: ;
 XX Matching token: ; SYMBOL to symbol: ; result: False
 Matched terminal: ; with token: ;  IN match function
 salam
-from : 52 with ; to 53 Type: EdgeType.TERMINAL
+from : 54 with ; to 53 Type: EdgeType.TERMINAL
 None 53
 terminal matched, continuing to next state
 start while 53
@@ -1079,7 +1409,7 @@ False
 hereeee
 EPSILON None
 reached final state
-state after popping 139
+state after popping 140
 ###22222222222222222222222222222222222222
 predict: IterationStmt {'while'}
 XX Matching token: } SYMBOL to symbol: while result: False
@@ -1090,7 +1420,48 @@ XX Matching token: } SYMBOL to symbol: return result: False
 predict: SelectionStmt {'if'}
 XX Matching token: } SYMBOL to symbol: if result: False
 going to the start of while after matching with nt
-start while 139
+start while 140
+0
+0
+False
+hereeee
+EPSILON None
+reached final state
+state after popping 143
+going to the start of while after matching with nt
+start while 143
+0
+1
+False
+hereeee
+###22222222222222222222222222222222222222
+predict: StatementList {'}', '(', '-', 'if', '{', 'ID', 'break', 'return', 'while', ';', 'NUM', '+'}
+XX Matching token: } SYMBOL to symbol: } result: True
+NON TERMINASLS: token } in {'}', '(', '-', 'if', '{', 'ID', 'break', 'return', 'while', ';', 'NUM', '+'}
+from : 143 with StatementList to 142 Type: EdgeType.NON_TERMINAL
+token }
+target before pushing 142
+We now are in : StatementList
+start while 141
+0
+1
+False
+hereeee
+###22222222222222222222222222222222222222
+predict: Statement {'(', '-', 'if', '{', 'ID', 'break', 'return', 'while', ';', 'NUM', '+'}
+XX Matching token: } SYMBOL to symbol: ( result: False
+XX Matching token: } SYMBOL to symbol: - result: False
+XX Matching token: } SYMBOL to symbol: if result: False
+XX Matching token: } SYMBOL to symbol: { result: False
+ID Matching ID token: } to symbol: ID result: False
+XX Matching token: } SYMBOL to symbol: break result: False
+XX Matching token: } SYMBOL to symbol: return result: False
+XX Matching token: } SYMBOL to symbol: while result: False
+XX Matching token: } SYMBOL to symbol: ; result: False
+XX Matching token: } SYMBOL to symbol: + result: False
+EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x102af7150>
+epsilon edge
+start while 142
 0
 0
 False
@@ -1101,46 +1472,35 @@ state after popping 142
 going to the start of while after matching with nt
 start while 142
 0
-1
-False
-hereeee
-###22222222222222222222222222222222222222
-predict: StatementList {'+', 'break', '}', '{', 'ID', '(', 'while', 'return', '-', ';', 'NUM', 'if'}
-XX Matching token: } SYMBOL to symbol: + result: False
-XX Matching token: } SYMBOL to symbol: break result: False
-XX Matching token: } SYMBOL to symbol: } result: True
-NON TERMINASLS: token } in {'+', 'break', '}', '{', 'ID', '(', 'while', 'return', '-', ';', 'NUM', 'if'}
-from : 142 with StatementList to 141 Type: EdgeType.NON_TERMINAL
-token }
-target before pushing 141
-We now are in : StatementList
-start while 140
 0
-2
 False
 hereeee
-###22222222222222222222222222222222222222
-predict: ε set()
-###22222222222222222222222222222222222222
-predict: Statement {'+', 'break', '{', 'ID', '(', 'while', 'return', '-', ';', 'NUM', 'if'}
-XX Matching token: } SYMBOL to symbol: + result: False
-XX Matching token: } SYMBOL to symbol: break result: False
-XX Matching token: } SYMBOL to symbol: { result: False
-ID Matching ID token: } to symbol: ID result: False
-XX Matching token: } SYMBOL to symbol: ( result: False
-XX Matching token: } SYMBOL to symbol: while result: False
-XX Matching token: } SYMBOL to symbol: return result: False
-XX Matching token: } SYMBOL to symbol: - result: False
-XX Matching token: } SYMBOL to symbol: ; result: False
-XX Matching token: } SYMBOL to symbol: if result: False
 EPSILON None
-state id: 140
-ILLEGAL Token: } Follow of : ε set()
-state after popping 141
-going to the start of while after matching with nt
+reached final state
 state after popping 33
 going to the start of while after matching with nt
-state after popping 69
+start while 33
+1
+0
+False
+###1111111111111111111111111111111111111111
+token } in }
+from : 33 with } to 30 Type: EdgeType.TERMINAL
+None
+XX Matching token: } SYMBOL to symbol: } result: False
+###8888888888888888888888888
+Matched terminal: }
+from : 33 with } to 30 Type: EdgeType.TERMINAL
+token }
+############################################
+Matching token: } to terminal: }
+XX Matching token: } SYMBOL to symbol: } result: False
+Matched terminal: } with token: }  IN match function
+salam
+from : 33 with } to 30 Type: EdgeType.TERMINAL
+None 30
+terminal matched, continuing to next state
+state after popping 70
 going to the start of while after matching with nt
 state after popping 48
 ###22222222222222222222222222222222222222
@@ -1152,7 +1512,7 @@ state after popping 39
 going to the start of while after matching with nt
 state after popping 46
 going to the start of while after matching with nt
-state after popping 105
+state after popping 106
 going to the start of while after matching with nt
 final token: 
 
@@ -1183,15 +1543,30 @@ Program
                           │     │                 └──   ├── ; -> ;
                           │     └──   ├── DeclarationList
                           │           └──   ├── epsilon
-                          └──   ├── StatementList
-                                ├──   ├── Statement
-                                │     └──   ├── ExpressionStmt
-                                │           ├──   ├── error -> illegal3 x
-                                │           ├──   ├── error -> illegal3 =
-                                │           ├──   ├── error -> illegal3 10
-                                │           └──   ├── ; -> ;
-                                └──   ├── StatementList
-                                      └──   ├── error -> illegal3 }
+                          ├──   ├── StatementList
+                          │     ├──   ├── Statement
+                          │     │     └──   ├── ExpressionStmt
+                          │     │           ├──   ├── Expression
+                          │     │           │     ├──   ├── ID -> x
+                          │     │           │     └──   ├── B
+                          │     │           │           ├──   ├── = -> =
+                          │     │           │           └──   ├── Expression
+                          │     │           │                 └──   ├── SimpleExpressionZegond
+                          │     │           │                       ├──   ├── AdditiveExpressionZegond
+                          │     │           │                       │     ├──   ├── TermZegond
+                          │     │           │                       │     │     ├──   ├── SignedFactorZegond
+                          │     │           │                       │     │     │     └──   ├── FactorZegond
+                          │     │           │                       │     │     │           └──   ├── NUM -> 10
+                          │     │           │                       │     │     └──   ├── G
+                          │     │           │                       │     │           └──   ├── epsilon
+                          │     │           │                       │     └──   ├── D
+                          │     │           │                       │           └──   ├── epsilon
+                          │     │           │                       └──   ├── C
+                          │     │           │                             └──   ├── epsilon
+                          │     │           └──   ├── ; -> ;
+                          │     └──   ├── StatementList
+                          │           └──   ├── epsilon
+                          └──   ├── } -> }
 
 
 Parsing completed successfully.
