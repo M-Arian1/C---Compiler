@@ -57,12 +57,12 @@ class DiagramParser:
         self.error_log.write(f"#{self.current_line_number} : syntax error, {message}\n")
     
     def match_token_to_symbol(self, symbol):
-        if symbol == "KEYWORD":
+        if str(symbol) == "KEYWORD":
             return self.current_state.type[1].value == Token.KEYWORD.value
-        if symbol == "ID":
+        if str(symbol) == "ID":
             print("ID Matching ID token:", self.current_token, "to symbol:", symbol, "result:", self.current_state.type[1].value == Token.ID.value)
             return self.current_state.type[1].value == Token.ID.value
-        if symbol == "NUM":
+        if str(symbol) == "NUM":
             return self.current_state.type[1].value == Token.NUM.value
         print("XX Matching token:", self.current_token, self.current_state.type[1].value, "to symbol:", symbol, "result:", self.current_token == symbol)
         return str(self.current_token) == str(symbol)
@@ -188,6 +188,7 @@ class DiagramParser:
             #check for epsilon
             if not transitioned and epsilon_edge is not None:
                 # Create epsilon node and add it to current node
+                print("epsilon edge")
                 epsilon_node = ParseNode('epsilon')
                 self.current_node.add_child(epsilon_node)
                 state = epsilon_edge.target
