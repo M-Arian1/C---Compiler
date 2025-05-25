@@ -147,7 +147,7 @@ class Grammar:
         "DeclarationList": {"int", "void", "ID", ";", "NUM", "(", "}", "{", "break", "if", "while", "return", "+", "-", "$"},
         "Declaration": {"int", "void"},
         "DeclarationInitial": {"int", "void"},
-        "DeclarationPrime": {";", "[", "{"},
+        "DeclarationPrime": {";", "[", "("},
         "VarDeclarationPrime": {";", "["},
         "FunDeclarationPrime": {"("},
         "TypeSpecifier": {"int", "void"},

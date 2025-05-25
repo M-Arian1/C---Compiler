@@ -1,1 +1,5 @@
-int a = 2;
+
+void main(void) {
+    int x;
+    x = 10;
+}

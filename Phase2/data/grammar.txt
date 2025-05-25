@@ -47,7 +47,7 @@ ParamPrime ~
 ParamPrime ~ [ ]
 Params ~ int ID ParamPrime ParamList
 Params ~ void
-Program ~ DeclarationList
+Program ~ DeclarationList $
 Relop ~ <
 Relop ~ ==
 ReturnStmt ~ return ReturnStmtPrime

@@ -96,7 +96,10 @@ class DiagramParser:
         self.parse_tree = ParseNode(start_symbol)
         self.current_node = self.parse_tree
         self.execute_diagram(start_symbol, start_diagram)
+        # self.current_state, self.current_token, self.current_line_number = self.scanner.get_next_token()
+        # print("final token in parse", self.current_token)
         if self.current_token != '$':
+            print("final token:", self.current_token)
             self.log_error(f"illegal {self.current_state.type[1].value}")
         self.error_log.close()
         return self.parse_tree
@@ -122,7 +125,7 @@ class DiagramParser:
                     terminal_transitions.append(edge)
                 elif edge.edge_type.value == EdgeType.NON_TERMINAL.value:
                     non_terminal_transitions.append(edge)
-                elif edge.edge_type == EdgeType.EPSILON:
+                elif edge.edge_type.value == EdgeType.EPSILON.value:
                     epsilon_edge = edge
              
             print(len(terminal_transitions))
@@ -212,7 +215,6 @@ class DiagramParser:
                     continue
                 elif edge.edge_type.value == EdgeType.NON_TERMINAL.value:
                     follow = self.grammar.get_follow(edge.get_name())
-                    
                     if self.check_in_set(follow):
                         print("##2222#222#####22####################################") 
                         print("token", self.current_token, "in", follow)       
@@ -224,6 +226,7 @@ class DiagramParser:
                         transitioned = True
                         continue
                     else: #TODO: Handle with synch
+                        print("ILLEGAL","Token:", self.current_token, "Follow of :", edge.get_name(), follow)
                         self.log_error(f"illegal {self.current_token}")
                         # Create error node for illegal token
                         error_node = ParseNode('error', f"illegal {self.current_token}")
@@ -235,10 +238,10 @@ class DiagramParser:
                 if state.is_final:
                     print("reached final state")
                     return
-                else:
-                    self.log_error(f"illegal {self.current_token}")
-                    self.current_state, self.current_token, self.current_line_number = self.scanner.get_next_token()
-                    state = diagram.start_state
+                # else:
+                #     self.log_error(f"illegal {self.current_token}")
+                #     self.current_state, self.current_token, self.current_line_number = self.scanner.get_next_token()
+                #     state = diagram.start_state
 
                 
                 
