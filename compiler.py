@@ -37,7 +37,7 @@ def main():
     diagrams = diagram_builder.build_all()
     print("Transition diagrams built...")
     
-    # diagram_builder.print_diagrams()
+    diagram_builder.print_diagrams()
 
     # Step 5: Parse
     print("Starting parsing...")

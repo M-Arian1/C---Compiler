@@ -60,11 +60,11 @@ class DiagramParser:
         if symbol == "KEYWORD":
             return self.current_state.type[1].value == Token.KEYWORD.value
         if symbol == "ID":
-            print("Matching ID token:", self.current_token, "to symbol:", symbol, "result:", self.current_state.type[1].value == Token.ID.value)
+            print("ID Matching ID token:", self.current_token, "to symbol:", symbol, "result:", self.current_state.type[1].value == Token.ID.value)
             return self.current_state.type[1].value == Token.ID.value
         if symbol == "NUM":
             return self.current_state.type[1].value == Token.NUM.value
-        print("Matching token:", self.current_token, "to symbol:", symbol, "result:", self.current_token == symbol)
+        print("NUM Matching token:", self.current_token, "to symbol:", symbol, "result:", self.current_token == symbol)
         return str(self.current_token) == str(symbol)
     
     
@@ -109,6 +109,7 @@ class DiagramParser:
         state = diagram.start_state
         
         while self.scanner.input_reader_has_next():
+            print("start while", state.get_id())
             transitioned = False
             epsilon_edge = None
             terminal_transitions = []
@@ -123,7 +124,10 @@ class DiagramParser:
                     non_terminal_transitions.append(edge)
                 elif edge.edge_type == EdgeType.EPSILON:
                     epsilon_edge = edge
-                    
+             
+            print(len(terminal_transitions))
+            print(len(non_terminal_transitions))   
+            print(transitioned)     
             for edge in terminal_transitions:
                 print("###1111111111111111111111111111111111111111")
                 print("token", self.current_token, "in", edge.symbol)
@@ -146,8 +150,10 @@ class DiagramParser:
                     
             if terminal_matched:
                 print("terminal matched, continuing to next state")
-                continue
+                
+                continue 
               # No match in terminals
+            print("hereeee")
             for edge in non_terminal_transitions:
                 print("###22222222222222222222222222222222222222")
                 predict = self.grammar.get_predict(edge.get_name())
@@ -186,6 +192,7 @@ class DiagramParser:
                 continue
               #if Reaches here : syntax error
             if not state.is_final:
+                print("state id:", state.get_id())
                 error_edge = state.edges[0]
                 edge = error_edge
                 if edge.edge_type.value == EdgeType.TERMINAL.value:
@@ -220,6 +227,7 @@ class DiagramParser:
             
             if not transitioned:
                 if state.is_final:
+                    print("reached final state")
                     return
                 else:
                     self.log_error(f"illegal {self.current_token}")
