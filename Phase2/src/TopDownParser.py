@@ -1,10 +1,10 @@
 from enum import Enum
 from Phase1.src.Tokens import Token
+
 class EdgeType(Enum):
     TERMINAL = 'TERMINAL'
     NON_TERMINAL = 'NON_TERMINAL'
     EPSILON = 'EPSILON'
-    
 
 
 class ParserEdge:
@@ -41,12 +41,12 @@ class ParserDiagram:
 
 
 class DiagramParser:
-    
+
     def __init__(self, grammar, diagrams, scanner):
         self.grammar = grammar
         self.diagrams = diagrams
         self.scanner = scanner
-        self.current_state ,self.current_token, self.current_line_number = self.scanner.get_next_token()
+        self.current_state, self.current_token, self.current_line_number = self.scanner.get_next_token()
         self.return_stack = []
         self.parse_tree = None
         self.current_node = None
@@ -57,39 +57,27 @@ class DiagramParser:
         self.missing_end_detected = False
 
     def log_error(self, message):
-        # return
-        # self.error_log.write(f"#{self.current_line_number} : syntax error, {message}\n")
         self.error_messages.append(f"#{self.current_line_number} : syntax error, {message}\n")
-    
+
     def match_token_to_symbol(self, symbol):
         if str(symbol) == "KEYWORD":
             return self.current_state.type[1].value == Token.KEYWORD.value
         if str(symbol) == "ID":
-            print("ID Matching ID token:", self.current_token, "to symbol:", symbol, "result:", self.current_state.type[1].value == Token.ID.value)
             return self.current_state.type[1].value == Token.ID.value
         if str(symbol) == "NUM":
             return self.current_state.type[1].value == Token.NUM.value
-        print("XX Matching token:", self.current_token, self.current_state.type[1].value, "to symbol:", symbol, "result:", self.current_token == symbol)
         return str(self.current_token) == str(symbol)
-    
-    
+
     def check_in_set(self, set):
         for p in set:
             if self.match_token_to_symbol(p):
                 return True
-            
         return False
-        
 
     def match(self, terminal):
-        print("############################################")
-        print("Matching token:", self.current_token, "to terminal:", terminal)
         if self.match_token_to_symbol(terminal):
             matched = self.current_token
             self.current_state, self.current_token, self.current_line_number = self.scanner.get_next_token()
-            print("TOKEN took from SCANNER", self.current_token,"type", self.current_state.type[1].value)
-            print("Matched terminal:", terminal, "with token:", matched , " IN match function")
-            # print(self.current_token)
             return matched
         else:
             self.log_error(f"missing {terminal}")
@@ -98,20 +86,14 @@ class DiagramParser:
     def parse(self, start_symbol):
         from Phase2.src.TreeHandler import ParseNode
         start_diagram = self.diagrams[start_symbol]
-        print(self.current_token)
         self.parse_tree = ParseNode(start_symbol)
         self.current_node = self.parse_tree
         self.execute_diagram(start_symbol, start_diagram)
-        # self.current_state, self.current_token, self.current_line_number = self.scanner.get_next_token()
-        # print("final token in parse", self.current_token, "CHECK", self.current_token == chr(26))
-        
-        if self.current_token != '$':
 
-            # self.log_error(f"illegal {self.current_state.type[1].value}")
-            # self.log_error(self.current_token)
-            terminal_node = ParseNode('$','$')
+        if self.current_token != '$':
+            terminal_node = ParseNode('$', '$')
             self.current_node.add_child(terminal_node)
-        
+
         with self.error_log as f:
             if self.error_messages:
                 f.write("".join(self.error_messages))
@@ -120,27 +102,19 @@ class DiagramParser:
 
         self.error_log.close()
         return self.parse_tree
-    
 
-            
     def execute_diagram(self, diagram_name, diagram):
         from Phase2.src.TreeHandler import ParseNode
-        print("We now are in :", diagram_name)
         state = diagram.start_state
-        #Final token:
-        # if not self.scanner.input_reader_has_next():
-             
-        
+
         while (self.scanner.input_reader_has_next() or self.current_token == '$') and not self.unexpected_eof_flag and not self.missing_end_detected:
-            print("start while", state.get_id())
             transitioned = False
             epsilon_edge = None
             terminal_transitions = []
             non_terminal_transitions = []
             terminal_matched = False
             non_terminal_matched = False
-            
-            
+
             for edge in state.edges:
                 if edge.edge_type.value == EdgeType.TERMINAL.value:
                     terminal_transitions.append(edge)
@@ -148,130 +122,81 @@ class DiagramParser:
                     non_terminal_transitions.append(edge)
                 elif edge.edge_type.value == EdgeType.EPSILON.value:
                     epsilon_edge = edge
-             
-            print(len(terminal_transitions))
-            print(len(non_terminal_transitions))   
-            print(transitioned)     
+
             for edge in terminal_transitions:
-                print("###1111111111111111111111111111111111111111")
-                print("token", self.current_token, "in", edge.symbol)
-                print(edge.edge_info())
                 if self.match_token_to_symbol(edge.symbol):
-                    print("###8888888888888888888888888")
-                    print("Matched terminal:", edge.symbol)
-                    # Create terminal node and add it to current node
                     terminal_node = ParseNode(edge.symbol, self.current_token)
                     self.current_node.add_child(terminal_node)
-                    edge.edge_info()
-                    print("token", self.current_token)
                     self.match(edge.symbol)
-                    print("salam")
                     state = edge.target
-                    print(edge.edge_info(), state.get_id())
                     transitioned = True
                     terminal_matched = True
                     break
-                    
+
             if terminal_matched:
-                print("terminal matched, continuing to next state")
-                continue 
-              # No match in terminals
-            print("hereeee")
+                continue
+
             for edge in non_terminal_transitions:
-                print("###22222222222222222222222222222222222222")
                 predict = self.grammar.get_predict(edge.get_name())
-                print("predict:", edge.get_name(), predict)
                 if self.check_in_set(predict):
-                    print("NON TERMINASLS: token", self.current_token, "in", predict)
-                    # Create non-terminal node
                     non_terminal_node = ParseNode(edge.symbol)
                     self.current_node.add_child(non_terminal_node)
-                    
-                    # Save current node and update it for recursive call
+
                     parent_node = self.current_node
                     self.current_node = non_terminal_node
-                    
+
                     self.return_stack.append(edge.target)
-                    edge.edge_info()
-                    print("token", self.current_token)
-                    print("target before pushing", edge.target.get_id())
                     self.execute_diagram(edge.symbol, self.diagrams[str(edge.symbol)])
-                    
-                    # Restore the current node after recursion
+
                     self.current_node = parent_node
                     state = self.return_stack.pop()
-                    print("state after popping", state.get_id())
                     transitioned = True
                     non_terminal_matched = True
                     break
-            
+
             if non_terminal_matched:
-                print("going to the start of while after matching with nt")
-                continue            #if reaches here: no match
-            
-            print("EPSILON",epsilon_edge)
-            
-            #check for epsilon
+                continue
+
             if not transitioned and epsilon_edge is not None:
-                # Create epsilon node and add it to current node
-                print("epsilon edge")
                 epsilon_node = ParseNode('epsilon')
                 self.current_node.add_child(epsilon_node)
                 state = epsilon_edge.target
                 continue
-              #if Reaches here : syntax error
+
             if not state.is_final:
                 if self.current_token == "$":
-                        self.log_error(f"Unexpected EOF")
-                        self.unexpected_eof_flag = True
-                        return
-                print("state id:", state.get_id())
+                    self.log_error(f"Unexpected EOF")
+                    self.unexpected_eof_flag = True
+                    return
+
                 error_edge = state.edges[0]
                 edge = error_edge
                 if edge.edge_type.value == EdgeType.TERMINAL.value:
                     if str(edge.symbol) == "$":
                         self.missing_end_detected = True
                         transitioned = True
-                        
                         return
                     else:
-                        print("###11###11##########111############################")
-                        print("token", self.current_token, "in", edge.symbol)
                         self.log_error(f"missing {edge.symbol}")
-                        # Create error node for missing terminal
-                        # error_node = ParseNode('error', f"missing {edge.symbol}")
-                        # self.current_node.add_child(error_node)
                         state = error_edge.target
                         transitioned = True
                         continue
                 elif edge.edge_type.value == EdgeType.NON_TERMINAL.value:
                     follow = self.grammar.get_follow(edge.get_name())
                     if self.check_in_set(follow):
-                        print("##2222#222#####22####################################") 
-                        print("token", self.current_token, "in", follow)       
                         self.log_error(f"missing {edge.symbol}")
-                        # Create error node for missing non-terminal
-                        # error_node = ParseNode('error', f"missing {edge.symbol}")
-                        # self.current_node.add_child(error_node)
                         state = edge.target
                         transitioned = True
                         continue
-                    else: #TODO: Handle with synch
-                        print("ILLEGAL","Token:", self.current_token, "Follow of :", edge.get_name(), follow)
+                    else:
                         if self.current_state.type[1].value == Token.ID.value or self.current_state.type[1].value == Token.NUM.value:
                             syntax_error_txt = self.current_state.type[1].value
                         else:
                             syntax_error_txt = self.current_token
                         self.log_error(f"illegal2 {syntax_error_txt}")
-                        # Create error node for illegal token
-                        # error_node = ParseNode('error', f"illegal3 {self.current_token}")
-                        # self.current_node.add_child(error_node)
                         self.current_state, self.current_token, self.current_line_number = self.scanner.get_next_token()
-                        continue  # Resynchronize by returning from current diagram
-            
+                        continue
+
             if not transitioned:
                 if state.is_final:
-                    print("reached final state")
                     return
-                              
-     
