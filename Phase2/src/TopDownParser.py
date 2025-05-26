@@ -51,13 +51,15 @@ class DiagramParser:
         self.parse_tree = None
         self.current_node = None
         self.error_log = open('syntax_errors.txt', 'w')
+        self.error_messages = []
         self.type = None
         self.unexpected_eof_flag = False
         self.missing_end_detected = False
 
     def log_error(self, message):
         # return
-        self.error_log.write(f"#{self.current_line_number} : syntax error, {message}\n")
+        # self.error_log.write(f"#{self.current_line_number} : syntax error, {message}\n")
+        self.error_messages.append(f"#{self.current_line_number} : syntax error, {message}\n")
     
     def match_token_to_symbol(self, symbol):
         if str(symbol) == "KEYWORD":
@@ -109,7 +111,13 @@ class DiagramParser:
             # self.log_error(self.current_token)
             terminal_node = ParseNode('$','$')
             self.current_node.add_child(terminal_node)
-            
+        
+        with self.error_log as f:
+            if self.error_messages:
+                f.write("".join(self.error_messages))
+            else:
+                f.write("There is no syntax error.\n")
+
         self.error_log.close()
         return self.parse_tree
     

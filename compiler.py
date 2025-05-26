@@ -48,6 +48,10 @@ def main():
         parse_tree = parser.parse("Program")  # Entry point for parsing
         print("\nParse Tree:")
         print(parse_tree)  # This will use the ParseNode's __str__ method
+        # Save parse tree to file
+        with open('parse_tree.txt', 'w') as f:
+            f.write(str(parse_tree))
+
         print("\nParsing completed successfully.")
     except Exception as e:
         print("Parsing failed with error:")
