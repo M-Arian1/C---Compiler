@@ -52,6 +52,7 @@ class DiagramParser:
         self.current_node = None
         self.error_log = open('syntax_errors.txt', 'w')
         self.type = None
+        self.unexpected_eof_flag = False
 
     def log_error(self, message):
         self.error_log.write(f"#{self.current_line_number} : syntax error, {message}\n")
@@ -102,7 +103,7 @@ class DiagramParser:
         
         if self.current_token != '$':
             print("final token:", self.current_token)
-            self.log_error(f"illegal f {self.current_state.type[1].value}")
+            self.log_error(f"illegal {self.current_state.type[1].value}")
             self.log_error(self.current_token)
         self.error_log.close()
         return self.parse_tree
@@ -113,8 +114,11 @@ class DiagramParser:
         from Phase2.src.TreeHandler import ParseNode
         print("We now are in :", diagram_name)
         state = diagram.start_state
+        #Final token:
+        # if not self.scanner.input_reader_has_next():
+             
         
-        while self.scanner.input_reader_has_next():
+        while (self.scanner.input_reader_has_next() or self.current_token == '$') and not self.unexpected_eof_flag :
             print("start while", state.get_id())
             transitioned = False
             epsilon_edge = None
@@ -122,6 +126,7 @@ class DiagramParser:
             non_terminal_transitions = []
             terminal_matched = False
             non_terminal_matched = False
+            
             
             for edge in state.edges:
                 if edge.edge_type.value == EdgeType.TERMINAL.value:
@@ -185,7 +190,7 @@ class DiagramParser:
                     print("state after popping", state.get_id())
                     transitioned = True
                     non_terminal_matched = True
-                    continue
+                    break
             
             if non_terminal_matched:
                 print("going to the start of while after matching with nt")
@@ -203,6 +208,10 @@ class DiagramParser:
                 continue
               #if Reaches here : syntax error
             if not state.is_final:
+                if self.current_token == "$":
+                        self.log_error(f"Unexpected EOF")
+                        self.unexpected_eof_flag = True
+                        return
                 print("state id:", state.get_id())
                 error_edge = state.edges[0]
                 edge = error_edge
