@@ -53,6 +53,7 @@ class DiagramParser:
         self.error_log = open('syntax_errors.txt', 'w')
         self.type = None
         self.unexpected_eof_flag = False
+        self.missing_end_detected = False
 
     def log_error(self, message):
         # return
@@ -100,13 +101,13 @@ class DiagramParser:
         self.current_node = self.parse_tree
         self.execute_diagram(start_symbol, start_diagram)
         # self.current_state, self.current_token, self.current_line_number = self.scanner.get_next_token()
-        print("final token in parse", self.current_token, "CHECK", self.current_token == chr(26))
+        # print("final token in parse", self.current_token, "CHECK", self.current_token == chr(26))
         
-        if self.current_token != '$':
-            print("final token:", self.current_token)
-            self.log_error(f"illegal {self.current_state.type[1].value}")
-            self.log_error(self.current_token)
-        self.error_log.close()
+        # if self.current_token != '$':
+        #     print("final token:", self.current_token)
+        #     self.log_error(f"illegal {self.current_state.type[1].value}")
+        #     self.log_error(self.current_token)
+        # self.error_log.close()
         return self.parse_tree
     
 
@@ -119,7 +120,7 @@ class DiagramParser:
         # if not self.scanner.input_reader_has_next():
              
         
-        while (self.scanner.input_reader_has_next() or self.current_token == '$') and not self.unexpected_eof_flag :
+        while (self.scanner.input_reader_has_next() or self.current_token == '$') and not self.unexpected_eof_flag and not self.missing_end_detected:
             print("start while", state.get_id())
             transitioned = False
             epsilon_edge = None
@@ -217,15 +218,21 @@ class DiagramParser:
                 error_edge = state.edges[0]
                 edge = error_edge
                 if edge.edge_type.value == EdgeType.TERMINAL.value:
-                    print("###11###11##########111############################")
-                    print("token", self.current_token, "in", edge.symbol)
-                    self.log_error(f"missing {edge.symbol}")
-                    # Create error node for missing terminal
-                    # error_node = ParseNode('error', f"missing {edge.symbol}")
-                    # self.current_node.add_child(error_node)
-                    state = error_edge.target
-                    transitioned = True
-                    continue
+                    if str(edge.symbol) == "$":
+                        self.missing_end_detected = True
+                        transitioned = True
+                        
+                        return
+                    else:
+                        print("###11###11##########111############################")
+                        print("token", self.current_token, "in", edge.symbol)
+                        self.log_error(f"missing {edge.symbol}")
+                        # Create error node for missing terminal
+                        # error_node = ParseNode('error', f"missing {edge.symbol}")
+                        # self.current_node.add_child(error_node)
+                        state = error_edge.target
+                        transitioned = True
+                        continue
                 elif edge.edge_type.value == EdgeType.NON_TERMINAL.value:
                     follow = self.grammar.get_follow(edge.get_name())
                     if self.check_in_set(follow):
@@ -240,7 +247,11 @@ class DiagramParser:
                         continue
                     else: #TODO: Handle with synch
                         print("ILLEGAL","Token:", self.current_token, "Follow of :", edge.get_name(), follow)
-                        self.log_error(f"illegal2 {self.current_token}")
+                        if self.current_state.type[1].value == Token.ID.value or self.current_state.type[1].value == Token.NUM.value:
+                            syntax_error_txt = self.current_state.type[1].value
+                        else:
+                            syntax_error_txt = self.current_token
+                        self.log_error(f"illegal2 {syntax_error_txt}")
                         # Create error node for illegal token
                         # error_node = ParseNode('error', f"illegal3 {self.current_token}")
                         # self.current_node.add_child(error_node)
