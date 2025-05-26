@@ -103,11 +103,14 @@ class DiagramParser:
         # self.current_state, self.current_token, self.current_line_number = self.scanner.get_next_token()
         # print("final token in parse", self.current_token, "CHECK", self.current_token == chr(26))
         
-        # if self.current_token != '$':
-        #     print("final token:", self.current_token)
-        #     self.log_error(f"illegal {self.current_state.type[1].value}")
-        #     self.log_error(self.current_token)
-        # self.error_log.close()
+        if self.current_token != '$':
+
+            # self.log_error(f"illegal {self.current_state.type[1].value}")
+            # self.log_error(self.current_token)
+            terminal_node = ParseNode('$','$')
+            self.current_node.add_child(terminal_node)
+            
+        self.error_log.close()
         return self.parse_tree
     
 

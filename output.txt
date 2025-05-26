@@ -431,21 +431,22 @@ start while 104
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: DeclarationList {'break', 'ID', ';', '(', 'return', '}', '$', '-', 'if', 'while', 'void', '+', 'int', 'NUM', '{'}
+predict: DeclarationList {'break', ';', 'void', 'while', '(', '}', '$', 'ID', 'if', 'NUM', 'return', '{', '+', '-', 'int'}
 XX Matching token: int KEYWORD to symbol: break result: False
-ID Matching ID token: int to symbol: ID result: False
 XX Matching token: int KEYWORD to symbol: ; result: False
+XX Matching token: int KEYWORD to symbol: void result: False
+XX Matching token: int KEYWORD to symbol: while result: False
 XX Matching token: int KEYWORD to symbol: ( result: False
-XX Matching token: int KEYWORD to symbol: return result: False
 XX Matching token: int KEYWORD to symbol: } result: False
 XX Matching token: int KEYWORD to symbol: $ result: False
-XX Matching token: int KEYWORD to symbol: - result: False
+ID Matching ID token: int to symbol: ID result: False
 XX Matching token: int KEYWORD to symbol: if result: False
-XX Matching token: int KEYWORD to symbol: while result: False
-XX Matching token: int KEYWORD to symbol: void result: False
+XX Matching token: int KEYWORD to symbol: return result: False
+XX Matching token: int KEYWORD to symbol: { result: False
 XX Matching token: int KEYWORD to symbol: + result: False
+XX Matching token: int KEYWORD to symbol: - result: False
 XX Matching token: int KEYWORD to symbol: int result: True
-NON TERMINASLS: token int in {'break', 'ID', ';', '(', 'return', '}', '$', '-', 'if', 'while', 'void', '+', 'int', 'NUM', '{'}
+NON TERMINASLS: token int in {'break', ';', 'void', 'while', '(', '}', '$', 'ID', 'if', 'NUM', 'return', '{', '+', '-', 'int'}
 from : 104 with DeclarationList to 106 Type: EdgeType.NON_TERMINAL
 token int
 target before pushing 106
@@ -456,10 +457,9 @@ start while 44
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: Declaration {'void', 'int'}
-XX Matching token: int KEYWORD to symbol: void result: False
+predict: Declaration {'int', 'void'}
 XX Matching token: int KEYWORD to symbol: int result: True
-NON TERMINASLS: token int in {'void', 'int'}
+NON TERMINASLS: token int in {'int', 'void'}
 from : 44 with Declaration to 46 Type: EdgeType.NON_TERMINAL
 token int
 target before pushing 46
@@ -470,10 +470,9 @@ start while 38
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: DeclarationInitial {'void', 'int'}
-XX Matching token: int KEYWORD to symbol: void result: False
+predict: DeclarationInitial {'int', 'void'}
 XX Matching token: int KEYWORD to symbol: int result: True
-NON TERMINASLS: token int in {'void', 'int'}
+NON TERMINASLS: token int in {'int', 'void'}
 from : 38 with DeclarationInitial to 40 Type: EdgeType.NON_TERMINAL
 token int
 target before pushing 40
@@ -484,10 +483,9 @@ start while 41
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: TypeSpecifier {'void', 'int'}
-XX Matching token: int KEYWORD to symbol: void result: False
+predict: TypeSpecifier {'int', 'void'}
 XX Matching token: int KEYWORD to symbol: int result: True
-NON TERMINASLS: token int in {'void', 'int'}
+NON TERMINASLS: token int in {'int', 'void'}
 from : 41 with TypeSpecifier to 43 Type: EdgeType.NON_TERMINAL
 token int
 target before pushing 43
@@ -560,9 +558,10 @@ start while 40
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: DeclarationPrime {'(', '[', ';'}
+predict: DeclarationPrime {'[', '(', ';'}
+XX Matching token: ( SYMBOL to symbol: [ result: False
 XX Matching token: ( SYMBOL to symbol: ( result: True
-NON TERMINASLS: token ( in {'(', '[', ';'}
+NON TERMINASLS: token ( in {'[', '(', ';'}
 from : 40 with DeclarationPrime to 39 Type: EdgeType.NON_TERMINAL
 token (
 target before pushing 39
@@ -608,10 +607,9 @@ start while 71
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: Params {'void', 'int'}
-XX Matching token: int KEYWORD to symbol: void result: False
+predict: Params {'int', 'void'}
 XX Matching token: int KEYWORD to symbol: int result: True
-NON TERMINASLS: token int in {'void', 'int'}
+NON TERMINASLS: token int in {'int', 'void'}
 from : 71 with Params to 72 Type: EdgeType.NON_TERMINAL
 token int
 target before pushing 72
@@ -768,10 +766,9 @@ start while 94
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: Param {'void', 'int'}
-XX Matching token: int KEYWORD to symbol: void result: False
+predict: Param {'int', 'void'}
 XX Matching token: int KEYWORD to symbol: int result: True
-NON TERMINASLS: token int in {'void', 'int'}
+NON TERMINASLS: token int in {'int', 'void'}
 from : 94 with Param to 95 Type: EdgeType.NON_TERMINAL
 token int
 target before pushing 95
@@ -782,10 +779,9 @@ start while 89
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: DeclarationInitial {'void', 'int'}
-XX Matching token: int KEYWORD to symbol: void result: False
+predict: DeclarationInitial {'int', 'void'}
 XX Matching token: int KEYWORD to symbol: int result: True
-NON TERMINASLS: token int in {'void', 'int'}
+NON TERMINASLS: token int in {'int', 'void'}
 from : 89 with DeclarationInitial to 91 Type: EdgeType.NON_TERMINAL
 token int
 target before pushing 91
@@ -796,10 +792,9 @@ start while 41
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: TypeSpecifier {'void', 'int'}
-XX Matching token: int KEYWORD to symbol: void result: False
+predict: TypeSpecifier {'int', 'void'}
 XX Matching token: int KEYWORD to symbol: int result: True
-NON TERMINASLS: token int in {'void', 'int'}
+NON TERMINASLS: token int in {'int', 'void'}
 from : 41 with TypeSpecifier to 43 Type: EdgeType.NON_TERMINAL
 token int
 target before pushing 43
@@ -891,7 +886,7 @@ from : 96 with [ to 98 Type: EdgeType.TERMINAL
 None
 XX Matching token: ) SYMBOL to symbol: [ result: False
 hereeee
-EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x104ffdfd0>
+EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x102969fd0>
 epsilon edge
 start while 97
 0
@@ -935,7 +930,7 @@ from : 92 with , to 94 Type: EdgeType.TERMINAL
 None
 XX Matching token: ) SYMBOL to symbol: , result: False
 hereeee
-EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x104ffdda0>
+EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x102969da0>
 epsilon edge
 start while 93
 0
@@ -1027,21 +1022,22 @@ start while 31
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: DeclarationList {'break', 'ID', ';', '(', 'return', '}', '$', '-', 'if', 'while', 'void', '+', 'int', 'NUM', '{'}
+predict: DeclarationList {'break', ';', 'void', 'while', '(', '}', '$', 'ID', 'if', 'NUM', 'return', '{', '+', '-', 'int'}
 XX Matching token: int KEYWORD to symbol: break result: False
-ID Matching ID token: int to symbol: ID result: False
 XX Matching token: int KEYWORD to symbol: ; result: False
+XX Matching token: int KEYWORD to symbol: void result: False
+XX Matching token: int KEYWORD to symbol: while result: False
 XX Matching token: int KEYWORD to symbol: ( result: False
-XX Matching token: int KEYWORD to symbol: return result: False
 XX Matching token: int KEYWORD to symbol: } result: False
 XX Matching token: int KEYWORD to symbol: $ result: False
-XX Matching token: int KEYWORD to symbol: - result: False
+ID Matching ID token: int to symbol: ID result: False
 XX Matching token: int KEYWORD to symbol: if result: False
-XX Matching token: int KEYWORD to symbol: while result: False
-XX Matching token: int KEYWORD to symbol: void result: False
+XX Matching token: int KEYWORD to symbol: return result: False
+XX Matching token: int KEYWORD to symbol: { result: False
 XX Matching token: int KEYWORD to symbol: + result: False
+XX Matching token: int KEYWORD to symbol: - result: False
 XX Matching token: int KEYWORD to symbol: int result: True
-NON TERMINASLS: token int in {'break', 'ID', ';', '(', 'return', '}', '$', '-', 'if', 'while', 'void', '+', 'int', 'NUM', '{'}
+NON TERMINASLS: token int in {'break', ';', 'void', 'while', '(', '}', '$', 'ID', 'if', 'NUM', 'return', '{', '+', '-', 'int'}
 from : 31 with DeclarationList to 32 Type: EdgeType.NON_TERMINAL
 token int
 target before pushing 32
@@ -1052,10 +1048,9 @@ start while 44
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: Declaration {'void', 'int'}
-XX Matching token: int KEYWORD to symbol: void result: False
+predict: Declaration {'int', 'void'}
 XX Matching token: int KEYWORD to symbol: int result: True
-NON TERMINASLS: token int in {'void', 'int'}
+NON TERMINASLS: token int in {'int', 'void'}
 from : 44 with Declaration to 46 Type: EdgeType.NON_TERMINAL
 token int
 target before pushing 46
@@ -1066,10 +1061,9 @@ start while 38
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: DeclarationInitial {'void', 'int'}
-XX Matching token: int KEYWORD to symbol: void result: False
+predict: DeclarationInitial {'int', 'void'}
 XX Matching token: int KEYWORD to symbol: int result: True
-NON TERMINASLS: token int in {'void', 'int'}
+NON TERMINASLS: token int in {'int', 'void'}
 from : 38 with DeclarationInitial to 40 Type: EdgeType.NON_TERMINAL
 token int
 target before pushing 40
@@ -1080,10 +1074,9 @@ start while 41
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: TypeSpecifier {'void', 'int'}
-XX Matching token: int KEYWORD to symbol: void result: False
+predict: TypeSpecifier {'int', 'void'}
 XX Matching token: int KEYWORD to symbol: int result: True
-NON TERMINASLS: token int in {'void', 'int'}
+NON TERMINASLS: token int in {'int', 'void'}
 from : 41 with TypeSpecifier to 43 Type: EdgeType.NON_TERMINAL
 token int
 target before pushing 43
@@ -1156,11 +1149,11 @@ start while 40
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: DeclarationPrime {'(', '[', ';'}
-XX Matching token: ; SYMBOL to symbol: ( result: False
+predict: DeclarationPrime {'[', '(', ';'}
 XX Matching token: ; SYMBOL to symbol: [ result: False
+XX Matching token: ; SYMBOL to symbol: ( result: False
 XX Matching token: ; SYMBOL to symbol: ; result: True
-NON TERMINASLS: token ; in {'(', '[', ';'}
+NON TERMINASLS: token ; in {'[', '(', ';'}
 from : 40 with DeclarationPrime to 39 Type: EdgeType.NON_TERMINAL
 token ;
 target before pushing 39
@@ -1237,21 +1230,22 @@ start while 46
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: DeclarationList {'break', 'ID', ';', '(', 'return', '}', '$', '-', 'if', 'while', 'void', '+', 'int', 'NUM', '{'}
+predict: DeclarationList {'break', ';', 'void', 'while', '(', '}', '$', 'ID', 'if', 'NUM', 'return', '{', '+', '-', 'int'}
 XX Matching token: int KEYWORD to symbol: break result: False
-ID Matching ID token: int to symbol: ID result: False
 XX Matching token: int KEYWORD to symbol: ; result: False
+XX Matching token: int KEYWORD to symbol: void result: False
+XX Matching token: int KEYWORD to symbol: while result: False
 XX Matching token: int KEYWORD to symbol: ( result: False
-XX Matching token: int KEYWORD to symbol: return result: False
 XX Matching token: int KEYWORD to symbol: } result: False
 XX Matching token: int KEYWORD to symbol: $ result: False
-XX Matching token: int KEYWORD to symbol: - result: False
+ID Matching ID token: int to symbol: ID result: False
 XX Matching token: int KEYWORD to symbol: if result: False
-XX Matching token: int KEYWORD to symbol: while result: False
-XX Matching token: int KEYWORD to symbol: void result: False
+XX Matching token: int KEYWORD to symbol: return result: False
+XX Matching token: int KEYWORD to symbol: { result: False
 XX Matching token: int KEYWORD to symbol: + result: False
+XX Matching token: int KEYWORD to symbol: - result: False
 XX Matching token: int KEYWORD to symbol: int result: True
-NON TERMINASLS: token int in {'break', 'ID', ';', '(', 'return', '}', '$', '-', 'if', 'while', 'void', '+', 'int', 'NUM', '{'}
+NON TERMINASLS: token int in {'break', ';', 'void', 'while', '(', '}', '$', 'ID', 'if', 'NUM', 'return', '{', '+', '-', 'int'}
 from : 46 with DeclarationList to 45 Type: EdgeType.NON_TERMINAL
 token int
 target before pushing 45
@@ -1262,10 +1256,9 @@ start while 44
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: Declaration {'void', 'int'}
-XX Matching token: int KEYWORD to symbol: void result: False
+predict: Declaration {'int', 'void'}
 XX Matching token: int KEYWORD to symbol: int result: True
-NON TERMINASLS: token int in {'void', 'int'}
+NON TERMINASLS: token int in {'int', 'void'}
 from : 44 with Declaration to 46 Type: EdgeType.NON_TERMINAL
 token int
 target before pushing 46
@@ -1276,10 +1269,9 @@ start while 38
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: DeclarationInitial {'void', 'int'}
-XX Matching token: int KEYWORD to symbol: void result: False
+predict: DeclarationInitial {'int', 'void'}
 XX Matching token: int KEYWORD to symbol: int result: True
-NON TERMINASLS: token int in {'void', 'int'}
+NON TERMINASLS: token int in {'int', 'void'}
 from : 38 with DeclarationInitial to 40 Type: EdgeType.NON_TERMINAL
 token int
 target before pushing 40
@@ -1290,10 +1282,9 @@ start while 41
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: TypeSpecifier {'void', 'int'}
-XX Matching token: int KEYWORD to symbol: void result: False
+predict: TypeSpecifier {'int', 'void'}
 XX Matching token: int KEYWORD to symbol: int result: True
-NON TERMINASLS: token int in {'void', 'int'}
+NON TERMINASLS: token int in {'int', 'void'}
 from : 41 with TypeSpecifier to 43 Type: EdgeType.NON_TERMINAL
 token int
 target before pushing 43
@@ -1366,11 +1357,11 @@ start while 40
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: DeclarationPrime {'(', '[', ';'}
-XX Matching token: ; SYMBOL to symbol: ( result: False
+predict: DeclarationPrime {'[', '(', ';'}
 XX Matching token: ; SYMBOL to symbol: [ result: False
+XX Matching token: ; SYMBOL to symbol: ( result: False
 XX Matching token: ; SYMBOL to symbol: ; result: True
-NON TERMINASLS: token ; in {'(', '[', ';'}
+NON TERMINASLS: token ; in {'[', '(', ';'}
 from : 40 with DeclarationPrime to 39 Type: EdgeType.NON_TERMINAL
 token ;
 target before pushing 39
@@ -1447,10 +1438,16 @@ start while 46
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: DeclarationList {'break', 'ID', ';', '(', 'return', '}', '$', '-', 'if', 'while', 'void', '+', 'int', 'NUM', '{'}
+predict: DeclarationList {'break', ';', 'void', 'while', '(', '}', '$', 'ID', 'if', 'NUM', 'return', '{', '+', '-', 'int'}
 XX Matching token: total ID to symbol: break result: False
+XX Matching token: total ID to symbol: ; result: False
+XX Matching token: total ID to symbol: void result: False
+XX Matching token: total ID to symbol: while result: False
+XX Matching token: total ID to symbol: ( result: False
+XX Matching token: total ID to symbol: } result: False
+XX Matching token: total ID to symbol: $ result: False
 ID Matching ID token: total to symbol: ID result: True
-NON TERMINASLS: token total in {'break', 'ID', ';', '(', 'return', '}', '$', '-', 'if', 'while', 'void', '+', 'int', 'NUM', '{'}
+NON TERMINASLS: token total in {'break', ';', 'void', 'while', '(', '}', '$', 'ID', 'if', 'NUM', 'return', '{', '+', '-', 'int'}
 from : 46 with DeclarationList to 45 Type: EdgeType.NON_TERMINAL
 token total
 target before pushing 45
@@ -1461,10 +1458,10 @@ start while 44
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: Declaration {'void', 'int'}
-XX Matching token: total ID to symbol: void result: False
+predict: Declaration {'int', 'void'}
 XX Matching token: total ID to symbol: int result: False
-EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x104ffc830>
+XX Matching token: total ID to symbol: void result: False
+EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x102968830>
 epsilon edge
 start while 45
 0
@@ -1499,10 +1496,15 @@ start while 32
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: StatementList {'break', 'ID', '+', ';', '(', 'return', '}', '-', 'if', 'while', '{', 'NUM'}
+predict: StatementList {'break', ';', 'while', '(', '}', 'if', 'ID', 'NUM', 'return', '{', '+', '-'}
 XX Matching token: total ID to symbol: break result: False
+XX Matching token: total ID to symbol: ; result: False
+XX Matching token: total ID to symbol: while result: False
+XX Matching token: total ID to symbol: ( result: False
+XX Matching token: total ID to symbol: } result: False
+XX Matching token: total ID to symbol: if result: False
 ID Matching ID token: total to symbol: ID result: True
-NON TERMINASLS: token total in {'break', 'ID', '+', ';', '(', 'return', '}', '-', 'if', 'while', '{', 'NUM'}
+NON TERMINASLS: token total in {'break', ';', 'while', '(', '}', 'if', 'ID', 'NUM', 'return', '{', '+', '-'}
 from : 32 with StatementList to 33 Type: EdgeType.NON_TERMINAL
 token total
 target before pushing 33
@@ -1513,10 +1515,14 @@ start while 141
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: Statement {'break', 'ID', '+', ';', '(', 'return', '-', 'if', 'while', '{', 'NUM'}
+predict: Statement {'break', ';', 'while', '(', 'if', 'ID', 'NUM', 'return', '{', '+', '-'}
 XX Matching token: total ID to symbol: break result: False
+XX Matching token: total ID to symbol: ; result: False
+XX Matching token: total ID to symbol: while result: False
+XX Matching token: total ID to symbol: ( result: False
+XX Matching token: total ID to symbol: if result: False
 ID Matching ID token: total to symbol: ID result: True
-NON TERMINASLS: token total in {'break', 'ID', '+', ';', '(', 'return', '-', 'if', 'while', '{', 'NUM'}
+NON TERMINASLS: token total in {'break', ';', 'while', '(', 'if', 'ID', 'NUM', 'return', '{', '+', '-'}
 from : 141 with Statement to 143 Type: EdgeType.NON_TERMINAL
 token total
 target before pushing 143
@@ -1530,10 +1536,14 @@ hereeee
 predict: CompoundStmt {'{'}
 XX Matching token: total ID to symbol: { result: False
 ###22222222222222222222222222222222222222
-predict: ExpressionStmt {'break', 'ID', '+', ';', '(', '-', 'NUM'}
+predict: ExpressionStmt {'break', 'NUM', ';', '+', '-', '(', 'ID'}
 XX Matching token: total ID to symbol: break result: False
+XX Matching token: total ID to symbol: ; result: False
+XX Matching token: total ID to symbol: + result: False
+XX Matching token: total ID to symbol: - result: False
+XX Matching token: total ID to symbol: ( result: False
 ID Matching ID token: total to symbol: ID result: True
-NON TERMINASLS: token total in {'break', 'ID', '+', ';', '(', '-', 'NUM'}
+NON TERMINASLS: token total in {'break', 'NUM', ';', '+', '-', '(', 'ID'}
 from : 139 with ExpressionStmt to 140 Type: EdgeType.NON_TERMINAL
 token total
 target before pushing 140
@@ -1554,9 +1564,12 @@ None
 XX Matching token: total ID to symbol: break result: False
 hereeee
 ###22222222222222222222222222222222222222
-predict: Expression {'ID', '+', '(', '-', 'NUM'}
+predict: Expression {'NUM', '+', '-', '(', 'ID'}
+XX Matching token: total ID to symbol: + result: False
+XX Matching token: total ID to symbol: - result: False
+XX Matching token: total ID to symbol: ( result: False
 ID Matching ID token: total to symbol: ID result: True
-NON TERMINASLS: token total in {'ID', '+', '(', '-', 'NUM'}
+NON TERMINASLS: token total in {'NUM', '+', '-', '(', 'ID'}
 from : 52 with Expression to 54 Type: EdgeType.NON_TERMINAL
 token total
 target before pushing 54
@@ -1589,20 +1602,15 @@ start while 51
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: B {']', ')', ';', '==', '(', '*', '[', '-', ',', '+', '<', '='}
-XX Matching token: = SYMBOL to symbol: ] result: False
-XX Matching token: = SYMBOL to symbol: ) result: False
+predict: B {';', ']', '*', ',', '==', '(', '=', ')', '[', '+', '-', '<'}
 XX Matching token: = SYMBOL to symbol: ; result: False
+XX Matching token: = SYMBOL to symbol: ] result: False
+XX Matching token: = SYMBOL to symbol: * result: False
+XX Matching token: = SYMBOL to symbol: , result: False
 XX Matching token: = SYMBOL to symbol: == result: False
 XX Matching token: = SYMBOL to symbol: ( result: False
-XX Matching token: = SYMBOL to symbol: * result: False
-XX Matching token: = SYMBOL to symbol: [ result: False
-XX Matching token: = SYMBOL to symbol: - result: False
-XX Matching token: = SYMBOL to symbol: , result: False
-XX Matching token: = SYMBOL to symbol: + result: False
-XX Matching token: = SYMBOL to symbol: < result: False
 XX Matching token: = SYMBOL to symbol: = result: True
-NON TERMINASLS: token = in {']', ')', ';', '==', '(', '*', '[', '-', ',', '+', '<', '='}
+NON TERMINASLS: token = in {';', ']', '*', ',', '==', '(', '=', ')', '[', '+', '-', '<'}
 from : 51 with B to 50 Type: EdgeType.NON_TERMINAL
 token =
 target before pushing 50
@@ -1635,12 +1643,8 @@ start while 22
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: Expression {'ID', '+', '(', '-', 'NUM'}
-ID Matching ID token: 0 to symbol: ID result: False
-XX Matching token: 0 NUM to symbol: + result: False
-XX Matching token: 0 NUM to symbol: ( result: False
-XX Matching token: 0 NUM to symbol: - result: False
-NON TERMINASLS: token 0 in {'ID', '+', '(', '-', 'NUM'}
+predict: Expression {'NUM', '+', '-', '(', 'ID'}
+NON TERMINASLS: token 0 in {'NUM', '+', '-', '(', 'ID'}
 from : 22 with Expression to 21 Type: EdgeType.NON_TERMINAL
 token 0
 target before pushing 21
@@ -1656,10 +1660,9 @@ None
 ID Matching ID token: 0 to symbol: ID result: False
 hereeee
 ###22222222222222222222222222222222222222
-predict: SimpleExpressionZegond {'(', '+', 'NUM', '-'}
-XX Matching token: 0 NUM to symbol: ( result: False
+predict: SimpleExpressionZegond {'+', 'NUM', '-', '('}
 XX Matching token: 0 NUM to symbol: + result: False
-NON TERMINASLS: token 0 in {'(', '+', 'NUM', '-'}
+NON TERMINASLS: token 0 in {'+', 'NUM', '-', '('}
 from : 49 with SimpleExpressionZegond to 50 Type: EdgeType.NON_TERMINAL
 token 0
 target before pushing 50
@@ -1670,10 +1673,9 @@ start while 136
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: AdditiveExpressionZegond {'(', '+', 'NUM', '-'}
-XX Matching token: 0 NUM to symbol: ( result: False
+predict: AdditiveExpressionZegond {'+', 'NUM', '-', '('}
 XX Matching token: 0 NUM to symbol: + result: False
-NON TERMINASLS: token 0 in {'(', '+', 'NUM', '-'}
+NON TERMINASLS: token 0 in {'+', 'NUM', '-', '('}
 from : 136 with AdditiveExpressionZegond to 138 Type: EdgeType.NON_TERMINAL
 token 0
 target before pushing 138
@@ -1684,10 +1686,9 @@ start while 6
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: TermZegond {'(', '+', 'NUM', '-'}
-XX Matching token: 0 NUM to symbol: ( result: False
+predict: TermZegond {'+', 'NUM', '-', '('}
 XX Matching token: 0 NUM to symbol: + result: False
-NON TERMINASLS: token 0 in {'(', '+', 'NUM', '-'}
+NON TERMINASLS: token 0 in {'+', 'NUM', '-', '('}
 from : 6 with TermZegond to 8 Type: EdgeType.NON_TERMINAL
 token 0
 target before pushing 8
@@ -1698,10 +1699,9 @@ start while 150
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: SignedFactorZegond {'(', '+', 'NUM', '-'}
-XX Matching token: 0 NUM to symbol: ( result: False
+predict: SignedFactorZegond {'+', 'NUM', '-', '('}
 XX Matching token: 0 NUM to symbol: + result: False
-NON TERMINASLS: token 0 in {'(', '+', 'NUM', '-'}
+NON TERMINASLS: token 0 in {'+', 'NUM', '-', '('}
 from : 150 with SignedFactorZegond to 152 Type: EdgeType.NON_TERMINAL
 token 0
 target before pushing 152
@@ -1722,9 +1722,8 @@ None
 XX Matching token: 0 NUM to symbol: - result: False
 hereeee
 ###22222222222222222222222222222222222222
-predict: FactorZegond {'(', 'NUM'}
-XX Matching token: 0 NUM to symbol: ( result: False
-NON TERMINASLS: token 0 in {'(', 'NUM'}
+predict: FactorZegond {'NUM', '('}
+NON TERMINASLS: token 0 in {'NUM', '('}
 from : 129 with FactorZegond to 130 Type: EdgeType.NON_TERMINAL
 token 0
 target before pushing 130
@@ -1778,11 +1777,9 @@ start while 152
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: G {']', ')', ';', '==', '*', '-', ',', '+', '<'}
-XX Matching token: ; SYMBOL to symbol: ] result: False
-XX Matching token: ; SYMBOL to symbol: ) result: False
+predict: G {';', ']', '*', ',', '==', ')', '+', '-', '<'}
 XX Matching token: ; SYMBOL to symbol: ; result: True
-NON TERMINASLS: token ; in {']', ')', ';', '==', '*', '-', ',', '+', '<'}
+NON TERMINASLS: token ; in {';', ']', '*', ',', '==', ')', '+', '-', '<'}
 from : 152 with G to 151 Type: EdgeType.NON_TERMINAL
 token ;
 target before pushing 151
@@ -1797,7 +1794,7 @@ from : 74 with * to 76 Type: EdgeType.TERMINAL
 None
 XX Matching token: ; SYMBOL to symbol: * result: False
 hereeee
-EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x104ffd5c0>
+EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x1029695c0>
 epsilon edge
 start while 75
 0
@@ -1823,11 +1820,9 @@ start while 8
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: D {']', ')', ';', '==', '-', ',', '+', '<'}
-XX Matching token: ; SYMBOL to symbol: ] result: False
-XX Matching token: ; SYMBOL to symbol: ) result: False
+predict: D {';', ']', '==', ',', ')', '+', '-', '<'}
 XX Matching token: ; SYMBOL to symbol: ; result: True
-NON TERMINASLS: token ; in {']', ')', ';', '==', '-', ',', '+', '<'}
+NON TERMINASLS: token ; in {';', ']', '==', ',', ')', '+', '-', '<'}
 from : 8 with D to 7 Type: EdgeType.NON_TERMINAL
 token ;
 target before pushing 7
@@ -1841,7 +1836,7 @@ hereeee
 predict: Addop {'+', '-'}
 XX Matching token: ; SYMBOL to symbol: + result: False
 XX Matching token: ; SYMBOL to symbol: - result: False
-EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x104ffc4b0>
+EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x1029684b0>
 epsilon edge
 start while 35
 0
@@ -1867,11 +1862,9 @@ start while 138
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: C {']', ')', ';', ',', '==', '<'}
-XX Matching token: ; SYMBOL to symbol: ] result: False
-XX Matching token: ; SYMBOL to symbol: ) result: False
+predict: C {';', ']', '==', ',', '<', ')'}
 XX Matching token: ; SYMBOL to symbol: ; result: True
-NON TERMINASLS: token ; in {']', ')', ';', ',', '==', '<'}
+NON TERMINASLS: token ; in {';', ']', '==', ',', '<', ')'}
 from : 138 with C to 137 Type: EdgeType.NON_TERMINAL
 token ;
 target before pushing 137
@@ -1882,10 +1875,10 @@ start while 26
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: Relop {'<', '=='}
-XX Matching token: ; SYMBOL to symbol: < result: False
+predict: Relop {'==', '<'}
 XX Matching token: ; SYMBOL to symbol: == result: False
-EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x104fb23d0>
+XX Matching token: ; SYMBOL to symbol: < result: False
+EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x10291e450>
 epsilon edge
 start while 27
 0
@@ -1978,10 +1971,15 @@ start while 143
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: StatementList {'break', 'ID', '+', ';', '(', 'return', '}', '-', 'if', 'while', '{', 'NUM'}
+predict: StatementList {'break', ';', 'while', '(', '}', 'if', 'ID', 'NUM', 'return', '{', '+', '-'}
 XX Matching token: i ID to symbol: break result: False
+XX Matching token: i ID to symbol: ; result: False
+XX Matching token: i ID to symbol: while result: False
+XX Matching token: i ID to symbol: ( result: False
+XX Matching token: i ID to symbol: } result: False
+XX Matching token: i ID to symbol: if result: False
 ID Matching ID token: i to symbol: ID result: True
-NON TERMINASLS: token i in {'break', 'ID', '+', ';', '(', 'return', '}', '-', 'if', 'while', '{', 'NUM'}
+NON TERMINASLS: token i in {'break', ';', 'while', '(', '}', 'if', 'ID', 'NUM', 'return', '{', '+', '-'}
 from : 143 with StatementList to 142 Type: EdgeType.NON_TERMINAL
 token i
 target before pushing 142
@@ -1992,10 +1990,14 @@ start while 141
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: Statement {'break', 'ID', '+', ';', '(', 'return', '-', 'if', 'while', '{', 'NUM'}
+predict: Statement {'break', ';', 'while', '(', 'if', 'ID', 'NUM', 'return', '{', '+', '-'}
 XX Matching token: i ID to symbol: break result: False
+XX Matching token: i ID to symbol: ; result: False
+XX Matching token: i ID to symbol: while result: False
+XX Matching token: i ID to symbol: ( result: False
+XX Matching token: i ID to symbol: if result: False
 ID Matching ID token: i to symbol: ID result: True
-NON TERMINASLS: token i in {'break', 'ID', '+', ';', '(', 'return', '-', 'if', 'while', '{', 'NUM'}
+NON TERMINASLS: token i in {'break', ';', 'while', '(', 'if', 'ID', 'NUM', 'return', '{', '+', '-'}
 from : 141 with Statement to 143 Type: EdgeType.NON_TERMINAL
 token i
 target before pushing 143
@@ -2009,10 +2011,14 @@ hereeee
 predict: CompoundStmt {'{'}
 XX Matching token: i ID to symbol: { result: False
 ###22222222222222222222222222222222222222
-predict: ExpressionStmt {'break', 'ID', '+', ';', '(', '-', 'NUM'}
+predict: ExpressionStmt {'break', 'NUM', ';', '+', '-', '(', 'ID'}
 XX Matching token: i ID to symbol: break result: False
+XX Matching token: i ID to symbol: ; result: False
+XX Matching token: i ID to symbol: + result: False
+XX Matching token: i ID to symbol: - result: False
+XX Matching token: i ID to symbol: ( result: False
 ID Matching ID token: i to symbol: ID result: True
-NON TERMINASLS: token i in {'break', 'ID', '+', ';', '(', '-', 'NUM'}
+NON TERMINASLS: token i in {'break', 'NUM', ';', '+', '-', '(', 'ID'}
 from : 139 with ExpressionStmt to 140 Type: EdgeType.NON_TERMINAL
 token i
 target before pushing 140
@@ -2033,9 +2039,12 @@ None
 XX Matching token: i ID to symbol: break result: False
 hereeee
 ###22222222222222222222222222222222222222
-predict: Expression {'ID', '+', '(', '-', 'NUM'}
+predict: Expression {'NUM', '+', '-', '(', 'ID'}
+XX Matching token: i ID to symbol: + result: False
+XX Matching token: i ID to symbol: - result: False
+XX Matching token: i ID to symbol: ( result: False
 ID Matching ID token: i to symbol: ID result: True
-NON TERMINASLS: token i in {'ID', '+', '(', '-', 'NUM'}
+NON TERMINASLS: token i in {'NUM', '+', '-', '(', 'ID'}
 from : 52 with Expression to 54 Type: EdgeType.NON_TERMINAL
 token i
 target before pushing 54
@@ -2068,20 +2077,15 @@ start while 51
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: B {']', ')', ';', '==', '(', '*', '[', '-', ',', '+', '<', '='}
-XX Matching token: = SYMBOL to symbol: ] result: False
-XX Matching token: = SYMBOL to symbol: ) result: False
+predict: B {';', ']', '*', ',', '==', '(', '=', ')', '[', '+', '-', '<'}
 XX Matching token: = SYMBOL to symbol: ; result: False
+XX Matching token: = SYMBOL to symbol: ] result: False
+XX Matching token: = SYMBOL to symbol: * result: False
+XX Matching token: = SYMBOL to symbol: , result: False
 XX Matching token: = SYMBOL to symbol: == result: False
 XX Matching token: = SYMBOL to symbol: ( result: False
-XX Matching token: = SYMBOL to symbol: * result: False
-XX Matching token: = SYMBOL to symbol: [ result: False
-XX Matching token: = SYMBOL to symbol: - result: False
-XX Matching token: = SYMBOL to symbol: , result: False
-XX Matching token: = SYMBOL to symbol: + result: False
-XX Matching token: = SYMBOL to symbol: < result: False
 XX Matching token: = SYMBOL to symbol: = result: True
-NON TERMINASLS: token = in {']', ')', ';', '==', '(', '*', '[', '-', ',', '+', '<', '='}
+NON TERMINASLS: token = in {';', ']', '*', ',', '==', '(', '=', ')', '[', '+', '-', '<'}
 from : 51 with B to 50 Type: EdgeType.NON_TERMINAL
 token =
 target before pushing 50
@@ -2114,12 +2118,8 @@ start while 22
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: Expression {'ID', '+', '(', '-', 'NUM'}
-ID Matching ID token: 0 to symbol: ID result: False
-XX Matching token: 0 NUM to symbol: + result: False
-XX Matching token: 0 NUM to symbol: ( result: False
-XX Matching token: 0 NUM to symbol: - result: False
-NON TERMINASLS: token 0 in {'ID', '+', '(', '-', 'NUM'}
+predict: Expression {'NUM', '+', '-', '(', 'ID'}
+NON TERMINASLS: token 0 in {'NUM', '+', '-', '(', 'ID'}
 from : 22 with Expression to 21 Type: EdgeType.NON_TERMINAL
 token 0
 target before pushing 21
@@ -2135,10 +2135,9 @@ None
 ID Matching ID token: 0 to symbol: ID result: False
 hereeee
 ###22222222222222222222222222222222222222
-predict: SimpleExpressionZegond {'(', '+', 'NUM', '-'}
-XX Matching token: 0 NUM to symbol: ( result: False
+predict: SimpleExpressionZegond {'+', 'NUM', '-', '('}
 XX Matching token: 0 NUM to symbol: + result: False
-NON TERMINASLS: token 0 in {'(', '+', 'NUM', '-'}
+NON TERMINASLS: token 0 in {'+', 'NUM', '-', '('}
 from : 49 with SimpleExpressionZegond to 50 Type: EdgeType.NON_TERMINAL
 token 0
 target before pushing 50
@@ -2149,10 +2148,9 @@ start while 136
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: AdditiveExpressionZegond {'(', '+', 'NUM', '-'}
-XX Matching token: 0 NUM to symbol: ( result: False
+predict: AdditiveExpressionZegond {'+', 'NUM', '-', '('}
 XX Matching token: 0 NUM to symbol: + result: False
-NON TERMINASLS: token 0 in {'(', '+', 'NUM', '-'}
+NON TERMINASLS: token 0 in {'+', 'NUM', '-', '('}
 from : 136 with AdditiveExpressionZegond to 138 Type: EdgeType.NON_TERMINAL
 token 0
 target before pushing 138
@@ -2163,10 +2161,9 @@ start while 6
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: TermZegond {'(', '+', 'NUM', '-'}
-XX Matching token: 0 NUM to symbol: ( result: False
+predict: TermZegond {'+', 'NUM', '-', '('}
 XX Matching token: 0 NUM to symbol: + result: False
-NON TERMINASLS: token 0 in {'(', '+', 'NUM', '-'}
+NON TERMINASLS: token 0 in {'+', 'NUM', '-', '('}
 from : 6 with TermZegond to 8 Type: EdgeType.NON_TERMINAL
 token 0
 target before pushing 8
@@ -2177,10 +2174,9 @@ start while 150
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: SignedFactorZegond {'(', '+', 'NUM', '-'}
-XX Matching token: 0 NUM to symbol: ( result: False
+predict: SignedFactorZegond {'+', 'NUM', '-', '('}
 XX Matching token: 0 NUM to symbol: + result: False
-NON TERMINASLS: token 0 in {'(', '+', 'NUM', '-'}
+NON TERMINASLS: token 0 in {'+', 'NUM', '-', '('}
 from : 150 with SignedFactorZegond to 152 Type: EdgeType.NON_TERMINAL
 token 0
 target before pushing 152
@@ -2201,9 +2197,8 @@ None
 XX Matching token: 0 NUM to symbol: - result: False
 hereeee
 ###22222222222222222222222222222222222222
-predict: FactorZegond {'(', 'NUM'}
-XX Matching token: 0 NUM to symbol: ( result: False
-NON TERMINASLS: token 0 in {'(', 'NUM'}
+predict: FactorZegond {'NUM', '('}
+NON TERMINASLS: token 0 in {'NUM', '('}
 from : 129 with FactorZegond to 130 Type: EdgeType.NON_TERMINAL
 token 0
 target before pushing 130
@@ -2257,11 +2252,9 @@ start while 152
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: G {']', ')', ';', '==', '*', '-', ',', '+', '<'}
-XX Matching token: ; SYMBOL to symbol: ] result: False
-XX Matching token: ; SYMBOL to symbol: ) result: False
+predict: G {';', ']', '*', ',', '==', ')', '+', '-', '<'}
 XX Matching token: ; SYMBOL to symbol: ; result: True
-NON TERMINASLS: token ; in {']', ')', ';', '==', '*', '-', ',', '+', '<'}
+NON TERMINASLS: token ; in {';', ']', '*', ',', '==', ')', '+', '-', '<'}
 from : 152 with G to 151 Type: EdgeType.NON_TERMINAL
 token ;
 target before pushing 151
@@ -2276,7 +2269,7 @@ from : 74 with * to 76 Type: EdgeType.TERMINAL
 None
 XX Matching token: ; SYMBOL to symbol: * result: False
 hereeee
-EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x104ffd5c0>
+EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x1029695c0>
 epsilon edge
 start while 75
 0
@@ -2302,11 +2295,9 @@ start while 8
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: D {']', ')', ';', '==', '-', ',', '+', '<'}
-XX Matching token: ; SYMBOL to symbol: ] result: False
-XX Matching token: ; SYMBOL to symbol: ) result: False
+predict: D {';', ']', '==', ',', ')', '+', '-', '<'}
 XX Matching token: ; SYMBOL to symbol: ; result: True
-NON TERMINASLS: token ; in {']', ')', ';', '==', '-', ',', '+', '<'}
+NON TERMINASLS: token ; in {';', ']', '==', ',', ')', '+', '-', '<'}
 from : 8 with D to 7 Type: EdgeType.NON_TERMINAL
 token ;
 target before pushing 7
@@ -2320,7 +2311,7 @@ hereeee
 predict: Addop {'+', '-'}
 XX Matching token: ; SYMBOL to symbol: + result: False
 XX Matching token: ; SYMBOL to symbol: - result: False
-EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x104ffc4b0>
+EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x1029684b0>
 epsilon edge
 start while 35
 0
@@ -2346,11 +2337,9 @@ start while 138
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: C {']', ')', ';', ',', '==', '<'}
-XX Matching token: ; SYMBOL to symbol: ] result: False
-XX Matching token: ; SYMBOL to symbol: ) result: False
+predict: C {';', ']', '==', ',', '<', ')'}
 XX Matching token: ; SYMBOL to symbol: ; result: True
-NON TERMINASLS: token ; in {']', ')', ';', ',', '==', '<'}
+NON TERMINASLS: token ; in {';', ']', '==', ',', '<', ')'}
 from : 138 with C to 137 Type: EdgeType.NON_TERMINAL
 token ;
 target before pushing 137
@@ -2361,10 +2350,10 @@ start while 26
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: Relop {'<', '=='}
-XX Matching token: ; SYMBOL to symbol: < result: False
+predict: Relop {'==', '<'}
 XX Matching token: ; SYMBOL to symbol: == result: False
-EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x104fb23d0>
+XX Matching token: ; SYMBOL to symbol: < result: False
+EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x10291e450>
 epsilon edge
 start while 27
 0
@@ -2457,18 +2446,11 @@ start while 143
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: StatementList {'break', 'ID', '+', ';', '(', 'return', '}', '-', 'if', 'while', '{', 'NUM'}
+predict: StatementList {'break', ';', 'while', '(', '}', 'if', 'ID', 'NUM', 'return', '{', '+', '-'}
 XX Matching token: while KEYWORD to symbol: break result: False
-ID Matching ID token: while to symbol: ID result: False
-XX Matching token: while KEYWORD to symbol: + result: False
 XX Matching token: while KEYWORD to symbol: ; result: False
-XX Matching token: while KEYWORD to symbol: ( result: False
-XX Matching token: while KEYWORD to symbol: return result: False
-XX Matching token: while KEYWORD to symbol: } result: False
-XX Matching token: while KEYWORD to symbol: - result: False
-XX Matching token: while KEYWORD to symbol: if result: False
 XX Matching token: while KEYWORD to symbol: while result: True
-NON TERMINASLS: token while in {'break', 'ID', '+', ';', '(', 'return', '}', '-', 'if', 'while', '{', 'NUM'}
+NON TERMINASLS: token while in {'break', ';', 'while', '(', '}', 'if', 'ID', 'NUM', 'return', '{', '+', '-'}
 from : 143 with StatementList to 142 Type: EdgeType.NON_TERMINAL
 token while
 target before pushing 142
@@ -2479,17 +2461,11 @@ start while 141
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: Statement {'break', 'ID', '+', ';', '(', 'return', '-', 'if', 'while', '{', 'NUM'}
+predict: Statement {'break', ';', 'while', '(', 'if', 'ID', 'NUM', 'return', '{', '+', '-'}
 XX Matching token: while KEYWORD to symbol: break result: False
-ID Matching ID token: while to symbol: ID result: False
-XX Matching token: while KEYWORD to symbol: + result: False
 XX Matching token: while KEYWORD to symbol: ; result: False
-XX Matching token: while KEYWORD to symbol: ( result: False
-XX Matching token: while KEYWORD to symbol: return result: False
-XX Matching token: while KEYWORD to symbol: - result: False
-XX Matching token: while KEYWORD to symbol: if result: False
 XX Matching token: while KEYWORD to symbol: while result: True
-NON TERMINASLS: token while in {'break', 'ID', '+', ';', '(', 'return', '-', 'if', 'while', '{', 'NUM'}
+NON TERMINASLS: token while in {'break', ';', 'while', '(', 'if', 'ID', 'NUM', 'return', '{', '+', '-'}
 from : 141 with Statement to 143 Type: EdgeType.NON_TERMINAL
 token while
 target before pushing 143
@@ -2503,13 +2479,13 @@ hereeee
 predict: CompoundStmt {'{'}
 XX Matching token: while KEYWORD to symbol: { result: False
 ###22222222222222222222222222222222222222
-predict: ExpressionStmt {'break', 'ID', '+', ';', '(', '-', 'NUM'}
+predict: ExpressionStmt {'break', 'NUM', ';', '+', '-', '(', 'ID'}
 XX Matching token: while KEYWORD to symbol: break result: False
-ID Matching ID token: while to symbol: ID result: False
-XX Matching token: while KEYWORD to symbol: + result: False
 XX Matching token: while KEYWORD to symbol: ; result: False
-XX Matching token: while KEYWORD to symbol: ( result: False
+XX Matching token: while KEYWORD to symbol: + result: False
 XX Matching token: while KEYWORD to symbol: - result: False
+XX Matching token: while KEYWORD to symbol: ( result: False
+ID Matching ID token: while to symbol: ID result: False
 ###22222222222222222222222222222222222222
 predict: IterationStmt {'while'}
 XX Matching token: while KEYWORD to symbol: while result: True
@@ -2568,9 +2544,12 @@ start while 86
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: Expression {'ID', '+', '(', '-', 'NUM'}
+predict: Expression {'NUM', '+', '-', '(', 'ID'}
+XX Matching token: i ID to symbol: + result: False
+XX Matching token: i ID to symbol: - result: False
+XX Matching token: i ID to symbol: ( result: False
 ID Matching ID token: i to symbol: ID result: True
-NON TERMINASLS: token i in {'ID', '+', '(', '-', 'NUM'}
+NON TERMINASLS: token i in {'NUM', '+', '-', '(', 'ID'}
 from : 86 with Expression to 87 Type: EdgeType.NON_TERMINAL
 token i
 target before pushing 87
@@ -2603,19 +2582,20 @@ start while 51
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: B {']', ')', ';', '==', '(', '*', '[', '-', ',', '+', '<', '='}
-XX Matching token: < SYMBOL to symbol: ] result: False
-XX Matching token: < SYMBOL to symbol: ) result: False
+predict: B {';', ']', '*', ',', '==', '(', '=', ')', '[', '+', '-', '<'}
 XX Matching token: < SYMBOL to symbol: ; result: False
+XX Matching token: < SYMBOL to symbol: ] result: False
+XX Matching token: < SYMBOL to symbol: * result: False
+XX Matching token: < SYMBOL to symbol: , result: False
 XX Matching token: < SYMBOL to symbol: == result: False
 XX Matching token: < SYMBOL to symbol: ( result: False
-XX Matching token: < SYMBOL to symbol: * result: False
+XX Matching token: < SYMBOL to symbol: = result: False
+XX Matching token: < SYMBOL to symbol: ) result: False
 XX Matching token: < SYMBOL to symbol: [ result: False
-XX Matching token: < SYMBOL to symbol: - result: False
-XX Matching token: < SYMBOL to symbol: , result: False
 XX Matching token: < SYMBOL to symbol: + result: False
+XX Matching token: < SYMBOL to symbol: - result: False
 XX Matching token: < SYMBOL to symbol: < result: True
-NON TERMINASLS: token < in {']', ')', ';', '==', '(', '*', '[', '-', ',', '+', '<', '='}
+NON TERMINASLS: token < in {';', ']', '*', ',', '==', '(', '=', ')', '[', '+', '-', '<'}
 from : 51 with B to 50 Type: EdgeType.NON_TERMINAL
 token <
 target before pushing 50
@@ -2636,18 +2616,18 @@ None
 XX Matching token: < SYMBOL to symbol: [ result: False
 hereeee
 ###22222222222222222222222222222222222222
-predict: SimpleExpressionPrime {']', ')', ';', '==', '(', '*', '-', ',', '+', '<'}
-XX Matching token: < SYMBOL to symbol: ] result: False
-XX Matching token: < SYMBOL to symbol: ) result: False
+predict: SimpleExpressionPrime {';', ']', '*', ',', '==', '(', ')', '+', '-', '<'}
 XX Matching token: < SYMBOL to symbol: ; result: False
+XX Matching token: < SYMBOL to symbol: ] result: False
+XX Matching token: < SYMBOL to symbol: * result: False
+XX Matching token: < SYMBOL to symbol: , result: False
 XX Matching token: < SYMBOL to symbol: == result: False
 XX Matching token: < SYMBOL to symbol: ( result: False
-XX Matching token: < SYMBOL to symbol: * result: False
-XX Matching token: < SYMBOL to symbol: - result: False
-XX Matching token: < SYMBOL to symbol: , result: False
+XX Matching token: < SYMBOL to symbol: ) result: False
 XX Matching token: < SYMBOL to symbol: + result: False
+XX Matching token: < SYMBOL to symbol: - result: False
 XX Matching token: < SYMBOL to symbol: < result: True
-NON TERMINASLS: token < in {']', ')', ';', '==', '(', '*', '-', ',', '+', '<'}
+NON TERMINASLS: token < in {';', ']', '*', ',', '==', '(', ')', '+', '-', '<'}
 from : 20 with SimpleExpressionPrime to 21 Type: EdgeType.NON_TERMINAL
 token <
 target before pushing 21
@@ -2658,18 +2638,18 @@ start while 133
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: AdditiveExpressionPrime {']', ')', ';', '==', '(', '*', '-', ',', '+', '<'}
-XX Matching token: < SYMBOL to symbol: ] result: False
-XX Matching token: < SYMBOL to symbol: ) result: False
+predict: AdditiveExpressionPrime {';', ']', '*', ',', '==', '(', ')', '+', '-', '<'}
 XX Matching token: < SYMBOL to symbol: ; result: False
+XX Matching token: < SYMBOL to symbol: ] result: False
+XX Matching token: < SYMBOL to symbol: * result: False
+XX Matching token: < SYMBOL to symbol: , result: False
 XX Matching token: < SYMBOL to symbol: == result: False
 XX Matching token: < SYMBOL to symbol: ( result: False
-XX Matching token: < SYMBOL to symbol: * result: False
-XX Matching token: < SYMBOL to symbol: - result: False
-XX Matching token: < SYMBOL to symbol: , result: False
+XX Matching token: < SYMBOL to symbol: ) result: False
 XX Matching token: < SYMBOL to symbol: + result: False
+XX Matching token: < SYMBOL to symbol: - result: False
 XX Matching token: < SYMBOL to symbol: < result: True
-NON TERMINASLS: token < in {']', ')', ';', '==', '(', '*', '-', ',', '+', '<'}
+NON TERMINASLS: token < in {';', ']', '*', ',', '==', '(', ')', '+', '-', '<'}
 from : 133 with AdditiveExpressionPrime to 135 Type: EdgeType.NON_TERMINAL
 token <
 target before pushing 135
@@ -2680,18 +2660,18 @@ start while 3
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: TermPrime {']', ')', ';', '==', '(', '*', '-', ',', '+', '<'}
-XX Matching token: < SYMBOL to symbol: ] result: False
-XX Matching token: < SYMBOL to symbol: ) result: False
+predict: TermPrime {';', ']', '*', ',', '==', '(', ')', '+', '-', '<'}
 XX Matching token: < SYMBOL to symbol: ; result: False
+XX Matching token: < SYMBOL to symbol: ] result: False
+XX Matching token: < SYMBOL to symbol: * result: False
+XX Matching token: < SYMBOL to symbol: , result: False
 XX Matching token: < SYMBOL to symbol: == result: False
 XX Matching token: < SYMBOL to symbol: ( result: False
-XX Matching token: < SYMBOL to symbol: * result: False
-XX Matching token: < SYMBOL to symbol: - result: False
-XX Matching token: < SYMBOL to symbol: , result: False
+XX Matching token: < SYMBOL to symbol: ) result: False
 XX Matching token: < SYMBOL to symbol: + result: False
+XX Matching token: < SYMBOL to symbol: - result: False
 XX Matching token: < SYMBOL to symbol: < result: True
-NON TERMINASLS: token < in {']', ')', ';', '==', '(', '*', '-', ',', '+', '<'}
+NON TERMINASLS: token < in {';', ']', '*', ',', '==', '(', ')', '+', '-', '<'}
 from : 3 with TermPrime to 5 Type: EdgeType.NON_TERMINAL
 token <
 target before pushing 5
@@ -2702,18 +2682,18 @@ start while 147
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: SignedFactorPrime {']', ')', ';', '==', '(', '*', '-', ',', '+', '<'}
-XX Matching token: < SYMBOL to symbol: ] result: False
-XX Matching token: < SYMBOL to symbol: ) result: False
+predict: SignedFactorPrime {';', ']', '*', ',', '==', '(', ')', '+', '-', '<'}
 XX Matching token: < SYMBOL to symbol: ; result: False
+XX Matching token: < SYMBOL to symbol: ] result: False
+XX Matching token: < SYMBOL to symbol: * result: False
+XX Matching token: < SYMBOL to symbol: , result: False
 XX Matching token: < SYMBOL to symbol: == result: False
 XX Matching token: < SYMBOL to symbol: ( result: False
-XX Matching token: < SYMBOL to symbol: * result: False
-XX Matching token: < SYMBOL to symbol: - result: False
-XX Matching token: < SYMBOL to symbol: , result: False
+XX Matching token: < SYMBOL to symbol: ) result: False
 XX Matching token: < SYMBOL to symbol: + result: False
+XX Matching token: < SYMBOL to symbol: - result: False
 XX Matching token: < SYMBOL to symbol: < result: True
-NON TERMINASLS: token < in {']', ')', ';', '==', '(', '*', '-', ',', '+', '<'}
+NON TERMINASLS: token < in {';', ']', '*', ',', '==', '(', ')', '+', '-', '<'}
 from : 147 with SignedFactorPrime to 149 Type: EdgeType.NON_TERMINAL
 token <
 target before pushing 149
@@ -2724,18 +2704,18 @@ start while 127
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: FactorPrime {']', ')', ';', '==', '(', '*', '-', ',', '+', '<'}
-XX Matching token: < SYMBOL to symbol: ] result: False
-XX Matching token: < SYMBOL to symbol: ) result: False
+predict: FactorPrime {';', ']', '*', ',', '==', '(', ')', '+', '-', '<'}
 XX Matching token: < SYMBOL to symbol: ; result: False
+XX Matching token: < SYMBOL to symbol: ] result: False
+XX Matching token: < SYMBOL to symbol: * result: False
+XX Matching token: < SYMBOL to symbol: , result: False
 XX Matching token: < SYMBOL to symbol: == result: False
 XX Matching token: < SYMBOL to symbol: ( result: False
-XX Matching token: < SYMBOL to symbol: * result: False
-XX Matching token: < SYMBOL to symbol: - result: False
-XX Matching token: < SYMBOL to symbol: , result: False
+XX Matching token: < SYMBOL to symbol: ) result: False
 XX Matching token: < SYMBOL to symbol: + result: False
+XX Matching token: < SYMBOL to symbol: - result: False
 XX Matching token: < SYMBOL to symbol: < result: True
-NON TERMINASLS: token < in {']', ')', ';', '==', '(', '*', '-', ',', '+', '<'}
+NON TERMINASLS: token < in {';', ']', '*', ',', '==', '(', ')', '+', '-', '<'}
 from : 127 with FactorPrime to 128 Type: EdgeType.NON_TERMINAL
 token <
 target before pushing 128
@@ -2750,7 +2730,7 @@ from : 61 with ( to 63 Type: EdgeType.TERMINAL
 None
 XX Matching token: < SYMBOL to symbol: ( result: False
 hereeee
-EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x104ffd080>
+EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x102969080>
 epsilon edge
 start while 62
 0
@@ -2776,17 +2756,17 @@ start while 149
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: G {']', ')', ';', '==', '*', '-', ',', '+', '<'}
-XX Matching token: < SYMBOL to symbol: ] result: False
-XX Matching token: < SYMBOL to symbol: ) result: False
+predict: G {';', ']', '*', ',', '==', ')', '+', '-', '<'}
 XX Matching token: < SYMBOL to symbol: ; result: False
-XX Matching token: < SYMBOL to symbol: == result: False
+XX Matching token: < SYMBOL to symbol: ] result: False
 XX Matching token: < SYMBOL to symbol: * result: False
-XX Matching token: < SYMBOL to symbol: - result: False
 XX Matching token: < SYMBOL to symbol: , result: False
+XX Matching token: < SYMBOL to symbol: == result: False
+XX Matching token: < SYMBOL to symbol: ) result: False
 XX Matching token: < SYMBOL to symbol: + result: False
+XX Matching token: < SYMBOL to symbol: - result: False
 XX Matching token: < SYMBOL to symbol: < result: True
-NON TERMINASLS: token < in {']', ')', ';', '==', '*', '-', ',', '+', '<'}
+NON TERMINASLS: token < in {';', ']', '*', ',', '==', ')', '+', '-', '<'}
 from : 149 with G to 148 Type: EdgeType.NON_TERMINAL
 token <
 target before pushing 148
@@ -2801,7 +2781,7 @@ from : 74 with * to 76 Type: EdgeType.TERMINAL
 None
 XX Matching token: < SYMBOL to symbol: * result: False
 hereeee
-EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x104ffd5c0>
+EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x1029695c0>
 epsilon edge
 start while 75
 0
@@ -2827,16 +2807,16 @@ start while 5
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: D {']', ')', ';', '==', '-', ',', '+', '<'}
-XX Matching token: < SYMBOL to symbol: ] result: False
-XX Matching token: < SYMBOL to symbol: ) result: False
+predict: D {';', ']', '==', ',', ')', '+', '-', '<'}
 XX Matching token: < SYMBOL to symbol: ; result: False
+XX Matching token: < SYMBOL to symbol: ] result: False
 XX Matching token: < SYMBOL to symbol: == result: False
-XX Matching token: < SYMBOL to symbol: - result: False
 XX Matching token: < SYMBOL to symbol: , result: False
+XX Matching token: < SYMBOL to symbol: ) result: False
 XX Matching token: < SYMBOL to symbol: + result: False
+XX Matching token: < SYMBOL to symbol: - result: False
 XX Matching token: < SYMBOL to symbol: < result: True
-NON TERMINASLS: token < in {']', ')', ';', '==', '-', ',', '+', '<'}
+NON TERMINASLS: token < in {';', ']', '==', ',', ')', '+', '-', '<'}
 from : 5 with D to 4 Type: EdgeType.NON_TERMINAL
 token <
 target before pushing 4
@@ -2850,7 +2830,7 @@ hereeee
 predict: Addop {'+', '-'}
 XX Matching token: < SYMBOL to symbol: + result: False
 XX Matching token: < SYMBOL to symbol: - result: False
-EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x104ffc4b0>
+EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x1029684b0>
 epsilon edge
 start while 35
 0
@@ -2876,14 +2856,13 @@ start while 135
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: C {']', ')', ';', ',', '==', '<'}
-XX Matching token: < SYMBOL to symbol: ] result: False
-XX Matching token: < SYMBOL to symbol: ) result: False
+predict: C {';', ']', '==', ',', '<', ')'}
 XX Matching token: < SYMBOL to symbol: ; result: False
-XX Matching token: < SYMBOL to symbol: , result: False
+XX Matching token: < SYMBOL to symbol: ] result: False
 XX Matching token: < SYMBOL to symbol: == result: False
+XX Matching token: < SYMBOL to symbol: , result: False
 XX Matching token: < SYMBOL to symbol: < result: True
-NON TERMINASLS: token < in {']', ')', ';', ',', '==', '<'}
+NON TERMINASLS: token < in {';', ']', '==', ',', '<', ')'}
 from : 135 with C to 134 Type: EdgeType.NON_TERMINAL
 token <
 target before pushing 134
@@ -2894,9 +2873,10 @@ start while 26
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: Relop {'<', '=='}
+predict: Relop {'==', '<'}
+XX Matching token: < SYMBOL to symbol: == result: False
 XX Matching token: < SYMBOL to symbol: < result: True
-NON TERMINASLS: token < in {'<', '=='}
+NON TERMINASLS: token < in {'==', '<'}
 from : 26 with Relop to 28 Type: EdgeType.NON_TERMINAL
 token <
 target before pushing 28
@@ -2938,9 +2918,12 @@ start while 28
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: AdditiveExpression {'ID', '+', '(', '-', 'NUM'}
+predict: AdditiveExpression {'NUM', '+', '-', '(', 'ID'}
+XX Matching token: size ID to symbol: + result: False
+XX Matching token: size ID to symbol: - result: False
+XX Matching token: size ID to symbol: ( result: False
 ID Matching ID token: size to symbol: ID result: True
-NON TERMINASLS: token size in {'ID', '+', '(', '-', 'NUM'}
+NON TERMINASLS: token size in {'NUM', '+', '-', '(', 'ID'}
 from : 28 with AdditiveExpression to 27 Type: EdgeType.NON_TERMINAL
 token size
 target before pushing 27
@@ -2951,9 +2934,12 @@ start while 0
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: Term {'ID', '+', '(', '-', 'NUM'}
+predict: Term {'NUM', '+', '-', '(', 'ID'}
+XX Matching token: size ID to symbol: + result: False
+XX Matching token: size ID to symbol: - result: False
+XX Matching token: size ID to symbol: ( result: False
 ID Matching ID token: size to symbol: ID result: True
-NON TERMINASLS: token size in {'ID', '+', '(', '-', 'NUM'}
+NON TERMINASLS: token size in {'NUM', '+', '-', '(', 'ID'}
 from : 0 with Term to 2 Type: EdgeType.NON_TERMINAL
 token size
 target before pushing 2
@@ -2964,9 +2950,12 @@ start while 144
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: SignedFactor {'ID', '+', '(', '-', 'NUM'}
+predict: SignedFactor {'NUM', '+', '-', '(', 'ID'}
+XX Matching token: size ID to symbol: + result: False
+XX Matching token: size ID to symbol: - result: False
+XX Matching token: size ID to symbol: ( result: False
 ID Matching ID token: size to symbol: ID result: True
-NON TERMINASLS: token size in {'ID', '+', '(', '-', 'NUM'}
+NON TERMINASLS: token size in {'NUM', '+', '-', '(', 'ID'}
 from : 144 with SignedFactor to 146 Type: EdgeType.NON_TERMINAL
 token size
 target before pushing 146
@@ -2987,10 +2976,10 @@ None
 XX Matching token: size ID to symbol: - result: False
 hereeee
 ###22222222222222222222222222222222222222
-predict: Factor {'(', 'NUM', 'ID'}
+predict: Factor {'NUM', '(', 'ID'}
 XX Matching token: size ID to symbol: ( result: False
 ID Matching ID token: size to symbol: ID result: True
-NON TERMINASLS: token size in {'(', 'NUM', 'ID'}
+NON TERMINASLS: token size in {'NUM', '(', 'ID'}
 from : 123 with Factor to 124 Type: EdgeType.NON_TERMINAL
 token size
 target before pushing 124
@@ -3028,17 +3017,17 @@ start while 60
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: VarCallPrime {']', ')', ';', '==', '(', '*', '[', '-', ',', '+', '<'}
-XX Matching token: { SYMBOL to symbol: ] result: False
-XX Matching token: { SYMBOL to symbol: ) result: False
+predict: VarCallPrime {';', ']', '*', ',', '==', '(', ')', '[', '+', '-', '<'}
 XX Matching token: { SYMBOL to symbol: ; result: False
+XX Matching token: { SYMBOL to symbol: ] result: False
+XX Matching token: { SYMBOL to symbol: * result: False
+XX Matching token: { SYMBOL to symbol: , result: False
 XX Matching token: { SYMBOL to symbol: == result: False
 XX Matching token: { SYMBOL to symbol: ( result: False
-XX Matching token: { SYMBOL to symbol: * result: False
+XX Matching token: { SYMBOL to symbol: ) result: False
 XX Matching token: { SYMBOL to symbol: [ result: False
-XX Matching token: { SYMBOL to symbol: - result: False
-XX Matching token: { SYMBOL to symbol: , result: False
 XX Matching token: { SYMBOL to symbol: + result: False
+XX Matching token: { SYMBOL to symbol: - result: False
 XX Matching token: { SYMBOL to symbol: < result: False
 EPSILON None
 state id: 60
@@ -3058,17 +3047,17 @@ start while 60
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: VarCallPrime {']', ')', ';', '==', '(', '*', '[', '-', ',', '+', '<'}
-XX Matching token: total ID to symbol: ] result: False
-XX Matching token: total ID to symbol: ) result: False
+predict: VarCallPrime {';', ']', '*', ',', '==', '(', ')', '[', '+', '-', '<'}
 XX Matching token: total ID to symbol: ; result: False
+XX Matching token: total ID to symbol: ] result: False
+XX Matching token: total ID to symbol: * result: False
+XX Matching token: total ID to symbol: , result: False
 XX Matching token: total ID to symbol: == result: False
 XX Matching token: total ID to symbol: ( result: False
-XX Matching token: total ID to symbol: * result: False
+XX Matching token: total ID to symbol: ) result: False
 XX Matching token: total ID to symbol: [ result: False
-XX Matching token: total ID to symbol: - result: False
-XX Matching token: total ID to symbol: , result: False
 XX Matching token: total ID to symbol: + result: False
+XX Matching token: total ID to symbol: - result: False
 XX Matching token: total ID to symbol: < result: False
 EPSILON None
 state id: 60
@@ -3088,17 +3077,17 @@ start while 60
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: VarCallPrime {']', ')', ';', '==', '(', '*', '[', '-', ',', '+', '<'}
-XX Matching token: = SYMBOL to symbol: ] result: False
-XX Matching token: = SYMBOL to symbol: ) result: False
+predict: VarCallPrime {';', ']', '*', ',', '==', '(', ')', '[', '+', '-', '<'}
 XX Matching token: = SYMBOL to symbol: ; result: False
+XX Matching token: = SYMBOL to symbol: ] result: False
+XX Matching token: = SYMBOL to symbol: * result: False
+XX Matching token: = SYMBOL to symbol: , result: False
 XX Matching token: = SYMBOL to symbol: == result: False
 XX Matching token: = SYMBOL to symbol: ( result: False
-XX Matching token: = SYMBOL to symbol: * result: False
+XX Matching token: = SYMBOL to symbol: ) result: False
 XX Matching token: = SYMBOL to symbol: [ result: False
-XX Matching token: = SYMBOL to symbol: - result: False
-XX Matching token: = SYMBOL to symbol: , result: False
 XX Matching token: = SYMBOL to symbol: + result: False
+XX Matching token: = SYMBOL to symbol: - result: False
 XX Matching token: = SYMBOL to symbol: < result: False
 EPSILON None
 state id: 60
@@ -3118,17 +3107,17 @@ start while 60
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: VarCallPrime {']', ')', ';', '==', '(', '*', '[', '-', ',', '+', '<'}
-XX Matching token: total ID to symbol: ] result: False
-XX Matching token: total ID to symbol: ) result: False
+predict: VarCallPrime {';', ']', '*', ',', '==', '(', ')', '[', '+', '-', '<'}
 XX Matching token: total ID to symbol: ; result: False
+XX Matching token: total ID to symbol: ] result: False
+XX Matching token: total ID to symbol: * result: False
+XX Matching token: total ID to symbol: , result: False
 XX Matching token: total ID to symbol: == result: False
 XX Matching token: total ID to symbol: ( result: False
-XX Matching token: total ID to symbol: * result: False
+XX Matching token: total ID to symbol: ) result: False
 XX Matching token: total ID to symbol: [ result: False
-XX Matching token: total ID to symbol: - result: False
-XX Matching token: total ID to symbol: , result: False
 XX Matching token: total ID to symbol: + result: False
+XX Matching token: total ID to symbol: - result: False
 XX Matching token: total ID to symbol: < result: False
 EPSILON None
 state id: 60
@@ -3148,18 +3137,17 @@ start while 60
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: VarCallPrime {']', ')', ';', '==', '(', '*', '[', '-', ',', '+', '<'}
-XX Matching token: + SYMBOL to symbol: ] result: False
-XX Matching token: + SYMBOL to symbol: ) result: False
+predict: VarCallPrime {';', ']', '*', ',', '==', '(', ')', '[', '+', '-', '<'}
 XX Matching token: + SYMBOL to symbol: ; result: False
+XX Matching token: + SYMBOL to symbol: ] result: False
+XX Matching token: + SYMBOL to symbol: * result: False
+XX Matching token: + SYMBOL to symbol: , result: False
 XX Matching token: + SYMBOL to symbol: == result: False
 XX Matching token: + SYMBOL to symbol: ( result: False
-XX Matching token: + SYMBOL to symbol: * result: False
+XX Matching token: + SYMBOL to symbol: ) result: False
 XX Matching token: + SYMBOL to symbol: [ result: False
-XX Matching token: + SYMBOL to symbol: - result: False
-XX Matching token: + SYMBOL to symbol: , result: False
 XX Matching token: + SYMBOL to symbol: + result: True
-NON TERMINASLS: token + in {']', ')', ';', '==', '(', '*', '[', '-', ',', '+', '<'}
+NON TERMINASLS: token + in {';', ']', '*', ',', '==', '(', ')', '[', '+', '-', '<'}
 from : 60 with VarCallPrime to 57 Type: EdgeType.NON_TERMINAL
 token +
 target before pushing 57
@@ -3175,17 +3163,16 @@ None
 XX Matching token: + SYMBOL to symbol: ( result: False
 hereeee
 ###22222222222222222222222222222222222222
-predict: VarPrime {']', ')', ';', '==', '*', '[', '-', ',', '+', '<'}
-XX Matching token: + SYMBOL to symbol: ] result: False
-XX Matching token: + SYMBOL to symbol: ) result: False
+predict: VarPrime {';', ']', '*', ',', '==', ')', '[', '+', '-', '<'}
 XX Matching token: + SYMBOL to symbol: ; result: False
-XX Matching token: + SYMBOL to symbol: == result: False
+XX Matching token: + SYMBOL to symbol: ] result: False
 XX Matching token: + SYMBOL to symbol: * result: False
-XX Matching token: + SYMBOL to symbol: [ result: False
-XX Matching token: + SYMBOL to symbol: - result: False
 XX Matching token: + SYMBOL to symbol: , result: False
+XX Matching token: + SYMBOL to symbol: == result: False
+XX Matching token: + SYMBOL to symbol: ) result: False
+XX Matching token: + SYMBOL to symbol: [ result: False
 XX Matching token: + SYMBOL to symbol: + result: True
-NON TERMINASLS: token + in {']', ')', ';', '==', '*', '[', '-', ',', '+', '<'}
+NON TERMINASLS: token + in {';', ']', '*', ',', '==', ')', '[', '+', '-', '<'}
 from : 155 with VarPrime to 156 Type: EdgeType.NON_TERMINAL
 token +
 target before pushing 156
@@ -3200,7 +3187,7 @@ from : 164 with [ to 166 Type: EdgeType.TERMINAL
 None
 XX Matching token: + SYMBOL to symbol: [ result: False
 hereeee
-EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x105010520>
+EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x10297c520>
 epsilon edge
 start while 165
 0
@@ -3244,16 +3231,15 @@ start while 146
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: G {']', ')', ';', '==', '*', '-', ',', '+', '<'}
-XX Matching token: + SYMBOL to symbol: ] result: False
-XX Matching token: + SYMBOL to symbol: ) result: False
+predict: G {';', ']', '*', ',', '==', ')', '+', '-', '<'}
 XX Matching token: + SYMBOL to symbol: ; result: False
-XX Matching token: + SYMBOL to symbol: == result: False
+XX Matching token: + SYMBOL to symbol: ] result: False
 XX Matching token: + SYMBOL to symbol: * result: False
-XX Matching token: + SYMBOL to symbol: - result: False
 XX Matching token: + SYMBOL to symbol: , result: False
+XX Matching token: + SYMBOL to symbol: == result: False
+XX Matching token: + SYMBOL to symbol: ) result: False
 XX Matching token: + SYMBOL to symbol: + result: True
-NON TERMINASLS: token + in {']', ')', ';', '==', '*', '-', ',', '+', '<'}
+NON TERMINASLS: token + in {';', ']', '*', ',', '==', ')', '+', '-', '<'}
 from : 146 with G to 145 Type: EdgeType.NON_TERMINAL
 token +
 target before pushing 145
@@ -3268,7 +3254,7 @@ from : 74 with * to 76 Type: EdgeType.TERMINAL
 None
 XX Matching token: + SYMBOL to symbol: * result: False
 hereeee
-EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x104ffd5c0>
+EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x1029695c0>
 epsilon edge
 start while 75
 0
@@ -3294,15 +3280,14 @@ start while 2
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: D {']', ')', ';', '==', '-', ',', '+', '<'}
-XX Matching token: + SYMBOL to symbol: ] result: False
-XX Matching token: + SYMBOL to symbol: ) result: False
+predict: D {';', ']', '==', ',', ')', '+', '-', '<'}
 XX Matching token: + SYMBOL to symbol: ; result: False
+XX Matching token: + SYMBOL to symbol: ] result: False
 XX Matching token: + SYMBOL to symbol: == result: False
-XX Matching token: + SYMBOL to symbol: - result: False
 XX Matching token: + SYMBOL to symbol: , result: False
+XX Matching token: + SYMBOL to symbol: ) result: False
 XX Matching token: + SYMBOL to symbol: + result: True
-NON TERMINASLS: token + in {']', ')', ';', '==', '-', ',', '+', '<'}
+NON TERMINASLS: token + in {';', ']', '==', ',', ')', '+', '-', '<'}
 from : 2 with D to 1 Type: EdgeType.NON_TERMINAL
 token +
 target before pushing 1
@@ -3357,9 +3342,12 @@ start while 36
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: Term {'ID', '+', '(', '-', 'NUM'}
+predict: Term {'NUM', '+', '-', '(', 'ID'}
+XX Matching token: arr ID to symbol: + result: False
+XX Matching token: arr ID to symbol: - result: False
+XX Matching token: arr ID to symbol: ( result: False
 ID Matching ID token: arr to symbol: ID result: True
-NON TERMINASLS: token arr in {'ID', '+', '(', '-', 'NUM'}
+NON TERMINASLS: token arr in {'NUM', '+', '-', '(', 'ID'}
 from : 36 with Term to 37 Type: EdgeType.NON_TERMINAL
 token arr
 target before pushing 37
@@ -3370,9 +3358,12 @@ start while 144
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: SignedFactor {'ID', '+', '(', '-', 'NUM'}
+predict: SignedFactor {'NUM', '+', '-', '(', 'ID'}
+XX Matching token: arr ID to symbol: + result: False
+XX Matching token: arr ID to symbol: - result: False
+XX Matching token: arr ID to symbol: ( result: False
 ID Matching ID token: arr to symbol: ID result: True
-NON TERMINASLS: token arr in {'ID', '+', '(', '-', 'NUM'}
+NON TERMINASLS: token arr in {'NUM', '+', '-', '(', 'ID'}
 from : 144 with SignedFactor to 146 Type: EdgeType.NON_TERMINAL
 token arr
 target before pushing 146
@@ -3393,10 +3384,10 @@ None
 XX Matching token: arr ID to symbol: - result: False
 hereeee
 ###22222222222222222222222222222222222222
-predict: Factor {'(', 'NUM', 'ID'}
+predict: Factor {'NUM', '(', 'ID'}
 XX Matching token: arr ID to symbol: ( result: False
 ID Matching ID token: arr to symbol: ID result: True
-NON TERMINASLS: token arr in {'(', 'NUM', 'ID'}
+NON TERMINASLS: token arr in {'NUM', '(', 'ID'}
 from : 123 with Factor to 124 Type: EdgeType.NON_TERMINAL
 token arr
 target before pushing 124
@@ -3434,15 +3425,16 @@ start while 60
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: VarCallPrime {']', ')', ';', '==', '(', '*', '[', '-', ',', '+', '<'}
-XX Matching token: [ SYMBOL to symbol: ] result: False
-XX Matching token: [ SYMBOL to symbol: ) result: False
+predict: VarCallPrime {';', ']', '*', ',', '==', '(', ')', '[', '+', '-', '<'}
 XX Matching token: [ SYMBOL to symbol: ; result: False
+XX Matching token: [ SYMBOL to symbol: ] result: False
+XX Matching token: [ SYMBOL to symbol: * result: False
+XX Matching token: [ SYMBOL to symbol: , result: False
 XX Matching token: [ SYMBOL to symbol: == result: False
 XX Matching token: [ SYMBOL to symbol: ( result: False
-XX Matching token: [ SYMBOL to symbol: * result: False
+XX Matching token: [ SYMBOL to symbol: ) result: False
 XX Matching token: [ SYMBOL to symbol: [ result: True
-NON TERMINASLS: token [ in {']', ')', ';', '==', '(', '*', '[', '-', ',', '+', '<'}
+NON TERMINASLS: token [ in {';', ']', '*', ',', '==', '(', ')', '[', '+', '-', '<'}
 from : 60 with VarCallPrime to 57 Type: EdgeType.NON_TERMINAL
 token [
 target before pushing 57
@@ -3458,14 +3450,15 @@ None
 XX Matching token: [ SYMBOL to symbol: ( result: False
 hereeee
 ###22222222222222222222222222222222222222
-predict: VarPrime {']', ')', ';', '==', '*', '[', '-', ',', '+', '<'}
-XX Matching token: [ SYMBOL to symbol: ] result: False
-XX Matching token: [ SYMBOL to symbol: ) result: False
+predict: VarPrime {';', ']', '*', ',', '==', ')', '[', '+', '-', '<'}
 XX Matching token: [ SYMBOL to symbol: ; result: False
-XX Matching token: [ SYMBOL to symbol: == result: False
+XX Matching token: [ SYMBOL to symbol: ] result: False
 XX Matching token: [ SYMBOL to symbol: * result: False
+XX Matching token: [ SYMBOL to symbol: , result: False
+XX Matching token: [ SYMBOL to symbol: == result: False
+XX Matching token: [ SYMBOL to symbol: ) result: False
 XX Matching token: [ SYMBOL to symbol: [ result: True
-NON TERMINASLS: token [ in {']', ')', ';', '==', '*', '[', '-', ',', '+', '<'}
+NON TERMINASLS: token [ in {';', ']', '*', ',', '==', ')', '[', '+', '-', '<'}
 from : 155 with VarPrime to 156 Type: EdgeType.NON_TERMINAL
 token [
 target before pushing 156
@@ -3498,9 +3491,12 @@ start while 166
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: Expression {'ID', '+', '(', '-', 'NUM'}
+predict: Expression {'NUM', '+', '-', '(', 'ID'}
+XX Matching token: i ID to symbol: + result: False
+XX Matching token: i ID to symbol: - result: False
+XX Matching token: i ID to symbol: ( result: False
 ID Matching ID token: i to symbol: ID result: True
-NON TERMINASLS: token i in {'ID', '+', '(', '-', 'NUM'}
+NON TERMINASLS: token i in {'NUM', '+', '-', '(', 'ID'}
 from : 166 with Expression to 167 Type: EdgeType.NON_TERMINAL
 token i
 target before pushing 167
@@ -3533,9 +3529,10 @@ start while 51
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: B {']', ')', ';', '==', '(', '*', '[', '-', ',', '+', '<', '='}
+predict: B {';', ']', '*', ',', '==', '(', '=', ')', '[', '+', '-', '<'}
+XX Matching token: ] SYMBOL to symbol: ; result: False
 XX Matching token: ] SYMBOL to symbol: ] result: True
-NON TERMINASLS: token ] in {']', ')', ';', '==', '(', '*', '[', '-', ',', '+', '<', '='}
+NON TERMINASLS: token ] in {';', ']', '*', ',', '==', '(', '=', ')', '[', '+', '-', '<'}
 from : 51 with B to 50 Type: EdgeType.NON_TERMINAL
 token ]
 target before pushing 50
@@ -3556,9 +3553,10 @@ None
 XX Matching token: ] SYMBOL to symbol: [ result: False
 hereeee
 ###22222222222222222222222222222222222222
-predict: SimpleExpressionPrime {']', ')', ';', '==', '(', '*', '-', ',', '+', '<'}
+predict: SimpleExpressionPrime {';', ']', '*', ',', '==', '(', ')', '+', '-', '<'}
+XX Matching token: ] SYMBOL to symbol: ; result: False
 XX Matching token: ] SYMBOL to symbol: ] result: True
-NON TERMINASLS: token ] in {']', ')', ';', '==', '(', '*', '-', ',', '+', '<'}
+NON TERMINASLS: token ] in {';', ']', '*', ',', '==', '(', ')', '+', '-', '<'}
 from : 20 with SimpleExpressionPrime to 21 Type: EdgeType.NON_TERMINAL
 token ]
 target before pushing 21
@@ -3569,9 +3567,10 @@ start while 133
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: AdditiveExpressionPrime {']', ')', ';', '==', '(', '*', '-', ',', '+', '<'}
+predict: AdditiveExpressionPrime {';', ']', '*', ',', '==', '(', ')', '+', '-', '<'}
+XX Matching token: ] SYMBOL to symbol: ; result: False
 XX Matching token: ] SYMBOL to symbol: ] result: True
-NON TERMINASLS: token ] in {']', ')', ';', '==', '(', '*', '-', ',', '+', '<'}
+NON TERMINASLS: token ] in {';', ']', '*', ',', '==', '(', ')', '+', '-', '<'}
 from : 133 with AdditiveExpressionPrime to 135 Type: EdgeType.NON_TERMINAL
 token ]
 target before pushing 135
@@ -3582,9 +3581,10 @@ start while 3
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: TermPrime {']', ')', ';', '==', '(', '*', '-', ',', '+', '<'}
+predict: TermPrime {';', ']', '*', ',', '==', '(', ')', '+', '-', '<'}
+XX Matching token: ] SYMBOL to symbol: ; result: False
 XX Matching token: ] SYMBOL to symbol: ] result: True
-NON TERMINASLS: token ] in {']', ')', ';', '==', '(', '*', '-', ',', '+', '<'}
+NON TERMINASLS: token ] in {';', ']', '*', ',', '==', '(', ')', '+', '-', '<'}
 from : 3 with TermPrime to 5 Type: EdgeType.NON_TERMINAL
 token ]
 target before pushing 5
@@ -3595,9 +3595,10 @@ start while 147
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: SignedFactorPrime {']', ')', ';', '==', '(', '*', '-', ',', '+', '<'}
+predict: SignedFactorPrime {';', ']', '*', ',', '==', '(', ')', '+', '-', '<'}
+XX Matching token: ] SYMBOL to symbol: ; result: False
 XX Matching token: ] SYMBOL to symbol: ] result: True
-NON TERMINASLS: token ] in {']', ')', ';', '==', '(', '*', '-', ',', '+', '<'}
+NON TERMINASLS: token ] in {';', ']', '*', ',', '==', '(', ')', '+', '-', '<'}
 from : 147 with SignedFactorPrime to 149 Type: EdgeType.NON_TERMINAL
 token ]
 target before pushing 149
@@ -3608,9 +3609,10 @@ start while 127
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: FactorPrime {']', ')', ';', '==', '(', '*', '-', ',', '+', '<'}
+predict: FactorPrime {';', ']', '*', ',', '==', '(', ')', '+', '-', '<'}
+XX Matching token: ] SYMBOL to symbol: ; result: False
 XX Matching token: ] SYMBOL to symbol: ] result: True
-NON TERMINASLS: token ] in {']', ')', ';', '==', '(', '*', '-', ',', '+', '<'}
+NON TERMINASLS: token ] in {';', ']', '*', ',', '==', '(', ')', '+', '-', '<'}
 from : 127 with FactorPrime to 128 Type: EdgeType.NON_TERMINAL
 token ]
 target before pushing 128
@@ -3625,7 +3627,7 @@ from : 61 with ( to 63 Type: EdgeType.TERMINAL
 None
 XX Matching token: ] SYMBOL to symbol: ( result: False
 hereeee
-EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x104ffd080>
+EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x102969080>
 epsilon edge
 start while 62
 0
@@ -3651,9 +3653,10 @@ start while 149
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: G {']', ')', ';', '==', '*', '-', ',', '+', '<'}
+predict: G {';', ']', '*', ',', '==', ')', '+', '-', '<'}
+XX Matching token: ] SYMBOL to symbol: ; result: False
 XX Matching token: ] SYMBOL to symbol: ] result: True
-NON TERMINASLS: token ] in {']', ')', ';', '==', '*', '-', ',', '+', '<'}
+NON TERMINASLS: token ] in {';', ']', '*', ',', '==', ')', '+', '-', '<'}
 from : 149 with G to 148 Type: EdgeType.NON_TERMINAL
 token ]
 target before pushing 148
@@ -3668,7 +3671,7 @@ from : 74 with * to 76 Type: EdgeType.TERMINAL
 None
 XX Matching token: ] SYMBOL to symbol: * result: False
 hereeee
-EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x104ffd5c0>
+EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x1029695c0>
 epsilon edge
 start while 75
 0
@@ -3694,9 +3697,10 @@ start while 5
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: D {']', ')', ';', '==', '-', ',', '+', '<'}
+predict: D {';', ']', '==', ',', ')', '+', '-', '<'}
+XX Matching token: ] SYMBOL to symbol: ; result: False
 XX Matching token: ] SYMBOL to symbol: ] result: True
-NON TERMINASLS: token ] in {']', ')', ';', '==', '-', ',', '+', '<'}
+NON TERMINASLS: token ] in {';', ']', '==', ',', ')', '+', '-', '<'}
 from : 5 with D to 4 Type: EdgeType.NON_TERMINAL
 token ]
 target before pushing 4
@@ -3710,7 +3714,7 @@ hereeee
 predict: Addop {'+', '-'}
 XX Matching token: ] SYMBOL to symbol: + result: False
 XX Matching token: ] SYMBOL to symbol: - result: False
-EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x104ffc4b0>
+EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x1029684b0>
 epsilon edge
 start while 35
 0
@@ -3736,9 +3740,10 @@ start while 135
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: C {']', ')', ';', ',', '==', '<'}
+predict: C {';', ']', '==', ',', '<', ')'}
+XX Matching token: ] SYMBOL to symbol: ; result: False
 XX Matching token: ] SYMBOL to symbol: ] result: True
-NON TERMINASLS: token ] in {']', ')', ';', ',', '==', '<'}
+NON TERMINASLS: token ] in {';', ']', '==', ',', '<', ')'}
 from : 135 with C to 134 Type: EdgeType.NON_TERMINAL
 token ]
 target before pushing 134
@@ -3749,10 +3754,10 @@ start while 26
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: Relop {'<', '=='}
-XX Matching token: ] SYMBOL to symbol: < result: False
+predict: Relop {'==', '<'}
 XX Matching token: ] SYMBOL to symbol: == result: False
-EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x104fb23d0>
+XX Matching token: ] SYMBOL to symbol: < result: False
+EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x10291e450>
 epsilon edge
 start while 27
 0
@@ -3854,15 +3859,15 @@ start while 146
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: G {']', ')', ';', '==', '*', '-', ',', '+', '<'}
-XX Matching token: i ID to symbol: ] result: False
-XX Matching token: i ID to symbol: ) result: False
+predict: G {';', ']', '*', ',', '==', ')', '+', '-', '<'}
 XX Matching token: i ID to symbol: ; result: False
-XX Matching token: i ID to symbol: == result: False
+XX Matching token: i ID to symbol: ] result: False
 XX Matching token: i ID to symbol: * result: False
-XX Matching token: i ID to symbol: - result: False
 XX Matching token: i ID to symbol: , result: False
+XX Matching token: i ID to symbol: == result: False
+XX Matching token: i ID to symbol: ) result: False
 XX Matching token: i ID to symbol: + result: False
+XX Matching token: i ID to symbol: - result: False
 XX Matching token: i ID to symbol: < result: False
 EPSILON None
 state id: 146
@@ -3881,15 +3886,15 @@ start while 146
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: G {']', ')', ';', '==', '*', '-', ',', '+', '<'}
-XX Matching token: = SYMBOL to symbol: ] result: False
-XX Matching token: = SYMBOL to symbol: ) result: False
+predict: G {';', ']', '*', ',', '==', ')', '+', '-', '<'}
 XX Matching token: = SYMBOL to symbol: ; result: False
-XX Matching token: = SYMBOL to symbol: == result: False
+XX Matching token: = SYMBOL to symbol: ] result: False
 XX Matching token: = SYMBOL to symbol: * result: False
-XX Matching token: = SYMBOL to symbol: - result: False
 XX Matching token: = SYMBOL to symbol: , result: False
+XX Matching token: = SYMBOL to symbol: == result: False
+XX Matching token: = SYMBOL to symbol: ) result: False
 XX Matching token: = SYMBOL to symbol: + result: False
+XX Matching token: = SYMBOL to symbol: - result: False
 XX Matching token: = SYMBOL to symbol: < result: False
 EPSILON None
 state id: 146
@@ -3908,15 +3913,15 @@ start while 146
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: G {']', ')', ';', '==', '*', '-', ',', '+', '<'}
-XX Matching token: i ID to symbol: ] result: False
-XX Matching token: i ID to symbol: ) result: False
+predict: G {';', ']', '*', ',', '==', ')', '+', '-', '<'}
 XX Matching token: i ID to symbol: ; result: False
-XX Matching token: i ID to symbol: == result: False
+XX Matching token: i ID to symbol: ] result: False
 XX Matching token: i ID to symbol: * result: False
-XX Matching token: i ID to symbol: - result: False
 XX Matching token: i ID to symbol: , result: False
+XX Matching token: i ID to symbol: == result: False
+XX Matching token: i ID to symbol: ) result: False
 XX Matching token: i ID to symbol: + result: False
+XX Matching token: i ID to symbol: - result: False
 XX Matching token: i ID to symbol: < result: False
 EPSILON None
 state id: 146
@@ -3935,16 +3940,15 @@ start while 146
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: G {']', ')', ';', '==', '*', '-', ',', '+', '<'}
-XX Matching token: + SYMBOL to symbol: ] result: False
-XX Matching token: + SYMBOL to symbol: ) result: False
+predict: G {';', ']', '*', ',', '==', ')', '+', '-', '<'}
 XX Matching token: + SYMBOL to symbol: ; result: False
-XX Matching token: + SYMBOL to symbol: == result: False
+XX Matching token: + SYMBOL to symbol: ] result: False
 XX Matching token: + SYMBOL to symbol: * result: False
-XX Matching token: + SYMBOL to symbol: - result: False
 XX Matching token: + SYMBOL to symbol: , result: False
+XX Matching token: + SYMBOL to symbol: == result: False
+XX Matching token: + SYMBOL to symbol: ) result: False
 XX Matching token: + SYMBOL to symbol: + result: True
-NON TERMINASLS: token + in {']', ')', ';', '==', '*', '-', ',', '+', '<'}
+NON TERMINASLS: token + in {';', ']', '*', ',', '==', ')', '+', '-', '<'}
 from : 146 with G to 145 Type: EdgeType.NON_TERMINAL
 token +
 target before pushing 145
@@ -3959,7 +3963,7 @@ from : 74 with * to 76 Type: EdgeType.TERMINAL
 None
 XX Matching token: + SYMBOL to symbol: * result: False
 hereeee
-EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x104ffd5c0>
+EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x1029695c0>
 epsilon edge
 start while 75
 0
@@ -3985,15 +3989,14 @@ start while 37
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: D {']', ')', ';', '==', '-', ',', '+', '<'}
-XX Matching token: + SYMBOL to symbol: ] result: False
-XX Matching token: + SYMBOL to symbol: ) result: False
+predict: D {';', ']', '==', ',', ')', '+', '-', '<'}
 XX Matching token: + SYMBOL to symbol: ; result: False
+XX Matching token: + SYMBOL to symbol: ] result: False
 XX Matching token: + SYMBOL to symbol: == result: False
-XX Matching token: + SYMBOL to symbol: - result: False
 XX Matching token: + SYMBOL to symbol: , result: False
+XX Matching token: + SYMBOL to symbol: ) result: False
 XX Matching token: + SYMBOL to symbol: + result: True
-NON TERMINASLS: token + in {']', ')', ';', '==', '-', ',', '+', '<'}
+NON TERMINASLS: token + in {';', ']', '==', ',', ')', '+', '-', '<'}
 from : 37 with D to 35 Type: EdgeType.NON_TERMINAL
 token +
 target before pushing 35
@@ -4048,12 +4051,8 @@ start while 36
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: Term {'ID', '+', '(', '-', 'NUM'}
-ID Matching ID token: 1 to symbol: ID result: False
-XX Matching token: 1 NUM to symbol: + result: False
-XX Matching token: 1 NUM to symbol: ( result: False
-XX Matching token: 1 NUM to symbol: - result: False
-NON TERMINASLS: token 1 in {'ID', '+', '(', '-', 'NUM'}
+predict: Term {'NUM', '+', '-', '(', 'ID'}
+NON TERMINASLS: token 1 in {'NUM', '+', '-', '(', 'ID'}
 from : 36 with Term to 37 Type: EdgeType.NON_TERMINAL
 token 1
 target before pushing 37
@@ -4064,12 +4063,8 @@ start while 144
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: SignedFactor {'ID', '+', '(', '-', 'NUM'}
-ID Matching ID token: 1 to symbol: ID result: False
-XX Matching token: 1 NUM to symbol: + result: False
-XX Matching token: 1 NUM to symbol: ( result: False
-XX Matching token: 1 NUM to symbol: - result: False
-NON TERMINASLS: token 1 in {'ID', '+', '(', '-', 'NUM'}
+predict: SignedFactor {'NUM', '+', '-', '(', 'ID'}
+NON TERMINASLS: token 1 in {'NUM', '+', '-', '(', 'ID'}
 from : 144 with SignedFactor to 146 Type: EdgeType.NON_TERMINAL
 token 1
 target before pushing 146
@@ -4090,9 +4085,8 @@ None
 XX Matching token: 1 NUM to symbol: - result: False
 hereeee
 ###22222222222222222222222222222222222222
-predict: Factor {'(', 'NUM', 'ID'}
-XX Matching token: 1 NUM to symbol: ( result: False
-NON TERMINASLS: token 1 in {'(', 'NUM', 'ID'}
+predict: Factor {'NUM', '(', 'ID'}
+NON TERMINASLS: token 1 in {'NUM', '(', 'ID'}
 from : 123 with Factor to 124 Type: EdgeType.NON_TERMINAL
 token 1
 target before pushing 124
@@ -4151,11 +4145,9 @@ start while 146
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: G {']', ')', ';', '==', '*', '-', ',', '+', '<'}
-XX Matching token: ; SYMBOL to symbol: ] result: False
-XX Matching token: ; SYMBOL to symbol: ) result: False
+predict: G {';', ']', '*', ',', '==', ')', '+', '-', '<'}
 XX Matching token: ; SYMBOL to symbol: ; result: True
-NON TERMINASLS: token ; in {']', ')', ';', '==', '*', '-', ',', '+', '<'}
+NON TERMINASLS: token ; in {';', ']', '*', ',', '==', ')', '+', '-', '<'}
 from : 146 with G to 145 Type: EdgeType.NON_TERMINAL
 token ;
 target before pushing 145
@@ -4170,7 +4162,7 @@ from : 74 with * to 76 Type: EdgeType.TERMINAL
 None
 XX Matching token: ; SYMBOL to symbol: * result: False
 hereeee
-EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x104ffd5c0>
+EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x1029695c0>
 epsilon edge
 start while 75
 0
@@ -4196,11 +4188,9 @@ start while 37
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: D {']', ')', ';', '==', '-', ',', '+', '<'}
-XX Matching token: ; SYMBOL to symbol: ] result: False
-XX Matching token: ; SYMBOL to symbol: ) result: False
+predict: D {';', ']', '==', ',', ')', '+', '-', '<'}
 XX Matching token: ; SYMBOL to symbol: ; result: True
-NON TERMINASLS: token ; in {']', ')', ';', '==', '-', ',', '+', '<'}
+NON TERMINASLS: token ; in {';', ']', '==', ',', ')', '+', '-', '<'}
 from : 37 with D to 35 Type: EdgeType.NON_TERMINAL
 token ;
 target before pushing 35
@@ -4214,7 +4204,7 @@ hereeee
 predict: Addop {'+', '-'}
 XX Matching token: ; SYMBOL to symbol: + result: False
 XX Matching token: ; SYMBOL to symbol: - result: False
-EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x104ffc4b0>
+EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x1029684b0>
 epsilon edge
 start while 35
 0
@@ -4308,12 +4298,10 @@ start while 88
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: Statement {'break', 'ID', '+', ';', '(', 'return', '-', 'if', 'while', '{', 'NUM'}
+predict: Statement {'break', ';', 'while', '(', 'if', 'ID', 'NUM', 'return', '{', '+', '-'}
 XX Matching token: ; SYMBOL to symbol: break result: False
-ID Matching ID token: ; to symbol: ID result: False
-XX Matching token: ; SYMBOL to symbol: + result: False
 XX Matching token: ; SYMBOL to symbol: ; result: True
-NON TERMINASLS: token ; in {'break', 'ID', '+', ';', '(', 'return', '-', 'if', 'while', '{', 'NUM'}
+NON TERMINASLS: token ; in {'break', ';', 'while', '(', 'if', 'ID', 'NUM', 'return', '{', '+', '-'}
 from : 88 with Statement to 84 Type: EdgeType.NON_TERMINAL
 token ;
 target before pushing 84
@@ -4327,12 +4315,10 @@ hereeee
 predict: CompoundStmt {'{'}
 XX Matching token: ; SYMBOL to symbol: { result: False
 ###22222222222222222222222222222222222222
-predict: ExpressionStmt {'break', 'ID', '+', ';', '(', '-', 'NUM'}
+predict: ExpressionStmt {'break', 'NUM', ';', '+', '-', '(', 'ID'}
 XX Matching token: ; SYMBOL to symbol: break result: False
-ID Matching ID token: ; to symbol: ID result: False
-XX Matching token: ; SYMBOL to symbol: + result: False
 XX Matching token: ; SYMBOL to symbol: ; result: True
-NON TERMINASLS: token ; in {'break', 'ID', '+', ';', '(', '-', 'NUM'}
+NON TERMINASLS: token ; in {'break', 'NUM', ';', '+', '-', '(', 'ID'}
 from : 139 with ExpressionStmt to 140 Type: EdgeType.NON_TERMINAL
 token ;
 target before pushing 140
@@ -4401,15 +4387,13 @@ start while 143
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: StatementList {'break', 'ID', '+', ';', '(', 'return', '}', '-', 'if', 'while', '{', 'NUM'}
+predict: StatementList {'break', ';', 'while', '(', '}', 'if', 'ID', 'NUM', 'return', '{', '+', '-'}
 XX Matching token: } SYMBOL to symbol: break result: False
-ID Matching ID token: } to symbol: ID result: False
-XX Matching token: } SYMBOL to symbol: + result: False
 XX Matching token: } SYMBOL to symbol: ; result: False
+XX Matching token: } SYMBOL to symbol: while result: False
 XX Matching token: } SYMBOL to symbol: ( result: False
-XX Matching token: } SYMBOL to symbol: return result: False
 XX Matching token: } SYMBOL to symbol: } result: True
-NON TERMINASLS: token } in {'break', 'ID', '+', ';', '(', 'return', '}', '-', 'if', 'while', '{', 'NUM'}
+NON TERMINASLS: token } in {'break', ';', 'while', '(', '}', 'if', 'ID', 'NUM', 'return', '{', '+', '-'}
 from : 143 with StatementList to 142 Type: EdgeType.NON_TERMINAL
 token }
 target before pushing 142
@@ -4420,18 +4404,18 @@ start while 141
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: Statement {'break', 'ID', '+', ';', '(', 'return', '-', 'if', 'while', '{', 'NUM'}
+predict: Statement {'break', ';', 'while', '(', 'if', 'ID', 'NUM', 'return', '{', '+', '-'}
 XX Matching token: } SYMBOL to symbol: break result: False
-ID Matching ID token: } to symbol: ID result: False
-XX Matching token: } SYMBOL to symbol: + result: False
 XX Matching token: } SYMBOL to symbol: ; result: False
-XX Matching token: } SYMBOL to symbol: ( result: False
-XX Matching token: } SYMBOL to symbol: return result: False
-XX Matching token: } SYMBOL to symbol: - result: False
-XX Matching token: } SYMBOL to symbol: if result: False
 XX Matching token: } SYMBOL to symbol: while result: False
+XX Matching token: } SYMBOL to symbol: ( result: False
+XX Matching token: } SYMBOL to symbol: if result: False
+ID Matching ID token: } to symbol: ID result: False
+XX Matching token: } SYMBOL to symbol: return result: False
 XX Matching token: } SYMBOL to symbol: { result: False
-EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x104fff8c0>
+XX Matching token: } SYMBOL to symbol: + result: False
+XX Matching token: } SYMBOL to symbol: - result: False
+EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x10296b8c0>
 epsilon edge
 start while 142
 0
@@ -4533,13 +4517,18 @@ start while 46
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: DeclarationList {'break', 'ID', ';', '(', 'return', '}', '$', '-', 'if', 'while', 'void', '+', 'int', 'NUM', '{'}
+predict: DeclarationList {'break', ';', 'void', 'while', '(', '}', '$', 'ID', 'if', 'NUM', 'return', '{', '+', '-', 'int'}
 XX Matching token: return KEYWORD to symbol: break result: False
-ID Matching ID token: return to symbol: ID result: False
 XX Matching token: return KEYWORD to symbol: ; result: False
+XX Matching token: return KEYWORD to symbol: void result: False
+XX Matching token: return KEYWORD to symbol: while result: False
 XX Matching token: return KEYWORD to symbol: ( result: False
+XX Matching token: return KEYWORD to symbol: } result: False
+XX Matching token: return KEYWORD to symbol: $ result: False
+ID Matching ID token: return to symbol: ID result: False
+XX Matching token: return KEYWORD to symbol: if result: False
 XX Matching token: return KEYWORD to symbol: return result: True
-NON TERMINASLS: token return in {'break', 'ID', ';', '(', 'return', '}', '$', '-', 'if', 'while', 'void', '+', 'int', 'NUM', '{'}
+NON TERMINASLS: token return in {'break', ';', 'void', 'while', '(', '}', '$', 'ID', 'if', 'NUM', 'return', '{', '+', '-', 'int'}
 from : 46 with DeclarationList to 45 Type: EdgeType.NON_TERMINAL
 token return
 target before pushing 45
@@ -4550,10 +4539,10 @@ start while 44
 False
 hereeee
 ###22222222222222222222222222222222222222
-predict: Declaration {'void', 'int'}
-XX Matching token: return KEYWORD to symbol: void result: False
+predict: Declaration {'int', 'void'}
 XX Matching token: return KEYWORD to symbol: int result: False
-EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x104ffc830>
+XX Matching token: return KEYWORD to symbol: void result: False
+EPSILON <Phase2.src.TransitionDiagram.ParserEdge object at 0x102968830>
 epsilon edge
 start while 45
 0
@@ -4588,175 +4577,176 @@ state id: 106
 
 Parse Tree:
 Program
-└── DeclarationList
-    ├── Declaration
-    │   ├── DeclarationInitial
-    │   │   ├── TypeSpecifier
-    │   │   │   └── (KEYWORD, int) 
-    │   │   └── (ID, sum) 
-    │   └── DeclarationPrime
-    │       └── FunDeclarationPrime
-    │           ├── (SYMBOL, () 
-    │           ├── Params
-    │           │   ├── (KEYWORD, int) 
-    │           │   ├── (ID, arr) 
-    │           │   ├── ParamPrime
-    │           │   │   ├── (SYMBOL, [) 
-    │           │   │   └── (SYMBOL, ]) 
-    │           │   └── ParamList
-    │           │       ├── (SYMBOL, ,) 
-    │           │       ├── Param
-    │           │       │   ├── DeclarationInitial
-    │           │       │   │   ├── TypeSpecifier
-    │           │       │   │   │   └── (KEYWORD, int) 
-    │           │       │   │   └── (ID, size) 
-    │           │       │   └── ParamPrime
-    │           │       │       └── epsilon
-    │           │       └── ParamList
-    │           │           └── epsilon
-    │           ├── (SYMBOL, )) 
-    │           └── CompoundStmt
-    │               ├── (SYMBOL, {) 
-    │               ├── DeclarationList
-    │               │   ├── Declaration
-    │               │   │   ├── DeclarationInitial
-    │               │   │   │   ├── TypeSpecifier
-    │               │   │   │   │   └── (KEYWORD, int) 
-    │               │   │   │   └── (ID, total) 
-    │               │   │   └── DeclarationPrime
-    │               │   │       └── VarDeclarationPrime
-    │               │   │           └── (SYMBOL, ;) 
-    │               │   └── DeclarationList
-    │               │       ├── Declaration
-    │               │       │   ├── DeclarationInitial
-    │               │       │   │   ├── TypeSpecifier
-    │               │       │   │   │   └── (KEYWORD, int) 
-    │               │       │   │   └── (ID, i) 
-    │               │       │   └── DeclarationPrime
-    │               │       │       └── VarDeclarationPrime
-    │               │       │           └── (SYMBOL, ;) 
-    │               │       └── DeclarationList
-    │               │           └── epsilon
-    │               ├── StatementList
-    │               │   ├── Statement
-    │               │   │   └── ExpressionStmt
-    │               │   │       ├── Expression
-    │               │   │       │   ├── (ID, total) 
-    │               │   │       │   └── B
-    │               │   │       │       ├── (SYMBOL, =) 
-    │               │   │       │       └── Expression
-    │               │   │       │           └── SimpleExpressionZegond
-    │               │   │       │               ├── AdditiveExpressionZegond
-    │               │   │       │               │   ├── TermZegond
-    │               │   │       │               │   │   ├── SignedFactorZegond
-    │               │   │       │               │   │   │   └── FactorZegond
-    │               │   │       │               │   │   │       └── (NUM, 0) 
-    │               │   │       │               │   │   └── G
-    │               │   │       │               │   │       └── epsilon
-    │               │   │       │               │   └── D
-    │               │   │       │               │       └── epsilon
-    │               │   │       │               └── C
-    │               │   │       │                   └── epsilon
-    │               │   │       └── (SYMBOL, ;) 
-    │               │   └── StatementList
-    │               │       ├── Statement
-    │               │       │   └── ExpressionStmt
-    │               │       │       ├── Expression
-    │               │       │       │   ├── (ID, i) 
-    │               │       │       │   └── B
-    │               │       │       │       ├── (SYMBOL, =) 
-    │               │       │       │       └── Expression
-    │               │       │       │           └── SimpleExpressionZegond
-    │               │       │       │               ├── AdditiveExpressionZegond
-    │               │       │       │               │   ├── TermZegond
-    │               │       │       │               │   │   ├── SignedFactorZegond
-    │               │       │       │               │   │   │   └── FactorZegond
-    │               │       │       │               │   │   │       └── (NUM, 0) 
-    │               │       │       │               │   │   └── G
-    │               │       │       │               │   │       └── epsilon
-    │               │       │       │               │   └── D
-    │               │       │       │               │       └── epsilon
-    │               │       │       │               └── C
-    │               │       │       │                   └── epsilon
-    │               │       │       └── (SYMBOL, ;) 
-    │               │       └── StatementList
-    │               │           ├── Statement
-    │               │           │   └── IterationStmt
-    │               │           │       ├── (KEYWORD, while) 
-    │               │           │       ├── (SYMBOL, () 
-    │               │           │       ├── Expression
-    │               │           │       │   ├── (ID, i) 
-    │               │           │       │   └── B
-    │               │           │       │       └── SimpleExpressionPrime
-    │               │           │       │           ├── AdditiveExpressionPrime
-    │               │           │       │           │   ├── TermPrime
-    │               │           │       │           │   │   ├── SignedFactorPrime
-    │               │           │       │           │   │   │   └── FactorPrime
-    │               │           │       │           │   │   │       └── epsilon
-    │               │           │       │           │   │   └── G
-    │               │           │       │           │   │       └── epsilon
-    │               │           │       │           │   └── D
-    │               │           │       │           │       └── epsilon
-    │               │           │       │           └── C
-    │               │           │       │               ├── Relop
-    │               │           │       │               │   └── (SYMBOL, <) 
-    │               │           │       │               └── AdditiveExpression
-    │               │           │       │                   ├── Term
-    │               │           │       │                   │   ├── SignedFactor
-    │               │           │       │                   │   │   └── Factor
-    │               │           │       │                   │   │       ├── (ID, size) 
-    │               │           │       │                   │   │       └── VarCallPrime
-    │               │           │       │                   │   │           └── VarPrime
-    │               │           │       │                   │   │               └── epsilon
-    │               │           │       │                   │   └── G
-    │               │           │       │                   │       └── epsilon
-    │               │           │       │                   └── D
-    │               │           │       │                       ├── Addop
-    │               │           │       │                       │   └── (SYMBOL, +) 
-    │               │           │       │                       ├── Term
-    │               │           │       │                       │   ├── SignedFactor
-    │               │           │       │                       │   │   └── Factor
-    │               │           │       │                       │   │       ├── (ID, arr) 
-    │               │           │       │                       │   │       └── VarCallPrime
-    │               │           │       │                       │   │           └── VarPrime
-    │               │           │       │                       │   │               ├── (SYMBOL, [) 
-    │               │           │       │                       │   │               ├── Expression
-    │               │           │       │                       │   │               │   ├── (ID, i) 
-    │               │           │       │                       │   │               │   └── B
-    │               │           │       │                       │   │               │       └── SimpleExpressionPrime
-    │               │           │       │                       │   │               │           ├── AdditiveExpressionPrime
-    │               │           │       │                       │   │               │           │   ├── TermPrime
-    │               │           │       │                       │   │               │           │   │   ├── SignedFactorPrime
-    │               │           │       │                       │   │               │           │   │   │   └── FactorPrime
-    │               │           │       │                       │   │               │           │   │   │       └── epsilon
-    │               │           │       │                       │   │               │           │   │   └── G
-    │               │           │       │                       │   │               │           │   │       └── epsilon
-    │               │           │       │                       │   │               │           │   └── D
-    │               │           │       │                       │   │               │           │       └── epsilon
-    │               │           │       │                       │   │               │           └── C
-    │               │           │       │                       │   │               │               └── epsilon
-    │               │           │       │                       │   │               └── (SYMBOL, ]) 
-    │               │           │       │                       │   └── G
-    │               │           │       │                       │       └── epsilon
-    │               │           │       │                       └── D
-    │               │           │       │                           ├── Addop
-    │               │           │       │                           │   └── (SYMBOL, +) 
-    │               │           │       │                           ├── Term
-    │               │           │       │                           │   ├── SignedFactor
-    │               │           │       │                           │   │   └── Factor
-    │               │           │       │                           │   │       └── (NUM, 1) 
-    │               │           │       │                           │   └── G
-    │               │           │       │                           │       └── epsilon
-    │               │           │       │                           └── D
-    │               │           │       │                               └── epsilon
-    │               │           │       └── Statement
-    │               │           │           └── ExpressionStmt
-    │               │           │               └── (SYMBOL, ;) 
-    │               │           └── StatementList
-    │               │               └── epsilon
-    │               └── (SYMBOL, }) 
-    └── DeclarationList
-        └── epsilon
+├── DeclarationList
+│   ├── Declaration
+│   │   ├── DeclarationInitial
+│   │   │   ├── TypeSpecifier
+│   │   │   │   └── (KEYWORD, int) 
+│   │   │   └── (ID, sum) 
+│   │   └── DeclarationPrime
+│   │       └── FunDeclarationPrime
+│   │           ├── (SYMBOL, () 
+│   │           ├── Params
+│   │           │   ├── (KEYWORD, int) 
+│   │           │   ├── (ID, arr) 
+│   │           │   ├── ParamPrime
+│   │           │   │   ├── (SYMBOL, [) 
+│   │           │   │   └── (SYMBOL, ]) 
+│   │           │   └── ParamList
+│   │           │       ├── (SYMBOL, ,) 
+│   │           │       ├── Param
+│   │           │       │   ├── DeclarationInitial
+│   │           │       │   │   ├── TypeSpecifier
+│   │           │       │   │   │   └── (KEYWORD, int) 
+│   │           │       │   │   └── (ID, size) 
+│   │           │       │   └── ParamPrime
+│   │           │       │       └── epsilon
+│   │           │       └── ParamList
+│   │           │           └── epsilon
+│   │           ├── (SYMBOL, )) 
+│   │           └── CompoundStmt
+│   │               ├── (SYMBOL, {) 
+│   │               ├── DeclarationList
+│   │               │   ├── Declaration
+│   │               │   │   ├── DeclarationInitial
+│   │               │   │   │   ├── TypeSpecifier
+│   │               │   │   │   │   └── (KEYWORD, int) 
+│   │               │   │   │   └── (ID, total) 
+│   │               │   │   └── DeclarationPrime
+│   │               │   │       └── VarDeclarationPrime
+│   │               │   │           └── (SYMBOL, ;) 
+│   │               │   └── DeclarationList
+│   │               │       ├── Declaration
+│   │               │       │   ├── DeclarationInitial
+│   │               │       │   │   ├── TypeSpecifier
+│   │               │       │   │   │   └── (KEYWORD, int) 
+│   │               │       │   │   └── (ID, i) 
+│   │               │       │   └── DeclarationPrime
+│   │               │       │       └── VarDeclarationPrime
+│   │               │       │           └── (SYMBOL, ;) 
+│   │               │       └── DeclarationList
+│   │               │           └── epsilon
+│   │               ├── StatementList
+│   │               │   ├── Statement
+│   │               │   │   └── ExpressionStmt
+│   │               │   │       ├── Expression
+│   │               │   │       │   ├── (ID, total) 
+│   │               │   │       │   └── B
+│   │               │   │       │       ├── (SYMBOL, =) 
+│   │               │   │       │       └── Expression
+│   │               │   │       │           └── SimpleExpressionZegond
+│   │               │   │       │               ├── AdditiveExpressionZegond
+│   │               │   │       │               │   ├── TermZegond
+│   │               │   │       │               │   │   ├── SignedFactorZegond
+│   │               │   │       │               │   │   │   └── FactorZegond
+│   │               │   │       │               │   │   │       └── (NUM, 0) 
+│   │               │   │       │               │   │   └── G
+│   │               │   │       │               │   │       └── epsilon
+│   │               │   │       │               │   └── D
+│   │               │   │       │               │       └── epsilon
+│   │               │   │       │               └── C
+│   │               │   │       │                   └── epsilon
+│   │               │   │       └── (SYMBOL, ;) 
+│   │               │   └── StatementList
+│   │               │       ├── Statement
+│   │               │       │   └── ExpressionStmt
+│   │               │       │       ├── Expression
+│   │               │       │       │   ├── (ID, i) 
+│   │               │       │       │   └── B
+│   │               │       │       │       ├── (SYMBOL, =) 
+│   │               │       │       │       └── Expression
+│   │               │       │       │           └── SimpleExpressionZegond
+│   │               │       │       │               ├── AdditiveExpressionZegond
+│   │               │       │       │               │   ├── TermZegond
+│   │               │       │       │               │   │   ├── SignedFactorZegond
+│   │               │       │       │               │   │   │   └── FactorZegond
+│   │               │       │       │               │   │   │       └── (NUM, 0) 
+│   │               │       │       │               │   │   └── G
+│   │               │       │       │               │   │       └── epsilon
+│   │               │       │       │               │   └── D
+│   │               │       │       │               │       └── epsilon
+│   │               │       │       │               └── C
+│   │               │       │       │                   └── epsilon
+│   │               │       │       └── (SYMBOL, ;) 
+│   │               │       └── StatementList
+│   │               │           ├── Statement
+│   │               │           │   └── IterationStmt
+│   │               │           │       ├── (KEYWORD, while) 
+│   │               │           │       ├── (SYMBOL, () 
+│   │               │           │       ├── Expression
+│   │               │           │       │   ├── (ID, i) 
+│   │               │           │       │   └── B
+│   │               │           │       │       └── SimpleExpressionPrime
+│   │               │           │       │           ├── AdditiveExpressionPrime
+│   │               │           │       │           │   ├── TermPrime
+│   │               │           │       │           │   │   ├── SignedFactorPrime
+│   │               │           │       │           │   │   │   └── FactorPrime
+│   │               │           │       │           │   │   │       └── epsilon
+│   │               │           │       │           │   │   └── G
+│   │               │           │       │           │   │       └── epsilon
+│   │               │           │       │           │   └── D
+│   │               │           │       │           │       └── epsilon
+│   │               │           │       │           └── C
+│   │               │           │       │               ├── Relop
+│   │               │           │       │               │   └── (SYMBOL, <) 
+│   │               │           │       │               └── AdditiveExpression
+│   │               │           │       │                   ├── Term
+│   │               │           │       │                   │   ├── SignedFactor
+│   │               │           │       │                   │   │   └── Factor
+│   │               │           │       │                   │   │       ├── (ID, size) 
+│   │               │           │       │                   │   │       └── VarCallPrime
+│   │               │           │       │                   │   │           └── VarPrime
+│   │               │           │       │                   │   │               └── epsilon
+│   │               │           │       │                   │   └── G
+│   │               │           │       │                   │       └── epsilon
+│   │               │           │       │                   └── D
+│   │               │           │       │                       ├── Addop
+│   │               │           │       │                       │   └── (SYMBOL, +) 
+│   │               │           │       │                       ├── Term
+│   │               │           │       │                       │   ├── SignedFactor
+│   │               │           │       │                       │   │   └── Factor
+│   │               │           │       │                       │   │       ├── (ID, arr) 
+│   │               │           │       │                       │   │       └── VarCallPrime
+│   │               │           │       │                       │   │           └── VarPrime
+│   │               │           │       │                       │   │               ├── (SYMBOL, [) 
+│   │               │           │       │                       │   │               ├── Expression
+│   │               │           │       │                       │   │               │   ├── (ID, i) 
+│   │               │           │       │                       │   │               │   └── B
+│   │               │           │       │                       │   │               │       └── SimpleExpressionPrime
+│   │               │           │       │                       │   │               │           ├── AdditiveExpressionPrime
+│   │               │           │       │                       │   │               │           │   ├── TermPrime
+│   │               │           │       │                       │   │               │           │   │   ├── SignedFactorPrime
+│   │               │           │       │                       │   │               │           │   │   │   └── FactorPrime
+│   │               │           │       │                       │   │               │           │   │   │       └── epsilon
+│   │               │           │       │                       │   │               │           │   │   └── G
+│   │               │           │       │                       │   │               │           │   │       └── epsilon
+│   │               │           │       │                       │   │               │           │   └── D
+│   │               │           │       │                       │   │               │           │       └── epsilon
+│   │               │           │       │                       │   │               │           └── C
+│   │               │           │       │                       │   │               │               └── epsilon
+│   │               │           │       │                       │   │               └── (SYMBOL, ]) 
+│   │               │           │       │                       │   └── G
+│   │               │           │       │                       │       └── epsilon
+│   │               │           │       │                       └── D
+│   │               │           │       │                           ├── Addop
+│   │               │           │       │                           │   └── (SYMBOL, +) 
+│   │               │           │       │                           ├── Term
+│   │               │           │       │                           │   ├── SignedFactor
+│   │               │           │       │                           │   │   └── Factor
+│   │               │           │       │                           │   │       └── (NUM, 1) 
+│   │               │           │       │                           │   └── G
+│   │               │           │       │                           │       └── epsilon
+│   │               │           │       │                           └── D
+│   │               │           │       │                               └── epsilon
+│   │               │           │       └── Statement
+│   │               │           │           └── ExpressionStmt
+│   │               │           │               └── (SYMBOL, ;) 
+│   │               │           └── StatementList
+│   │               │               └── epsilon
+│   │               └── (SYMBOL, }) 
+│   └── DeclarationList
+│       └── epsilon
+└── $
 
 
 Parsing completed successfully.
