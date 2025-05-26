@@ -1,0 +1,24 @@
+Program
+├── DeclarationList
+│   ├── Declaration
+│   │   ├── DeclarationInitial
+│   │   │   ├── TypeSpecifier
+│   │   │   │   └── (KEYWORD, int)
+│   │   │   └── (ID, a)
+│   │   └── DeclarationPrime
+│   │       └── VarDeclarationPrime
+│   │           └── (SYMBOL, ;)
+│   └── DeclarationList
+│       ├── Declaration
+│       │   ├── DeclarationInitial
+│       │   │   ├── TypeSpecifier
+│       │   │   │   └── (KEYWORD, int)
+│       │   │   └── (ID, array)
+│       │   └── DeclarationPrime
+│       │       └── VarDeclarationPrime
+│       │           ├── (SYMBOL, [)
+│       │           ├── (NUM, 10)
+│       │           └── (SYMBOL, ])
+│       └── DeclarationList
+│           └── epsilon
+└── $

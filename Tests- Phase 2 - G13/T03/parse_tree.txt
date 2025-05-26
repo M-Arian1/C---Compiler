@@ -1,0 +1,49 @@
+Program
+├── DeclarationList
+│   ├── Declaration
+│   │   ├── DeclarationInitial
+│   │   │   ├── TypeSpecifier
+│   │   │   │   └── (KEYWORD, void)
+│   │   │   └── (ID, foo)
+│   │   └── DeclarationPrime
+│   │       └── FunDeclarationPrime
+│   │           ├── (SYMBOL, ()
+│   │           ├── Params
+│   │           │   └── (KEYWORD, void)
+│   │           ├── (SYMBOL, ))
+│   │           └── CompoundStmt
+│   │               ├── (SYMBOL, {)
+│   │               ├── DeclarationList
+│   │               │   └── epsilon
+│   │               ├── StatementList
+│   │               │   ├── Statement
+│   │               │   │   └── ExpressionStmt
+│   │               │   │       └── (SYMBOL, ;)
+│   │               │   └── StatementList
+│   │               │       ├── Statement
+│   │               │       │   └── ExpressionStmt
+│   │               │       │       ├── Expression
+│   │               │       │       │   ├── (ID, bar)
+│   │               │       │       │   └── B
+│   │               │       │       │       └── SimpleExpressionPrime
+│   │               │       │       │           ├── AdditiveExpressionPrime
+│   │               │       │       │           │   ├── TermPrime
+│   │               │       │       │           │   │   ├── SignedFactorPrime
+│   │               │       │       │           │   │   │   └── FactorPrime
+│   │               │       │       │           │   │   │       ├── (SYMBOL, ()
+│   │               │       │       │           │   │   │       ├── Args
+│   │               │       │       │           │   │   │       │   └── epsilon
+│   │               │       │       │           │   │   │       └── (SYMBOL, ))
+│   │               │       │       │           │   │   └── G
+│   │               │       │       │           │   │       └── epsilon
+│   │               │       │       │           │   └── D
+│   │               │       │       │           │       └── epsilon
+│   │               │       │       │           └── C
+│   │               │       │       │               └── epsilon
+│   │               │       │       └── (SYMBOL, ;)
+│   │               │       └── StatementList
+│   │               │           └── epsilon
+│   │               └── (SYMBOL, })
+│   └── DeclarationList
+│       └── epsilon
+└── $
