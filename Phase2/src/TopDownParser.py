@@ -55,6 +55,7 @@ class DiagramParser:
         self.unexpected_eof_flag = False
 
     def log_error(self, message):
+        # return
         self.error_log.write(f"#{self.current_line_number} : syntax error, {message}\n")
     
     def match_token_to_symbol(self, symbol):
@@ -220,8 +221,8 @@ class DiagramParser:
                     print("token", self.current_token, "in", edge.symbol)
                     self.log_error(f"missing {edge.symbol}")
                     # Create error node for missing terminal
-                    error_node = ParseNode('error', f"missing {edge.symbol}")
-                    self.current_node.add_child(error_node)
+                    # error_node = ParseNode('error', f"missing {edge.symbol}")
+                    # self.current_node.add_child(error_node)
                     state = error_edge.target
                     transitioned = True
                     continue
@@ -232,8 +233,8 @@ class DiagramParser:
                         print("token", self.current_token, "in", follow)       
                         self.log_error(f"missing {edge.symbol}")
                         # Create error node for missing non-terminal
-                        error_node = ParseNode('error', f"missing {edge.symbol}")
-                        self.current_node.add_child(error_node)
+                        # error_node = ParseNode('error', f"missing {edge.symbol}")
+                        # self.current_node.add_child(error_node)
                         state = edge.target
                         transitioned = True
                         continue
@@ -241,8 +242,8 @@ class DiagramParser:
                         print("ILLEGAL","Token:", self.current_token, "Follow of :", edge.get_name(), follow)
                         self.log_error(f"illegal2 {self.current_token}")
                         # Create error node for illegal token
-                        error_node = ParseNode('error', f"illegal3 {self.current_token}")
-                        self.current_node.add_child(error_node)
+                        # error_node = ParseNode('error', f"illegal3 {self.current_token}")
+                        # self.current_node.add_child(error_node)
                         self.current_state, self.current_token, self.current_line_number = self.scanner.get_next_token()
                         continue  # Resynchronize by returning from current diagram
             
