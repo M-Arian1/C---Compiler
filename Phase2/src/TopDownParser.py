@@ -193,7 +193,7 @@ class DiagramParser:
                             syntax_error_txt = self.current_state.type[1].value
                         else:
                             syntax_error_txt = self.current_token
-                        self.log_error(f"illegal2 {syntax_error_txt}")
+                        self.log_error(f"illegal {syntax_error_txt}")
                         self.current_state, self.current_token, self.current_line_number = self.scanner.get_next_token()
                         continue
 
