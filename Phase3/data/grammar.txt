@@ -1,0 +1,83 @@
+Program ~ DeclarationList
+DeclarationList ~ Declaration DeclarationList
+DeclarationList ~ ε
+Declaration ~ DeclarationInitial DeclarationPrime
+DeclarationInitial ~ #push_ss TypeSpecifier #push_ss ID                                                ; keep the type and id of var/function in stack (for #dclr_var, #dclr_var, ...)
+DeclarationPrime ~ FunDeclarationPrime
+DeclarationPrime ~ VarDeclarationPrime
+VarDeclarationPrime ~ ; #dclr_var                                                                      ; update the type of var in symbol table + allocate space
+VarDeclarationPrime ~ [ #push_ss NUM ] ; #dclr_arr                                                     ; update the type and length of var in symbol table + allocate space
+FunDeclarationPrime ~ ( Params ) #update_func_params CompoundStmt #end_func
+TypeSpecifier ~ int
+TypeSpecifier ~ void
+Params ~ #push_ss int #push_ss ID ParamPrime ParamList
+Params ~ void
+ParamList ~ , Param ParamList
+ParamList ~ ε
+Param ~ DeclarationInitial ParamPrime
+ParamPrime ~ [ ] #save_param_list
+ParamPrime ~ ε #save_param_norm
+CompoundStmt ~ { #save_scope DeclarationList StatementList #fill_break }                               ; save scope in case of breaks and fill jmp location for breaks after reaching end of scope
+StatementList ~ Statement StatementList
+StatementList ~ ε
+Statement ~ ExpressionStmt
+Statement ~ CompoundStmt
+Statement ~ SelectionStmt
+Statement ~ IterationStmt
+Statement ~ ReturnStmt
+ExpressionStmt ~ Expression ;
+ExpressionStmt ~ break ; #save_jmp_out_scope                                                           ; save space to later fill with the next line of code after current scope
+ExpressionStmt ~ ;
+SelectionStmt ~ if ( Expression ) #save_if_cond_jpf Statement else #fill_if_cond_jpf Statement #fill_if_cond_jpt
+IterationStmt ~ while #loc_while_cond_before ( Expression ) #save_while_cond_jpf Statement #fill_while
+ReturnStmt ~ return ReturnStmtPrime
+ReturnStmtPrime ~ #return_jp;                                                                          ? #end_func HANDLES RETURN, DO WE NEED #return_jp?
+ReturnStmtPrime ~ Expression #save_return_value ;
+Expression ~ SimpleExpressionZegond
+Expression ~ #pid ID B #print
+B ~ = Expression #assign
+B ~ [ Expression ] #calc_arr_addr H
+B ~ SimpleExpressionPrime
+H ~ = Expression #assign
+H ~ G D C
+SimpleExpressionZegond ~ AdditiveExpressionZegond C
+SimpleExpressionPrime ~ AdditiveExpressionPrime C
+C ~ Relop AdditiveExpression #relation
+C ~ ε
+Relop ~ #push_ss <
+Relop ~ #push_ss ==
+AdditiveExpression ~ Term D
+AdditiveExpressionPrime ~ TermPrime D
+AdditiveExpressionZegond ~ TermZegond D
+D ~ Addop Term #add_or_sub D
+D ~ ε
+Addop ~ #push_ss +
+Addop ~ #push_ss -
+Term ~ SignedFactor G
+TermPrime ~ SignedFactorPrime G
+TermZegond ~ SignedFactorZegond G
+G ~ * SignedFactor #mult G
+G ~ ε
+SignedFactor ~ + Factor
+SignedFactor ~ - Factor
+SignedFactor ~ Factor
+SignedFactorPrime ~ FactorPrime
+SignedFactorZegond ~ + Factor
+SignedFactorZegond ~ - Factor
+SignedFactorZegond ~ FactorZegond
+Factor ~ ( Expression )
+Factor ~ #pid ID VarCallPrime
+Factor ~ #push_num_ss NUM
+VarCallPrime ~ #start_args ( Args ) #check_args
+VarCallPrime ~ VarPrime
+VarPrime ~ [ Expression ] #calc_arr_addr
+VarPrime ~ ε
+FactorPrime ~ #start_args ( Args ) #check_args
+FactorPrime ~ ε
+FactorZegond ~ ( Expression )
+FactorZegond ~ #push_num_ss NUM
+Args ~ ArgList
+Args ~ ε
+ArgList ~ Expression ArgListPrime
+ArgListPrime ~ , Expression ArgListPrime
+ArgListPrime ~ ε

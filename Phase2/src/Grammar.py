@@ -22,6 +22,11 @@ class Grammar:
         def __init__(self, name):
             super().__init__(name)
             self.goes_to_eps = False
+            
+    class ActionSymbol(Symbol):
+        def __init__(self, name):
+            super().__init__(name)
+            # self.goes_to_eps = False  -> Not really sure what to do here
 
     class Rule:
         def __init__(self, lhs, rhs):
@@ -35,7 +40,8 @@ class Grammar:
     def __init__(self):
         self.rules = []                      # List of Rule objects
         self.rule_map = {}                   # Optional: maps NT name to list of Rules
-        self.non_terminals = { }              # {name: NonTerminal}
+        self.action_symbols = {}             # Phase3: we should add action symbols
+        self.non_terminals = {}              # {name: NonTerminal}
         self.terminals = {}                  # {name: Terminal}
         self.terminal_names = {
             "+", "-", "*", "(", ")", "[", "]", "{", "}", ";", ",",
@@ -203,6 +209,13 @@ class Grammar:
         if name not in self.terminals:
             self.terminals[name] = Grammar.Terminal(name)
         return self.terminals[name]
+    
+    def get_or_create_action_symbol(self, name):
+        #TODO
+        if name not in self.action_symbols:
+            self.action_symbols[name] = Grammar.ActionSymbol(name)
+        return self.terminals[name]
+        
 
     def add_production(self, lhs_name, rhs_symbols):
         lhs = self.get_or_create_nt(lhs_name)
@@ -260,6 +273,8 @@ class Grammar:
                 if isinstance(sym, str):
                     if sym in all_lhs:
                         sym_obj = self.get_or_create_nt(sym)
+                    elif sym.startswith('#'): #Phase 3: hard-coded
+                        sym_obj = self.get_or_create_action_symbol(sym)
                     else:
                         sym_obj = self.get_or_create_terminal(sym)
                     new_rhs.append(sym_obj)

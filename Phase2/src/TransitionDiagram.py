@@ -5,7 +5,8 @@ class EdgeType(Enum):
     TERMINAL = 'TERMINAL'
     NON_TERMINAL = 'NON_TERMINAL'
     EPSILON = 'EPSILON'
-
+    ACTION_SYMBOL = 'ACTION_SYMBOL'     '''Since we add an edge before the edge (with whatever we had), 
+                                        we need to change the parser so it still matches and doesn't check first/follow for a symbol action'''
 
 class ParserEdge:
     def __init__(self, source, target, symbol, edge_type):

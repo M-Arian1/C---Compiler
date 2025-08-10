@@ -103,6 +103,7 @@ class DiagramParser:
         self.error_log.close()
         return self.parse_tree
 
+    #Phase3: Needs massive changes
     def execute_diagram(self, diagram_name, diagram):
         from Phase2.src.TreeHandler import ParseNode
         state = diagram.start_state
