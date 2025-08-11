@@ -5,6 +5,7 @@ class EdgeType(Enum):
     TERMINAL = 'TERMINAL'
     NON_TERMINAL = 'NON_TERMINAL'
     EPSILON = 'EPSILON'
+    ACTION_SYMBOL = 'ACTION_SYMBOL'
 
 
 class ParserEdge:
@@ -113,6 +114,8 @@ class DiagramParser:
             epsilon_edge = None
             terminal_transitions = []
             non_terminal_transitions = []
+            transition_with_action_symbol = []
+            state_or_transition_has_action = False
             terminal_matched = False
             non_terminal_matched = False
 
@@ -121,8 +124,32 @@ class DiagramParser:
                     terminal_transitions.append(edge)
                 elif edge.edge_type.value == EdgeType.NON_TERMINAL.value:
                     non_terminal_transitions.append(edge)
+                elif edge.edge_type.value == EdgeType.ACTION_SYMBOL.value:
+                    transition_with_action_symbol.append(edge)
+                    state_or_transition_has_action = True
                 elif edge.edge_type.value == EdgeType.EPSILON.value:
                     epsilon_edge = edge
+            
+            if state_or_transition_has_action:
+                #TODO
+                #Phase3
+                '''We should do the destined semantic routine IF the token matches with the next transition after this
+                if there's no transition after this we should only do the routine and probably continue?'''
+                
+                
+                for edge in transition_with_action_symbol:
+                    target_state = edge.target
+                    #Case 1: action symbol transitions into a final state
+                    if target_state.is_final:
+                        #TODO: perform the semantic action and then return without using the token
+                        pass 
+                    
+                    #Case 2: action symbol is a transition to an intermediate state
+                    else:
+                        #TODO: first we should add the transition from this state into the next one and add it to the possible "edges" so it matches with that instead of an action symbol!
+                        
+                        pass
+                pass
 
             for edge in terminal_transitions:
                 if self.match_token_to_symbol(edge.symbol):

@@ -21,16 +21,20 @@ class ParserEdge:
 
 
 class ParserState:
-    def __init__(self, id, is_final=False):
+    def __init__(self, id, is_final=False, has_semantic_action = False):
         self.id = id
         self.is_final = is_final
         self.edges = []
+        self.has_semantic_action = has_semantic_action
 
     def add_edge(self, symbol, target, edge_type):
         self.edges.append(ParserEdge(self, target, symbol, edge_type))
     
     def get_id(self):
         return str(self.id)
+    
+    def has_action(self):
+        return self.has_semantic_action
 
 
 class ParserDiagram:
@@ -54,16 +58,19 @@ class DiagramBuilder:
         self.diagrams = {}
         self.state_counter = 0
 
-    def new_state(self, is_final=False):
-        state = ParserState(self.state_counter, is_final)
+    def new_state(self, is_final=False, has_semantic_action = False):
+        state = ParserState(self.state_counter, is_final, has_semantic_action)
         self.state_counter += 1
         return state
 
     def determine_edge_type(self, symbol):
+        print("symbol", symbol, str(symbol).startswith("#"), "end")
         if isinstance(symbol, self.grammar.Terminal):
             return EdgeType.TERMINAL
         elif isinstance(symbol, self.grammar.NonTerminal):
             return EdgeType.NON_TERMINAL
+        elif isinstance(symbol, self.grammar.ActionSymbol):
+            return EdgeType.ACTION_SYMBOL
         elif symbol == 'epsilon' or symbol == 'ε':
             return EdgeType.EPSILON
         else:
@@ -96,7 +103,9 @@ class DiagramBuilder:
             for i, symbol in enumerate(production):
                 is_last = (i == len(production) - 1)
                 edge_type = self.determine_edge_type(symbol)
-                next_state = final if is_last else self.new_state()
+                has_semantic_action = (edge_type.value == EdgeType.ACTION_SYMBOL.value)
+                # print("determinig edge type", edge_type, has_semantic_action)
+                next_state = final if is_last else self.new_state(has_semantic_action = has_semantic_action)
                 if not is_last:
                     diagram.add_state(next_state)
                 current.add_edge(symbol, next_state, edge_type)
@@ -107,7 +116,8 @@ class DiagramBuilder:
             print(f"\nDiagram for Non-Terminal: {nt_name}")
             for state in diagram.states:
                 final_str = " (final)" if state.is_final else ""
-                print(f"  State {state.id}{final_str}")
+                has_action_str = " (has action symbol) " if state.has_action else ""
+                print(f"  State {state.id}{final_str}{has_action_str}")
                 for edge in state.edges:
                     print(f"    --[{edge.symbol} ({edge.edge_type.name})]--> State {edge.target.id}")
 

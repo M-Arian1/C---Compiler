@@ -40,7 +40,7 @@ class Grammar:
     def __init__(self):
         self.rules = []                      # List of Rule objects
         self.rule_map = {}                   # Optional: maps NT name to list of Rules
-        self.action_symbols = {}             # Phase3: we should add action symbols
+        
         self.non_terminals = {}              # {name: NonTerminal}
         self.terminals = {}                  # {name: Terminal}
         self.terminal_names = {
@@ -48,6 +48,37 @@ class Grammar:
             "<", "==", "=", "break", "if", "else", "int", "return",
             "void", "while", "ID", "NUM", "EPSILON", "$"
         }
+        self.action_symbols ={}
+        # self.action_symbols_names = {
+        #     "#push_in_semantic_stack",
+        #     "#dec-var",
+        #     "#dec-array",
+        #     "#pid",
+        #     "#mult",
+        #     "#add-or-sub",
+        #     "#relation",
+        #     "#label",
+        #     "#until",
+        #     "#save",
+        #     "#jpf_save",
+        #     "#jp",
+        #     "#save-num-in-ss",
+        #     "#assign",
+        #     "#print",
+        #     "#calc-arr-addr",
+        #     "#begin",
+        #     "#end",
+        #     "#save-break",
+        #     "#dec-func",
+        #     "#end-func",
+        #     "#dec-pointer",
+        #     "#param-info",
+        #     "#start-args",
+        #     "#check-args",
+        #     "#return-value",
+        #     "#return-jp"}
+        
+        
         self.first_sets = {
         "Program": ["int", "void", "EPSILON"],
         "DeclarationList": ["int", "void", "EPSILON"],
@@ -201,20 +232,20 @@ class Grammar:
             self.get_or_create_terminal(term)
 
     def get_or_create_nt(self, name):
-        if name not in self.non_terminals:
+        if (name not in self.non_terminals):
             self.non_terminals[name] = Grammar.NonTerminal(name)
         return self.non_terminals[name]
 
     def get_or_create_terminal(self, name):
-        if name not in self.terminals:
+        if (name not in self.terminals):
             self.terminals[name] = Grammar.Terminal(name)
         return self.terminals[name]
     
     def get_or_create_action_symbol(self, name):
         #TODO
-        if name not in self.action_symbols:
+        if (str(name).startswith("#")):
             self.action_symbols[name] = Grammar.ActionSymbol(name)
-        return self.terminals[name]
+        return self.action_symbols[name]
         
 
     def add_production(self, lhs_name, rhs_symbols):
@@ -228,6 +259,8 @@ class Grammar:
             for sym in rhs_symbols:
                 if sym in self.terminal_names:
                     rhs.append(self.get_or_create_terminal(sym))
+                elif str(sym).startswith("#"):
+                    rhs.append(self.get_or_create_action_symbol(sym))
                 else:
                     rhs.append(self.get_or_create_nt(sym))
             rule = Grammar.Rule(lhs, rhs)
@@ -273,7 +306,7 @@ class Grammar:
                 if isinstance(sym, str):
                     if sym in all_lhs:
                         sym_obj = self.get_or_create_nt(sym)
-                    elif sym.startswith('#'): #Phase 3: hard-coded
+                    elif str(sym).startswith("#"): #Phase 3: hard-coded
                         sym_obj = self.get_or_create_action_symbol(sym)
                     else:
                         sym_obj = self.get_or_create_terminal(sym)

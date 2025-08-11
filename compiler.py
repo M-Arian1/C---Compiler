@@ -26,7 +26,7 @@ def main():
     # Step 4: Build diagrams
     diagram_builder = DiagramBuilder(grammar)
     diagrams = diagram_builder.build_all()
-    # diagram_builder.print_diagrams()
+    diagram_builder.print_diagrams()
 
     # Step 5: Parse
     parser = DiagramParser(grammar, diagrams, scanner)

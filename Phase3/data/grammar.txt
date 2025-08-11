@@ -2,15 +2,15 @@ Program ~ DeclarationList
 DeclarationList ~ Declaration DeclarationList
 DeclarationList ~ ε
 Declaration ~ DeclarationInitial DeclarationPrime
-DeclarationInitial ~ #push_ss TypeSpecifier #push_ss ID                                                ; keep the type and id of var/function in stack (for #dclr_var, #dclr_var, ...)
+DeclarationInitial ~ #push_in_semantic_stack TypeSpecifier #push_in_semantic_stack ID                                                
 DeclarationPrime ~ FunDeclarationPrime
 DeclarationPrime ~ VarDeclarationPrime
 VarDeclarationPrime ~ ; #dclr_var                                                                      ; update the type of var in symbol table + allocate space
-VarDeclarationPrime ~ [ #push_ss NUM ] ; #dclr_arr                                                     ; update the type and length of var in symbol table + allocate space
+VarDeclarationPrime ~ [ #push_in_semantic_stack NUM ] ; #dclr_arr                                                     ; update the type and length of var in symbol table + allocate space
 FunDeclarationPrime ~ ( Params ) #update_func_params CompoundStmt #end_func
 TypeSpecifier ~ int
 TypeSpecifier ~ void
-Params ~ #push_ss int #push_ss ID ParamPrime ParamList
+Params ~ #push_in_semantic_stack int #push_in_semantic_stack ID ParamPrime ParamList
 Params ~ void
 ParamList ~ , Param ParamList
 ParamList ~ ε
@@ -44,15 +44,15 @@ SimpleExpressionZegond ~ AdditiveExpressionZegond C
 SimpleExpressionPrime ~ AdditiveExpressionPrime C
 C ~ Relop AdditiveExpression #relation
 C ~ ε
-Relop ~ #push_ss <
-Relop ~ #push_ss ==
+Relop ~ #push_in_semantic_stack <
+Relop ~ #push_in_semantic_stack ==
 AdditiveExpression ~ Term D
 AdditiveExpressionPrime ~ TermPrime D
 AdditiveExpressionZegond ~ TermZegond D
 D ~ Addop Term #add_or_sub D
 D ~ ε
-Addop ~ #push_ss +
-Addop ~ #push_ss -
+Addop ~ #push_in_semantic_stack +
+Addop ~ #push_in_semantic_stack -
 Term ~ SignedFactor G
 TermPrime ~ SignedFactorPrime G
 TermZegond ~ SignedFactorZegond G
