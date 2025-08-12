@@ -148,9 +148,51 @@ class DiagramParser:
                     else:
                         #TODO: first we should add the transition from this state into the next one and add it to the possible "edges" so it matches with that instead of an action symbol!
                         
-                        pass
-                pass
+                        #get the next edge after this
+                        next_edge = target_state.get_edges_from_state[0]
+                        if next_edge.edge_type.value == EdgeType.TERMINAL.value:
+                            edge = next_edge
+                            if self.match_token_to_symbol(edge.symbol):
+                                terminal_node = ParseNode(edge.symbol, self.current_token)
+                                self.current_node.add_child(terminal_node)
+                                self.match(edge.symbol)
+                                state = edge.target
+                                transitioned = True
+                                terminal_matched = True
+                                #TODO: perform action and advance token
+                                
+                        if terminal_matched:
+                            break   
+                        if next_edge.edge_type.value == EdgeType.NON_TERMINAL.value:
+                            predict = self.grammar.get_predict(edge.get_name())
+                            if self.check_in_set(predict):
+                                non_terminal_node = ParseNode(edge.symbol)
+                                self.current_node.add_child(non_terminal_node)
 
+                                parent_node = self.current_node
+                                self.current_node = non_terminal_node
+
+                                self.return_stack.append(edge.target)
+                                self.execute_diagram(edge.symbol, self.diagrams[str(edge.symbol)])
+
+                                self.current_node = parent_node
+                                state = self.return_stack.pop()
+                                transitioned = True
+                                non_terminal_matched = True
+                                
+                        if non_terminal_matched:
+                            break
+                        if not transitioned and  next_edge.edge_type.value == EdgeType.EPSILON.value:
+                            epsilon_node = ParseNode('epsilon')
+                            self.current_node.add_child(epsilon_node)
+                            state = epsilon_edge.target
+                            transitioned = True
+                            continue
+                        
+            if transitioned: 
+                continue
+            
+            
             for edge in terminal_transitions:
                 if self.match_token_to_symbol(edge.symbol):
                     terminal_node = ParseNode(edge.symbol, self.current_token)

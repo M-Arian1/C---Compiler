@@ -35,6 +35,9 @@ class ParserState:
     
     def has_action(self):
         return self.has_semantic_action
+    
+    def get_edges_from_state(self):
+        return self.edges
 
 
 class ParserDiagram:

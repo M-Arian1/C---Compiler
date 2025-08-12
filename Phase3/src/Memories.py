@@ -7,7 +7,7 @@ MAX_MEMORY_ADDRESS = 1000
 
 # ===== Memory Layer =====
 
-class MemorySegment:
+class Memory:
     """Abstract base for all memory segments."""
     def __init__(self, base_address, bound_address):
         self.base_address = base_address
@@ -19,7 +19,7 @@ class MemorySegment:
             raise MemoryError(f"Address {address} out of bounds [{self.base_address}, {self.bound_address}].")
 
 
-class AddressableSegment(MemorySegment):
+class AddressableSegment(Memory):
     """A memory segment where each cell stores a value."""
     def __init__(self, base_address, bound_address):
         super().__init__(base_address, bound_address)
@@ -53,7 +53,7 @@ class AddressableSegment(MemorySegment):
             raise MemoryError("Invalid memory access.")
 
 
-class CodeSegment(MemorySegment):
+class CodeSegment(Memory):
     """Stores compiled instructions."""
     def __init__(self, base_address, bound_address):
         super().__init__(base_address, bound_address)

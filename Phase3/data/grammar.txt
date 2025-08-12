@@ -1,12 +1,12 @@
-Program ~ DeclarationList
+Program ~ DeclarationList $
 DeclarationList ~ Declaration DeclarationList
 DeclarationList ~ ε
 Declaration ~ DeclarationInitial DeclarationPrime
 DeclarationInitial ~ #push_in_semantic_stack TypeSpecifier #push_in_semantic_stack ID                                                
 DeclarationPrime ~ FunDeclarationPrime
 DeclarationPrime ~ VarDeclarationPrime
-VarDeclarationPrime ~ ; #dclr_var                                                                      ; update the type of var in symbol table + allocate space
-VarDeclarationPrime ~ [ #push_in_semantic_stack NUM ] ; #dclr_arr                                                     ; update the type and length of var in symbol table + allocate space
+VarDeclarationPrime ~ ; #var_declare                                                                      
+VarDeclarationPrime ~ [ #push_in_semantic_stack NUM ] ; #arr_declare                                                    
 FunDeclarationPrime ~ ( Params ) #update_func_params CompoundStmt #end_func
 TypeSpecifier ~ int
 TypeSpecifier ~ void
@@ -15,7 +15,7 @@ Params ~ void
 ParamList ~ , Param ParamList
 ParamList ~ ε
 Param ~ DeclarationInitial ParamPrime
-ParamPrime ~ [ ] #save_param_list
+ParamPrime ~ [ ] #keep_params
 ParamPrime ~ ε #save_param_norm
 CompoundStmt ~ { #save_scope DeclarationList StatementList #fill_break }                               ; save scope in case of breaks and fill jmp location for breaks after reaching end of scope
 StatementList ~ Statement StatementList
@@ -31,7 +31,7 @@ ExpressionStmt ~ ;
 SelectionStmt ~ if ( Expression ) #save_if_cond_jpf Statement else #fill_if_cond_jpf Statement #fill_if_cond_jpt
 IterationStmt ~ while #loc_while_cond_before ( Expression ) #save_while_cond_jpf Statement #fill_while
 ReturnStmt ~ return ReturnStmtPrime
-ReturnStmtPrime ~ #return_jp;                                                                          ? #end_func HANDLES RETURN, DO WE NEED #return_jp?
+ReturnStmtPrime ~ #return_jp ;                                                                          ? #end_func HANDLES RETURN, DO WE NEED #return_jp?
 ReturnStmtPrime ~ Expression #save_return_value ;
 Expression ~ SimpleExpressionZegond
 Expression ~ #pid ID B #print
