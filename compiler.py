@@ -15,6 +15,7 @@ from Phase2.src.GrammarBuilder import GrammarBuilder
 from Phase1.scanner import Scanner                    # Your scanner class
 from Phase2.src.TransitionDiagram import DiagramBuilder  # Diagram builder
 from Phase2.src.TopDownParser import DiagramParser       # Diagram-based parser
+from Phase3.src.SemanticStack import SemanticStack
 
 def main():
     # Step 2: Initialize scanner
@@ -26,7 +27,7 @@ def main():
     # Step 4: Build diagrams
     diagram_builder = DiagramBuilder(grammar)
     diagrams = diagram_builder.build_all()
-    diagram_builder.print_diagrams()
+    # diagram_builder.print_diagrams()
 
     # Step 5: Parse
     parser = DiagramParser(grammar, diagrams, scanner)

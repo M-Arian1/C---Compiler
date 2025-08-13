@@ -1,8 +1,1 @@
-int max(void) {
-  if (x1 < 2)
-    return 2;
-  else
-    return 1
-else if 
-return b;
-}
+int a;

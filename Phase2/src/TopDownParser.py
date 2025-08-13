@@ -1,6 +1,7 @@
 from enum import Enum
 from Phase1.src.Tokens import Token
-
+from Phase3.src.CodeGenerator import CodeGenerator
+from Phase3.src.SemanticStack import SemanticStack
 class EdgeType(Enum):
     TERMINAL = 'TERMINAL'
     NON_TERMINAL = 'NON_TERMINAL'
@@ -56,6 +57,35 @@ class DiagramParser:
         self.type = None
         self.unexpected_eof_flag = False
         self.missing_end_detected = False
+        self.code_generator = code_generator = CodeGenerator(self)
+        self.semantic_actions={
+            "#push_in_semantic_stack" :         code_generator.push_token_in_semantic_stack,
+            "#var_declare":                     code_generator.variable_declaration,
+            "#arr_declare":                     code_generator.array_declaration,
+            "#func_declare":                    code_generator.function_declaration,
+            "#args_info":                       code_generator.function_arguements,
+            "fun_end":                          code_generator.function_end,
+            "#ptr_declare":                     code_generator.pointer_declaration,
+            "#br_save":                         code_generator.break_save,
+            "#save_cond":                       code_generator.save_index_before_cond_jump,
+            "#save_jpf":                        code_generator.save_jpf,
+            "#jp":                              code_generator.jump,
+            "#save_while_uncond":               code_generator.while_unconditional_jump,
+            "#save_while_cond_jpf":             code_generator.while_cond_jump,
+            "#fill_while_body":                 code_generator.fill_while,
+            "#return_jp":                       code_generator.jump_return,
+            "#save_return_value":               code_generator.return_value,
+            "#pid":                             code_generator.push_id,
+            "#print":                           code_generator.print_value,
+            "#assign":                          code_generator.assignment,
+            "#array_addr":                      code_generator.calculate_array_addr,
+            "#relation":                        code_generator.relative_op,
+            "#arithm_op":                       code_generator.arithmetic_operation,
+            "#mult":                            code_generator.multiply,
+            "##push_imm_in_semantic_stack":     code_generator.push_immediate,
+            "#args_begin":                      code_generator.args_in_func_call_begin,
+            "#args_end":                        code_generator.args_in_func_call_end
+        }
 
     def log_error(self, message):
         self.error_messages.append(f"#{self.current_line_number} : syntax error, {message}\n")
@@ -131,7 +161,7 @@ class DiagramParser:
                     epsilon_edge = edge
             
             if state_or_transition_has_action:
-                print("on an")
+                print("on action")
                 #TODO
                 #Phase3
                 '''We should do the destined semantic routine IF the token matches with the next transition after this

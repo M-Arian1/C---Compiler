@@ -7,7 +7,7 @@ DeclarationPrime ~ FunDeclarationPrime
 DeclarationPrime ~ VarDeclarationPrime
 VarDeclarationPrime ~ ; #var_declare                                                                      
 VarDeclarationPrime ~ [ #push_in_semantic_stack NUM ] ; #arr_declare                                                    
-FunDeclarationPrime ~ ( Params ) #update_func_params CompoundStmt #end_func
+FunDeclarationPrime ~ #func_declare ( Params ) #args_info CompoundStmt #fun_end
 TypeSpecifier ~ int
 TypeSpecifier ~ void
 Params ~ #push_in_semantic_stack int #push_in_semantic_stack ID ParamPrime ParamList
@@ -15,9 +15,9 @@ Params ~ void
 ParamList ~ , Param ParamList
 ParamList ~ ε
 Param ~ DeclarationInitial ParamPrime
-ParamPrime ~ [ ] #keep_params
-ParamPrime ~ ε #save_param_norm
-CompoundStmt ~ { #save_scope DeclarationList StatementList #fill_break }                               ; save scope in case of breaks and fill jmp location for breaks after reaching end of scope
+ParamPrime ~ [ ] #ptr_declare
+ParamPrime ~ ε #var_declare
+CompoundStmt ~ { DeclarationList StatementList }
 StatementList ~ Statement StatementList
 StatementList ~ ε
 Statement ~ ExpressionStmt
@@ -26,17 +26,17 @@ Statement ~ SelectionStmt
 Statement ~ IterationStmt
 Statement ~ ReturnStmt
 ExpressionStmt ~ Expression ;
-ExpressionStmt ~ break ; #save_jmp_out_scope                                                           ; save space to later fill with the next line of code after current scope
+ExpressionStmt ~ break ; #br_save                                                          
 ExpressionStmt ~ ;
-SelectionStmt ~ if ( Expression ) #save_if_cond_jpf Statement else #fill_if_cond_jpf Statement #fill_if_cond_jpt
-IterationStmt ~ while #loc_while_cond_before ( Expression ) #save_while_cond_jpf Statement #fill_while
+SelectionStmt ~ if ( Expression ) #save_cond Statement else #save_jpf Statement #jp
+IterationStmt ~ while #save_while_uncond ( Expression ) #save_while_cond_jpf Statement #fill_while_body
 ReturnStmt ~ return ReturnStmtPrime
-ReturnStmtPrime ~ #return_jp ;                                                                          ? #end_func HANDLES RETURN, DO WE NEED #return_jp?
+ReturnStmtPrime ~ #return_jp ;                                                                        
 ReturnStmtPrime ~ Expression #save_return_value ;
 Expression ~ SimpleExpressionZegond
 Expression ~ #pid ID B #print
 B ~ = Expression #assign
-B ~ [ Expression ] #arr_addr H
+B ~ [ Expression ] #array_addr H
 B ~ SimpleExpressionPrime
 H ~ = Expression #assign
 H ~ G D C
@@ -49,7 +49,7 @@ Relop ~ #push_in_semantic_stack ==
 AdditiveExpression ~ Term D
 AdditiveExpressionPrime ~ TermPrime D
 AdditiveExpressionZegond ~ TermZegond D
-D ~ Addop Term #add_or_sub D
+D ~ Addop Term #arithm_op D
 D ~ ε
 Addop ~ #push_in_semantic_stack +
 Addop ~ #push_in_semantic_stack -
@@ -68,11 +68,11 @@ SignedFactorZegond ~ FactorZegond
 Factor ~ ( Expression )
 Factor ~ #pid ID VarCallPrime
 Factor ~ #push_imm_in_semantic_stack NUM
-VarCallPrime ~ #start_args ( Args ) #check_args
+VarCallPrime ~ #args_begin ( Args ) #args_end
 VarCallPrime ~ VarPrime
-VarPrime ~ [ Expression ] #arr_addr
+VarPrime ~ [ Expression ] #array_addr
 VarPrime ~ ε
-FactorPrime ~ #start_args ( Args ) #check_args
+FactorPrime ~ #args_begin ( Args ) #args_end
 FactorPrime ~ ε
 FactorZegond ~ ( Expression )
 FactorZegond ~ #push_imm_in_semantic_stack NUM
