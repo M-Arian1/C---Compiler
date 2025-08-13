@@ -131,6 +131,7 @@ class DiagramParser:
                     epsilon_edge = edge
             
             if state_or_transition_has_action:
+                print("on an")
                 #TODO
                 #Phase3
                 '''We should do the destined semantic routine IF the token matches with the next transition after this

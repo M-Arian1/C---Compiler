@@ -6,7 +6,7 @@ class GrammarBuilder:
     def get_grammar():
         g = Grammar()
         base_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        grammar_file = os.path.join(base_path, 'data', 'grammar.txt')  #Phase3: we should change the path to be Phase3/grammar.txt
+        grammar_file = os.path.join(base_path, 'data', 'actioned_grammar.txt')  #Phase3: we should change the path to be Phase3/grammar.txt
         all_lhs = []
 
         # First pass: gather all LHS symbols

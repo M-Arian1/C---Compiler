@@ -67,7 +67,7 @@ class DiagramBuilder:
         return state
 
     def determine_edge_type(self, symbol):
-        print("symbol", symbol, str(symbol).startswith("#"), "end")
+        # print("symbol", symbol, str(symbol).startswith("#"), "end")
         if isinstance(symbol, self.grammar.Terminal):
             return EdgeType.TERMINAL
         elif isinstance(symbol, self.grammar.NonTerminal):
@@ -119,8 +119,8 @@ class DiagramBuilder:
             print(f"\nDiagram for Non-Terminal: {nt_name}")
             for state in diagram.states:
                 final_str = " (final)" if state.is_final else ""
-                has_action_str = " (has action symbol) " if state.has_action else ""
-                print(f"  State {state.id}{final_str}{has_action_str}")
+                # has_action_str = " (has action symbol) " if state.has_action else ""
+                print(f"  State {state.id}{final_str}")
                 for edge in state.edges:
                     print(f"    --[{edge.symbol} ({edge.edge_type.name})]--> State {edge.target.id}")
 

@@ -1,4 +1,0 @@
-Program
-└── DeclarationList
-    └── Declaration
-        └── DeclarationInitial
