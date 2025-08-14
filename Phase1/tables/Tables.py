@@ -41,8 +41,6 @@ class SymbolTable(Table):
         for i, sym in enumerate(self.all_symbols):
             text += f"{i+1}.\t{sym['name']}\n"
         return text
-
-
 class ErrorTable(Table):
     def __init__(self):
         super().__init__()

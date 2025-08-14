@@ -7,64 +7,78 @@ MAX_MEMORY_ADDRESS = 1000
 
 # ===== Memory Layer =====
 
-class Memory:
+class Data():
+    def __init__(self, lexeme, type, loc, is_func=False, attrs={}):
+        self.lexeme = lexeme
+        self.address = loc
+        self.type = type
+        self.is_func = is_func
+        self.attrs = attrs
+        if type == 'int' or type == 'array':
+            self.type_size = WORD_SIZE
+        
+class MemorySegment:
     """Abstract base for all memory segments."""
     def __init__(self, base_address, bound_address):
         self.base_address = base_address
         self.bound_address = bound_address
         self.current_address = base_address
+        self.cells = {}
 
     def _check_bounds(self, address):
         if not (self.base_address <= address <= self.bound_address):
             raise MemoryError(f"Address {address} out of bounds [{self.base_address}, {self.bound_address}].")
 
 
-class AddressableSegment(Memory):
-    """A memory segment where each cell stores a value."""
-    def __init__(self, base_address, bound_address):
-        super().__init__(base_address, bound_address)
-        self.cells = []
+# class AddressableSegment(MemorySegment):
+#     """A memory segment where each cell stores a value."""
+#     def __init__(self, base_address, bound_address):
+#         super().__init__(base_address, bound_address)
+#         self.cells = []
 
-    def allocate_cell(self):
-        if self.current_address + MEMORY_BLOCK_SIZE > self.bound_address:
-            raise MemoryError("Segment overflow.")
-        self.cells.append(None)
-        allocated_address = self.current_address
-        self.current_address += MEMORY_BLOCK_SIZE
-        return allocated_address
+#     def allocate_cell(self):
+#         if self.current_address + MEMORY_BLOCK_SIZE > self.bound_address:
+#             raise MemoryError("Segment overflow.")
+#         allocated_address = self.current_address
+#         self.cells.append(None)
+#         self.current_address += MEMORY_BLOCK_SIZE
+#         return allocated_address
 
-    def _address_to_index(self, address):
-        if address % MEMORY_BLOCK_SIZE != 0:
-            raise MemoryError(f"Unaligned memory access at {address}.")
-        return (address - self.base_address) // MEMORY_BLOCK_SIZE
+#     def _address_to_index(self, address):
+#         if address % MEMORY_BLOCK_SIZE != 0:
+#             raise MemoryError(f"Unaligned memory access at {address}.")
+#         return (address - self.base_address) // MEMORY_BLOCK_SIZE
 
-    def get(self, address):
-        idx = self._address_to_index(address)
-        try:
-            return self.cells[idx]
-        except IndexError:
-            raise MemoryError("Invalid memory access.")
+#     def get(self, address):
+#         idx = self._address_to_index(address)
+#         try:
+#             return self.cells[idx]
+#         except IndexError:
+#             raise MemoryError("Invalid memory access.")
 
-    def set(self, address, value):
-        idx = self._address_to_index(address)
-        try:
-            self.cells[idx] = value
-        except IndexError:
-            raise MemoryError("Invalid memory access.")
+#     def set(self, address, value):
+#         idx = self._address_to_index(address)
+#         try:
+#             self.cells[idx] = value
+#         except IndexError:
+#             raise MemoryError("Invalid memory access.")
 
 
-class CodeSegment(Memory):
+class CodeSegment(MemorySegment):
     """Stores compiled instructions."""
     def __init__(self, base_address, bound_address):
         super().__init__(base_address, bound_address)
-        self.instructions = {}
+        # self.instructions = {}
+        self.scope = 0
+        self.error = False
 
     def add_instruction(self, instruction, address=None):
         if address is None:
             address = self.current_address
             self.current_address += 1
         self._check_bounds(address)
-        self.instructions[address] = instruction
+        self.cells[address] = instruction
+        return address  # Return where the instruction was stored
 
     def set_program_counter(self, address):
         self._check_bounds(address)
@@ -72,19 +86,42 @@ class CodeSegment(Memory):
 
     def __str__(self):
         return "\n".join(
-            f"{addr}\t{self.instructions[addr]}" for addr in sorted(self.instructions)
+            f"{addr}\t{self.cells[addr]}" for addr in sorted(self.instructions)
         )
+        
+    def decrement_scope(self, value = 1):
+        if self.scope > 1:
+            self.scope -= value
+    
+    def increment_scope(self, value=1):
+        self.scope += value
 
 
-class DataSegment(AddressableSegment):
+class DataSegment(MemorySegment):
     """Holds program variables."""
+    def create_data(self, data_val, data_type, symbol_table, array_size=1, attrs={}):
+        self.cells.append[self.current_address]
+        for i in range(array_size):
+            data = Data(data_val, data_type, self.current_index, attrs=attrs)
+            if i == 0:
+                symbol_table[data_val] = data
+            self.block[self.current_index] = data
+            self.current_address += data.type_size
     pass
 
+    def get_data_by_address(self, address):
+        return self.cells[address]
 
-class TemporarySegment(AddressableSegment):
+
+class TemporarySegment(MemorySegment):
     """Holds temporary variables for computation."""
     def allocate_temp(self):
-        return self.allocate_cell()
+        if self.current_address + MEMORY_BLOCK_SIZE > self.bound_address:
+            raise MemoryError("Segment overflow.")
+        allocated_address = self.current_address
+        self.cells.append(None)
+        self.current_address += MEMORY_BLOCK_SIZE
+        return allocated_address
 
 
 class Memory:
