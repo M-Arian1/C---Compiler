@@ -170,9 +170,12 @@ class DiagramParser:
                 
                 for edge in transition_with_action_symbol:
                     target_state = edge.target
+                    act_sym = edge.symbol
+
                     #Case 1: action symbol transitions into a final state
                     if target_state.is_final:
                         #TODO: perform the semantic action and then return without using the token
+                        self.code_generator[act_sym](self.current_token)
                         pass 
                     
                     #Case 2: action symbol is a transition to an intermediate state
@@ -182,15 +185,17 @@ class DiagramParser:
                         #get the next edge after this
                         next_edge = target_state.get_edges_from_state[0]
                         if next_edge.edge_type.value == EdgeType.TERMINAL.value:
-                            edge = next_edge
-                            if self.match_token_to_symbol(edge.symbol):
-                                terminal_node = ParseNode(edge.symbol, self.current_token)
+                            # edge = next_edge
+                            if self.match_token_to_symbol(next_edge.symbol):
+                                terminal_node = ParseNode(next_edge.symbol, self.current_token)
                                 self.current_node.add_child(terminal_node)
-                                self.match(edge.symbol)
-                                state = edge.target
+                                self.match(next_edge.symbol)
+                                state = next_edge.target
                                 transitioned = True
                                 terminal_matched = True
                                 #TODO: perform action and advance token
+                                self.code_generator[act_sym](self.current_token)
+
                                 
                         if terminal_matched:
                             break   
@@ -210,6 +215,7 @@ class DiagramParser:
                                 state = self.return_stack.pop()
                                 transitioned = True
                                 non_terminal_matched = True
+                                self.code_generator[act_sym](self.current_token)
                                 
                         if non_terminal_matched:
                             break
@@ -218,6 +224,7 @@ class DiagramParser:
                             self.current_node.add_child(epsilon_node)
                             state = epsilon_edge.target
                             transitioned = True
+                            self.code_generator[act_sym](self.current_token)
                             continue
                         
             if transitioned: 
