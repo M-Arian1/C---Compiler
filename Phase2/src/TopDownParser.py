@@ -183,7 +183,7 @@ class DiagramParser:
                         #TODO: first we should add the transition from this state into the next one and add it to the possible "edges" so it matches with that instead of an action symbol!
                         
                         #get the next edge after this
-                        next_edge = target_state.get_edges_from_state[0]
+                        next_edge = target_state.get_edges_from_state()[0]
                         if next_edge.edge_type.value == EdgeType.TERMINAL.value:
                             # edge = next_edge
                             if self.match_token_to_symbol(next_edge.symbol):
