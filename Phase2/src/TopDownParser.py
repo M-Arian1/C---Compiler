@@ -194,7 +194,7 @@ class DiagramParser:
                                 transitioned = True
                                 terminal_matched = True
                                 #TODO: perform action and advance token
-                                self.code_generator[act_sym](self.current_token)
+                                self.semantic_actions[act_sym](self.current_token)
 
                                 
                         if terminal_matched:
@@ -209,7 +209,7 @@ class DiagramParser:
                                 self.current_node = non_terminal_node
 
                                 self.return_stack.append(next_edge.target)
-                                self.code_generator[act_sym](self.current_token)
+                                self.semantic_actions[act_sym](self.current_token)
                                 self.execute_diagram(next_edge.symbol, self.diagrams[str(edge.symbol)])
                                 self.current_node = parent_node
                                 state = self.return_stack.pop()
@@ -225,7 +225,7 @@ class DiagramParser:
                             self.current_node.add_child(epsilon_node)
                             state = epsilon_edge.target
                             transitioned = True
-                            self.code_generator[act_sym](self.current_token)
+                            self.semantic_actions[act_sym](self.current_token)
                             continue
                         
             if transitioned: 
