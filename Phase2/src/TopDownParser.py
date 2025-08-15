@@ -200,26 +200,27 @@ class DiagramParser:
                         if terminal_matched:
                             break   
                         if next_edge.edge_type.value == EdgeType.NON_TERMINAL.value:
-                            predict = self.grammar.get_predict(edge.get_name())
+                            predict = self.grammar.get_predict(next_edge.get_name())
                             if self.check_in_set(predict):
-                                non_terminal_node = ParseNode(edge.symbol)
+                                non_terminal_node = ParseNode(next_edge.symbol)
                                 self.current_node.add_child(non_terminal_node)
 
                                 parent_node = self.current_node
                                 self.current_node = non_terminal_node
 
-                                self.return_stack.append(edge.target)
-                                self.execute_diagram(edge.symbol, self.diagrams[str(edge.symbol)])
-
+                                self.return_stack.append(next_edge.target)
+                                self.code_generator[act_sym](self.current_token)
+                                self.execute_diagram(next_edge.symbol, self.diagrams[str(edge.symbol)])
                                 self.current_node = parent_node
                                 state = self.return_stack.pop()
                                 transitioned = True
                                 non_terminal_matched = True
-                                self.code_generator[act_sym](self.current_token)
+                               
                                 
                         if non_terminal_matched:
                             break
                         if not transitioned and  next_edge.edge_type.value == EdgeType.EPSILON.value:
+                            epsilon_edge = next_edge
                             epsilon_node = ParseNode('epsilon')
                             self.current_node.add_child(epsilon_node)
                             state = epsilon_edge.target
