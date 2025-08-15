@@ -1,10 +1,13 @@
 Program
-└── DeclarationList
-    └── Declaration
-        ├── DeclarationInitial
-        │   ├── TypeSpecifier
-        │   │   └── (KEYWORD, int) 
-        │   └── (ID, a) 
-        └── DeclarationPrime
-            └── VarDeclarationPrime
-                └── (SYMBOL, ;) 
+├── DeclarationList
+│   ├── Declaration
+│   │   ├── DeclarationInitial
+│   │   │   ├── TypeSpecifier
+│   │   │   │   └── (KEYWORD, int) 
+│   │   │   └── (ID, b) 
+│   │   └── DeclarationPrime
+│   │       └── VarDeclarationPrime
+│   │           └── (SYMBOL, ;) 
+│   └── DeclarationList
+│       └── epsilon
+└── $

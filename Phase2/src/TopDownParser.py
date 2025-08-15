@@ -148,6 +148,9 @@ class DiagramParser:
                 self.code_generator.args_in_func_call_end(self.current_token)
             case _:
                 raise ValueError(f"Unknown semantic action: {action_symbol}")
+            
+        if DEBUG:
+            print("action", action_symbol ," called successfully")
         
             
             
@@ -217,6 +220,7 @@ class DiagramParser:
             state_or_transition_has_action = False
             terminal_matched = False
             non_terminal_matched = False
+            final_after_action = False
 
             for edge in state.edges:
                 if DEBUG:
@@ -253,7 +257,13 @@ class DiagramParser:
                     if target_state.is_final:
                         #TODO: perform the semantic action and then return without using the token
                         self.exec_semantic_action(act_sym)
-                        pass 
+                        if DEBUG:
+                            print("Next State : final")
+                         
+                        transitioned = True
+                        final_after_action = True
+                        
+                        continue
                     
                     #Case 2: action symbol is a transition to an intermediate state
                     else:
@@ -301,6 +311,8 @@ class DiagramParser:
                                
                                 
                         if non_terminal_matched:
+                            if DEBUG:
+                                print("Non terminal after action symbol")
                             break
                         if not transitioned and  next_edge.edge_type.value == EdgeType.EPSILON.value:
                             epsilon_edge = next_edge
@@ -312,6 +324,10 @@ class DiagramParser:
                             continue
                         
             if transitioned: 
+                if DEBUG:
+                    print("here")
+                if final_after_action:
+                    return
                 continue
             
             

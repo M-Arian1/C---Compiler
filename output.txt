@@ -511,18 +511,18 @@ Determining edge type #push_in_semantic_stack ACTION_SYMBOL
 edge with action symbol detected
 on action
 11 action #push_in_semantic_stack
-Next edge after action symbol <Phase2.src.TransitionDiagram.ParserEdge object at 0x101350550> symbol TypeSpecifier
+Next edge after action symbol <Phase2.src.TransitionDiagram.ParserEdge object at 0x105128350> symbol TypeSpecifier
 Next edge was non terminal
 Current Token int Current State 32
 Determining edge type int TERMINAL
 Determining edge type void TERMINAL
-Current Token a Current State 33
-Current Token a Current State 12
+Current Token b Current State 33
+Current Token b Current State 12
 Determining edge type #push_in_semantic_stack ACTION_SYMBOL
 edge with action symbol detected
 on action
 13 action #push_in_semantic_stack
-Next edge after action symbol <Phase2.src.TransitionDiagram.ParserEdge object at 0x1012624e0> symbol ID
+Next edge after action symbol <Phase2.src.TransitionDiagram.ParserEdge object at 0x104f223f0> symbol ID
 before calling action, now in terminal case
 Current Token ; Current State 10
 Current Token ; Current State 8

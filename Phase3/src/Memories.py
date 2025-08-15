@@ -28,6 +28,13 @@ class MemorySegment:
     def _check_bounds(self, address):
         if not (self.base_address <= address <= self.bound_address):
             raise MemoryError(f"Address {address} out of bounds [{self.base_address}, {self.bound_address}].")
+        
+    def increment_addr(self, val = 1):
+        self.current_address += val
+        
+    def decrement_addr(self, val = 1):
+        self.current_address -= val
+        #TODO: handle memory error
 
 
 # class AddressableSegment(MemorySegment):
@@ -104,7 +111,7 @@ class DataSegment(MemorySegment):
         for i in range(array_size):
             data = Data(data_val, data_type, self.current_address, attrs=attrs)
             if i == 0:
-                symbol_table[data_val] = data
+                symbol_table[str(data_val)]= data
             self.cells[self.current_address] = data
             self.current_address += data.type_size
     pass

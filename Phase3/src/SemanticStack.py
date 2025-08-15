@@ -13,12 +13,13 @@ class SemanticStack:
         Remove 'count' items from the top of the stack.
         Returns the last removed item.
         """
+        popped = {}
         while count > 1:
             self.sp -= 1
-            self.stack.pop()
+            popped.append(self.stack.pop())
             count -= 1
         self.sp -= 1
-        return self.stack.pop()
+        return popped
 
     def is_empty(self):
         """Check if the stack is empty."""

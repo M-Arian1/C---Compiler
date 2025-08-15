@@ -47,6 +47,7 @@ class CodeGenerator:
 
         # Search from current scope backwards
         for scope in reversed(self.scope_stack):
+            # print(scope)
             if name in scope:
                 symbol = scope[name]
                 return symbol.address, is_implicit_print  # variable or function starting address
@@ -77,10 +78,10 @@ class CodeGenerator:
             pass
         else:
             #TODO:check for list and dict type later
+            # print(self.scope_stack[-1].__class__)
             self.data_block.create_data(var_name, 'int', self.scope_stack[-1])
         return
-    
-    
+        
     def push_id(self, token):
         if self.token == 'output':
             self.stack.push('PRINT')
@@ -183,34 +184,48 @@ class CodeGenerator:
         instr = Instruction(TACOperation.ASSIGN, self.semantic_stack.pop(), self.semantic_stack.top(), '')
         self.program_block.add_instruction(instr)
         return
-    
-    
-    
-    def calculate_array_addr(self, token):
-        
-        pass
-    
-  
-    def break_save(self, token):
-        pass
+
+    #######################################
+    ###                                 ###
+    ###           CONDITIONAL           ###
+    ###                                 ###
+    ####################################### 
     
     def save_index_before_cond_jump(self, token):
-        pass
+        index = self.program_block.current_address
+        self.semantic_stack.push(index)
+        self.program_block.increment_addr()
+        return
     
+    #TODO: Check
+    #PRBLEM: shouldn't we save scope or change it?
     def save_jpf(self, token):
-        pass
-    
-    def uncond_jump(self, token):
-        pass
+        jpf_index = self.semantic_stack.pop()
+        condition_result = self.semantic_stack.pop()
+
+        # Backpatch JPF at the reserved spot
+        instr = Instruction(TACOperation.JUMP_IF_FALSE, condition_result, '', self.program_block.current_address + 1)
+        self.program_block.add_instruction(instr, jpf_index)
+
+        # Reserve spot for unconditional JP to skip the else
+        jp_index = self.program_block.current_address
+        self.program_block.increment_addr()
+        
+        # Push JP index for later backpatching
+        self.semantic_stack.push(jp_index)
+        return
     
     def jump(self, token):
-        pass
+        jp_index = self.semantic_stack.pop()
+        instr = Instruction(TACOperation.JUMP, '', '', self.program_block.current_address)
+        self.program_block.add_instruction(instr, jp_index)
+        return
     
     
     
     #######################################
     ###                                 ###
-    ###     WHILE            ACTIONS    ###
+    ###         WHILE     ACTIONS       ###
     ###                                 ###
     #######################################
     def while_unconditional_jump(self, token):
@@ -222,8 +237,22 @@ class CodeGenerator:
     def fill_while(self, token):
         pass
     
-
+    def break_save(self, token):
+        
+        pass
     
+    
+
+    #######################################
+    ###                                 ###
+    ###               ARRAY             ###
+    ###                                 ###
+    #######################################    
+    
+    
+    def calculate_array_addr(self, token):
+        
+        pass
 
 
     #######################################
