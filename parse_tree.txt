@@ -1,0 +1,10 @@
+Program
+└── DeclarationList
+    └── Declaration
+        ├── DeclarationInitial
+        │   ├── TypeSpecifier
+        │   │   └── (KEYWORD, int) 
+        │   └── (ID, a) 
+        └── DeclarationPrime
+            └── VarDeclarationPrime
+                └── (SYMBOL, ;) 

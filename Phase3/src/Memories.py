@@ -100,12 +100,12 @@ class CodeSegment(MemorySegment):
 class DataSegment(MemorySegment):
     """Holds program variables."""
     def create_data(self, data_val, data_type, symbol_table, array_size=1, attrs={}):
-        self.cells.append[self.current_address]
+        # self.cells.append[self.current_address]
         for i in range(array_size):
-            data = Data(data_val, data_type, self.current_index, attrs=attrs)
+            data = Data(data_val, data_type, self.current_address, attrs=attrs)
             if i == 0:
                 symbol_table[data_val] = data
-            self.block[self.current_index] = data
+            self.cells[self.current_address] = data
             self.current_address += data.type_size
     pass
 

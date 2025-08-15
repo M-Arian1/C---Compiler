@@ -7,9 +7,9 @@ class CodeGenerator:
         self.parser = parser
         self.memory = memory
         self.semantic_stack = ss = SemanticStack()
-        self.program_block = memory.code
-        self.data_block = memory.data
-        self.temp_block = memory.temporaries
+        self.program_block = memory.program_block
+        self.data_block = memory.data_block
+        self.temp_block = memory.temp_segment
         self.semantic_errors = {}
         self.scope_stack=[{}]
         self.breaks = {}
@@ -77,7 +77,7 @@ class CodeGenerator:
             pass
         else:
             #TODO:check for list and dict type later
-            self.data_block.create_data(var_name, 'int', self.scope[-1])
+            self.data_block.create_data(var_name, 'int', self.scope_stack[-1])
         return
     
     
@@ -94,7 +94,7 @@ class CodeGenerator:
     def array_declaration(self, token):
         array_size = self.semantic_stack.pop()
         array_name = self.semantic_stack.pop()
-        self.data_block.create_data(array_name, 'array', self.scope[-1], int(array_size),
+        self.data_block.create_data(array_name, 'array', self.scope_stack[-1], int(array_size),
                                     {'array_size': int(array_size)})
         return
     
@@ -109,7 +109,7 @@ class CodeGenerator:
             # self.memory.PB.has_error = True
             pass
         else:
-            self.data_block.create_data(arg_name, 'array', self.scope[-1])
+            self.data_block.create_data(arg_name, 'array', self.scope_stack[-1])
         return
     
     def relative_op(self, token):
