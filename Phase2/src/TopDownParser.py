@@ -73,7 +73,7 @@ class DiagramParser:
             "#save_cond":                       self.code_generator.save_index_before_cond_jump,
             "#save_jpf":                        self.code_generator.save_jpf,
             "#jp":                              self.code_generator.jump,
-            "#save_while_uncond":               self.code_generator.while_unconditional_jump,
+            "#save_while_uncond":               self.code_generator.while_save,
             "#save_while_cond_jpf":             self.code_generator.while_cond_jump,
             "#fill_while_body":                 self.code_generator.fill_while,
             "#return_jp":                       self.code_generator.jump_return,
@@ -117,7 +117,7 @@ class DiagramParser:
             case "#jp":
                 self.code_generator.jump(self.current_token)
             case "#save_while_uncond":
-                self.code_generator.while_unconditional_jump(self.current_token)
+                self.code_generator.while_save(self.current_token)
             case "#save_while_cond_jpf":
                 self.code_generator.while_cond_jump(self.current_token)
             case "#fill_while_body":

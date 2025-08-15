@@ -13,6 +13,7 @@ class CodeGenerator:
         self.semantic_errors = {}
         self.scope_stack=[{}]
         self.breaks = {}
+        self.scope_number = 0
     
     
     #TODO
@@ -30,8 +31,7 @@ class CodeGenerator:
 
         return first_type, second_type, True
         
-        
-        
+       
     def findaddr(self, name):
         """
         Look for 'name' starting from current scope backwards.
@@ -57,9 +57,21 @@ class CodeGenerator:
         # self.semantic_errors.append()
         raise KeyError(f"Undeclared identifier: {name}")
         
+        
+    def open_new_scope(self):
+        # Push a new, empty dictionary onto the scope stack
+        self.scope_stack.append({})
+        self.scope_number += 1
+ 
+        
+    def end_scope(self):
+        # Pop the current scope
+        self.scope_stack.pop()
+        self.scope_number -= 1
+
     
     
-    #Phase3
+    #PHASE 3
     def push_token_in_semantic_stack(self,token):
         self.semantic_stack.push(token)
         return
@@ -91,28 +103,7 @@ class CodeGenerator:
         addr = self.findaddr(token)
         self.semantic_stack.push(addr)
         return
-    
-    def array_declaration(self, token):
-        array_size = self.semantic_stack.pop()
-        array_name = self.semantic_stack.pop()
-        self.data_block.create_data(array_name, 'array', self.scope_stack[-1], int(array_size),
-                                    {'array_size': int(array_size)})
-        return
-    
-    #when one of function arguemnts is an array
-    def pointer_declaration(self, token):
-        arg_name = self.semantic_stack.pop()
-        data_type = self.semantic_stack.pop()
-        if data_type == 'void':
-            #TODO: Handle error
-            # self.semantic_errors[int(self.parser.scanner.get_line_number()) - 1] = \
-            #     "Semantic Error! Illegal type of void for '" + name + "'"
-            # self.memory.PB.has_error = True
-            pass
-        else:
-            self.data_block.create_data(arg_name, 'array', self.scope_stack[-1])
-        return
-    
+     
     def relative_op(self, token):
         tmp = self.temp_block.allocate_temp()
         second_operand, operation, first_operand = self.semantic_stack.pop(3)
@@ -132,9 +123,7 @@ class CodeGenerator:
         else:
             #TODO: handle mismatch error
             pass
-        
-        
-    
+            
     def arithmetic_operation(self, token):
         
         tmp = self.temp_block.allocate_temp()
@@ -155,8 +144,7 @@ class CodeGenerator:
         else:
             #TODO: handle mismatch error
             pass
-        
-    
+            
     def multiply(self, token):
         
         tmp = self.temp_block.allocate_temp()
@@ -170,8 +158,7 @@ class CodeGenerator:
         else:
             #TODO: handle mismatch error
             pass
-    
-    
+        
     def print_value(self, token):
         if not self.semantic_stack.is_empty() and self.semantic_stack.top(1) == 'PRINT':
             operand = self.semantic_stack.pop()
@@ -228,18 +215,43 @@ class CodeGenerator:
     ###         WHILE     ACTIONS       ###
     ###                                 ###
     #######################################
-    def while_unconditional_jump(self, token):
-        pass
+    def while_save(self, token):
+        addr = self.program_block.current_address
+        self.semantic_stack.push(addr)
+        return
     
     def while_cond_jump(self, token):
-        pass
+        addr = self.program_block.current_address
+        self.semantic_stack.push(addr)
+        self.program_block.increment_addr()
+
+        self.open_new_scope()
+        return
     
     def fill_while(self, token):
-        pass
+        uncond_jmp_index = self.program_block.current_address
+
+
+        cond_jmp = Instruction(TACOperation.JUMP_IF_FALSE, self.semantic_stack.top(1), uncond_jmp_index + 1)
+        cond_jmp_index = self.stack.top(0)
+        self.program_block.add_instruction(cond_jmp, cond_jmp_index)
+
+        uncond_jmp = Instruction(TACOperation.JUMP, self.semantic_stack.top(2))
+        self.program_block.add_instruction(uncond_jmp)
+
+        self.semantic_stack.pop(3)
+
+        # fill breaks to current pc (no valid breaks except in while => #fill_break moved here and combined with #fill_while)
+        break_instr = Instruction(TACOperation.JUMP, self.program_block.current_address)
+        for br in self.breaks[self.scope]:
+            self.program_block.add_instruction(break_instr, br)
+        self.end_scope()
+        return
     
     def break_save(self, token):
-        
-        pass
+        jmp_index = self.program_block.add_instruction(Instruction(TACOperation.JUMP, "", "", ""))
+        self.breaks[self.scope].append(jmp_index)
+        return
     
     
 
@@ -249,10 +261,49 @@ class CodeGenerator:
     ###                                 ###
     #######################################    
     
+
+    def array_declaration(self, token):
+        array_size = self.semantic_stack.pop()
+        array_name = self.semantic_stack.pop()
+        self.data_block.create_data(array_name, 'array', self.scope_stack[-1], int(array_size),
+                                    {'array_size': int(array_size)})
+        return
     
+        #when one of function arguemnts is an array
+    def pointer_declaration(self, token):
+        arg_name = self.semantic_stack.pop()
+        data_type = self.semantic_stack.pop()
+        if data_type == 'void':
+            #TODO: Handle error
+            # self.semantic_errors[int(self.parser.scanner.get_line_number()) - 1] = \
+            #     "Semantic Error! Illegal type of void for '" + name + "'"
+            # self.memory.PB.has_error = True
+            pass
+        else:
+            self.data_block.create_data(arg_name, 'array', self.scope_stack[-1])
+        return
+   
+       
     def calculate_array_addr(self, token):
-        
+        tmp1 = self.temp_block.allocate_temp()
+        tmp2 = self.temp_block.allocate_temp()
+        offset = self.semantic_stack.pop()
+        base = self.semantic_stack.pop()
+        mult_instruction = Instruction(TACOperation.MULTIPLY, '#4', offset, tmp1)
+        self.program_block.add_instruction(mult_instruction)
+        if str(base).startswith('@'):
+            tmp_array_base = self.temp_block.allocate_temp()
+            self.program_block.add_instruction(Instruction('ASSIGN', base, tmp_array_base, ''))
+            add_instruction = Instruction(TACOperation.ADD, tmp_array_base, tmp1, tmp2)
+        else:
+            add_instruction = Instruction(TACOperation.ADD, '#' + str(base), tmp1, tmp2)
+        self.program_block.add_instruction(add_instruction)
+        self.semantic_stack.push('@' + str(tmp2))
         pass
+    
+    
+    
+    
 
 
     #######################################
@@ -261,13 +312,13 @@ class CodeGenerator:
     ###                                 ###
     #######################################
     def args_in_func_call_begin(self, token):
+        
         pass
     
     def args_in_func_call_end(self, token):
         pass
     
     def function_declaration(self, token):
-        
         pass
     
     def function_arguements(self,token):
