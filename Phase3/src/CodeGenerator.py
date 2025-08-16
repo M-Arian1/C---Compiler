@@ -37,10 +37,14 @@ class CodeGenerator:
     def get_pb(self):
         block = self.program_block.get_cells()
         print("PB", self.program_block.cells)
-        cells = []
-        for i in range(len(block)):
-            cells.append(str(f"{i}"+"\t"+block[i].to_string()+"\n"))
-        return cells
+        
+        result = []
+        for address in sorted(block.keys()):
+            instruction = block[address]
+            # Format: "line_number (OPERATION, operand1, operand2, operand3)"
+            result.append(f"{address}\t{instruction.to_string()}")
+        
+        return "\n".join(result)
         
             
         

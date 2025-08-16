@@ -42,7 +42,9 @@ def main():
         
     try:
         with open('output.txt','w') as o:
-            o.write(str(pb))
+            # pb should be a string, not a list
+            pb_output = pb  # assuming pb is the string from get_pb()
+            o.write(pb_output)
     except Exception as e:
         import traceback
         traceback.print_exc()

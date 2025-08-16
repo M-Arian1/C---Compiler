@@ -194,5 +194,8 @@ class ThreeAddressInstruction(Instruction):
         self.operands = [operand1, operand2, operand3]
 
     def to_string(self):
-        operand_strings = [str(op) if op is not None else "" for op in self.operands]
-        return f"({self.operation.value},{','.join(operand_strings)})"
+        op1 = str(self.operands[0]) if self.operands[0] is not None else ""
+        op2 = str(self.operands[1]) if self.operands[1] is not None else ""
+        op3 = str(self.operands[2]) if self.operands[2] is not None else ""
+        
+        return f"({self.operation.value}, {op1}, {op2}, {op3})"
