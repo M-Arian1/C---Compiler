@@ -201,7 +201,8 @@ class DiagramParser:
                 f.write("There is no syntax error.\n")
 
         self.error_log.close()
-        return self.parse_tree
+        program_block = self.code_generator.get_pb()
+        return self.parse_tree, program_block
 
     #Phase3: Needs massive changes
     def execute_diagram(self, diagram_name, diagram):

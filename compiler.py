@@ -33,9 +33,16 @@ def main():
     parser = DiagramParser(grammar, diagrams, scanner)
 
     try:
-        parse_tree = parser.parse("Program")  # Entry point for parsing
+        parse_tree, pb = parser.parse("Program")  # Entry point for parsing
         with open('parse_tree.txt', 'w') as f:
             f.write(str(parse_tree))
+    except Exception as e:
+        import traceback
+        traceback.print_exc()
+        
+    try:
+        with open('output.txt','w') as o:
+            o.write(str(pb))
     except Exception as e:
         import traceback
         traceback.print_exc()

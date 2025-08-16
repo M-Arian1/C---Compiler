@@ -110,6 +110,9 @@ class CodeSegment(MemorySegment):
     
     def increment_scope(self, value=1):
         self.scope += value
+        
+    def get_cells(self):
+        return self.cells
 
 
 class DataSegment(MemorySegment):
@@ -190,6 +193,6 @@ class ThreeAddressInstruction(Instruction):
         self.operation = operation
         self.operands = [operand1, operand2, operand3]
 
-    def __str__(self):
+    def to_string(self):
         operand_strings = [str(op) if op is not None else "" for op in self.operands]
         return f"({self.operation.value},{','.join(operand_strings)})"

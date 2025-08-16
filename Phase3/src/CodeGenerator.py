@@ -31,6 +31,12 @@ class CodeGenerator:
     
     
     #TODO
+    def get_pb(self):
+        block = self.program_block.get_cells()
+        for i in range(len(block)):
+            block.append(str(f"{i}"+"\t"+block[i].to_string()+"\n"))
+            
+        
     def check_operand_types(self, first_operand, second_operand):
         first_type,second_type = 'int', 'int'
         try:
@@ -114,7 +120,7 @@ class CodeGenerator:
             return
         #TODO: handle the semantic error differently
         
-        addr = self.findaddr(token)
+        addr, _ = self.findaddr(token)
         self.semantic_stack.push(addr)
         return
      
@@ -399,15 +405,15 @@ class CodeGenerator:
    
         
     def args_in_func_call_begin(self, token):
-        func_name = self.semantic_stack.pop()
-        if func_name == 'output':
+        func_name = self.semantic_stack.top()
+        if func_name == 'PRINT':
             #TODO: handle output implicitly
+            
             return
         else:
             if (self.get_function_by_name(func_name) == None):
                 #TODO: Handle undefined function error
                 return
-            self.semantic_stack.push(func_name)
             self.semantic_stack.push("#call_args")
 
             return
@@ -418,10 +424,16 @@ class CodeGenerator:
         args = {}
         while (str(self.semantic_stack.top()) == "#call_args"):
             arg_name = self.semantic_stack.pop(2)
-            arg_addr = self.findaddr(arg_name)
+            arg_addr, _ = self.findaddr(arg_name)
             args.append(arg_addr)
+            
         args = reversed(args)
         _, func_name = self.semantic_stack.pop(2)
+        if func_name == 'PRINT':
+            for arg in args:
+                self.program_block.add_instruction(ThreeAddressInstruction(TACOperation.PRINT, f'{arg}'))
+
+            return
         if (len(args) != len(self.get_function_by_name(func_name).get_args())):
             raise "semantic error! Mismatch in numbers of arguments of ID"
         func_args = self.get_function_by_name(func_name).get_args()
@@ -469,9 +481,14 @@ class FunctionObject:
     
     
     
+    
+    
+    
 class FunctionArg:
     def __init__(self, name, addr, type) -> None:
         self.name = name
         self.addr = addr
         self.type = type
         pass
+    
+    
