@@ -14,6 +14,20 @@ class CodeGenerator:
         self.scope_stack=[{}]
         self.breaks = {}
         self.scope_number = 0
+        self.functions_list = {}
+        self.in_func = {}
+        
+    def add_function(self, func):
+        self.functions_list.append(func)
+        self.in_func.append(func.name)
+        
+    def get_function_by_name(self, name):
+        my_func = None
+        for f in self.functions_list:
+            if str(f.name) == name:
+                my_func = f
+        return my_func
+
     
     
     #TODO
@@ -270,19 +284,7 @@ class CodeGenerator:
         return
     
         #when one of function arguemnts is an array
-    def pointer_declaration(self, token):
-        arg_name = self.semantic_stack.pop()
-        data_type = self.semantic_stack.pop()
-        if data_type == 'void':
-            #TODO: Handle error
-            # self.semantic_errors[int(self.parser.scanner.get_line_number()) - 1] = \
-            #     "Semantic Error! Illegal type of void for '" + name + "'"
-            # self.memory.PB.has_error = True
-            pass
-        else:
-            self.data_block.create_data(arg_name, 'array', self.scope_stack[-1])
-        return
-   
+
        
     def calculate_array_addr(self, token):
         tmp1 = self.temp_block.allocate_temp()
@@ -311,25 +313,165 @@ class CodeGenerator:
     ###     FUNCTION RELATED ACTIONS    ###
     ###                                 ###
     #######################################
-    def args_in_func_call_begin(self, token):
-        
-        pass
-    
-    def args_in_func_call_end(self, token):
-        pass
-    
     def function_declaration(self, token):
+        func_name, func_type = self.semantic_stack.pop(2)
+        
+        if str(func_name) == 'main':
+            #reserve some memory for main using push immediate and whatever, 
+            # but before that, check the base address of data or program block
+            instr = ThreeAddressInstruction(TACOperation.ASSIGN,'','#0', '0')
+            self.program_block.add_instruction(instr)
+            main_instr = ThreeAddressInstruction(TACOperation.JUMP, self.program_block.current_address)
+            self.program_block.add_instruction(main_instr)
+            return
+        
+        else:
+            first_line_addr = self.program_block.current_address
+            # func_data = Data("",)
+            
+            return_value_address = self.data_block.allocate_cell
+            func = FunctionObject(func_name,func_type, first_line_addr, self.scope_number, return_value_address )
+            self.add_function(func)
+            pass
+
+        self.open_new_scope()
+        self.semantic_stack.push(func_name)
+        self.semantic_stack.push("#arguments")
+        pass
+        
+    def push_param_in_ss(self, token):
+        self.semantic_stack.push(token)
         pass
     
     def function_arguements(self,token):
-        pass
-    
-    def function_end(self, token):
-        pass
-    
-    def jump_return(self, token):
+        #for args_info
+        args = {}
+        while (str(self.semantic_stack.top()) == "#arguments"):
+            arg_name, arg_type = self.semantic_stack.pop(2)
+            arg_addr = self.data_block.allocate_cell
+            arg = FunctionArg(arg_name, arg_addr, arg_type)
+            args.append(arg)
+        _, func_name = self.semantic_stack.pop(2)            
+
+        self.get_function_by_name(func_name).add_args(arg)
+
         pass
     
     def return_value(self, token):
-        pass
+        return_val = self.semantic_stack.pop()
+        rt_inst = ThreeAddressInstruction(TACOperation.ASSIGN, '','0', return_val)
+        self.program_block.add_instruction(rt_inst)
+        return
     
+    def function_end(self, token):
+        self.current_function_name = None
+        self.end_scope()
+        return
+    
+    def jump_return(self, token):
+        ret_addr = self.get_function_by_name(self.current_function_name).re
+        ret_jmp_inst = ThreeAddressInstruction(TACOperation.JUMP,f'@{ret_addr}')
+        self.program_block.add_instruction(ret_jmp_inst)
+        return
+    
+    
+
+        
+
+    
+    def pointer_declaration(self, token):
+        arg_name = self.semantic_stack.pop()
+        data_type = self.semantic_stack.pop()
+        if data_type == 'void':
+            #TODO: Handle error
+            # self.semantic_errors[int(self.parser.scanner.get_line_number()) - 1] = \
+            #     "Semantic Error! Illegal type of void for '" + name + "'"
+            # self.memory.PB.has_error = True
+            pass
+        else:
+            self.data_block.create_data(arg_name, 'array', self.scope_stack[-1])
+            self.semantic_stack.push(arg_name)
+            self.semantic_stack.push(data_type)
+        return
+   
+    
+
+   
+        
+    def args_in_func_call_begin(self, token):
+        func_name = self.semantic_stack.pop()
+        if func_name == 'output':
+            #TODO: handle output implicitly
+            return
+        else:
+            if (self.get_function_by_name(func_name) == None):
+                #TODO: Handle undefined function error
+                return
+            self.semantic_stack.push(func_name)
+            self.semantic_stack.push("#call_args")
+
+            return
+            
+    
+        
+    def args_in_func_call_end(self, token):
+        args = {}
+        while (str(self.semantic_stack.top()) == "#call_args"):
+            arg_name = self.semantic_stack.pop(2)
+            arg_addr = self.findaddr(arg_name)
+            args.append(arg_addr)
+        args = reversed(args)
+        _, func_name = self.semantic_stack.pop(2)
+        if (len(args) != len(self.get_function_by_name(func_name).get_args())):
+            raise "semantic error! Mismatch in numbers of arguments of ID"
+        func_args = self.get_function_by_name(func_name).get_args()
+        for i in len(args):
+            self.program_block.add_instruction(ThreeAddressInstruction(TACOperation.ASSIGN, '', f'@{args[i]}', f'{func_args[i]}'))
+            
+        self.get_function_by_name(func_name).set_return_addr(self.program_block.current_address)
+
+    
+
+class FunctionObject:
+    def __init__(self, name, type, func_addr, func_scope_number, return_addr= None) -> None:
+        self.name = name
+        self.scope = func_scope_number
+        self.first_line_addr = func_addr
+        #return addr is where we write where we should jump at the end of the function
+        self.return_addr = return_addr
+        self.args = {}
+        self.type = type
+        self.return_val = None
+
+        pass
+    def add_args(self, args):
+        for arg in args:    
+            self.args.append(arg)
+        
+    def get_args(self):
+        return self.args
+    
+        
+    def set_return_addr(self, address):
+        self.return_addr
+        
+    def get_return_addr(self):
+        return self.return_addr
+    
+    def get_addr(self):
+        return self.first_line_addr
+    
+    def set_return_val(self, value):
+        self.return_val = value
+        
+    def get_return_val(self):
+        return self.return_val
+    
+    
+    
+class FunctionArg:
+    def __init__(self, name, addr, type) -> None:
+        self.name = name
+        self.addr = addr
+        self.type = type
+        pass

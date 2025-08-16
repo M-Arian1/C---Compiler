@@ -35,6 +35,14 @@ class MemorySegment:
     def decrement_addr(self, val = 1):
         self.current_address -= val
         #TODO: handle memory error
+        
+    def allocate_cell(self):
+        if self.current_address + MEMORY_BLOCK_SIZE > self.bound_address:
+            raise MemoryError("Segment overflow.")
+        allocated_address = self.current_address
+        self.cells.append(None)
+        self.current_address += MEMORY_BLOCK_SIZE
+        return allocated_address
 
 
 # class AddressableSegment(MemorySegment):
@@ -106,19 +114,27 @@ class CodeSegment(MemorySegment):
 
 class DataSegment(MemorySegment):
     """Holds program variables."""
-    def create_data(self, data_val, data_type, symbol_table, array_size=1, attrs={}):
+    def create_data(self, data_name, data_type, symbol_table, array_size=1, attrs={}):
         # self.cells.append[self.current_address]
         for i in range(array_size):
-            data = Data(data_val, data_type, self.current_address, attrs=attrs)
+            data = Data(data_name, data_type, self.current_address, attrs=attrs)
             if i == 0:
-                symbol_table[str(data_val)]= data
+                symbol_table[str(data_name)]= data
             self.cells[self.current_address] = data
             self.current_address += data.type_size
     pass
 
+    def create_function(self, func_name, func_val, func_first_line, symbol_table):
+        
+        return
+
     def get_data_by_address(self, address):
         return self.cells[address]
-
+    
+    def write_at(self, address, data):
+        self.cells[address] = data
+        return
+    
 
 class TemporarySegment(MemorySegment):
     """Holds temporary variables for computation."""

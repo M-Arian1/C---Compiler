@@ -146,6 +146,8 @@ class DiagramParser:
                 self.code_generator.args_in_func_call_begin(self.current_token)
             case "#args_end":
                 self.code_generator.args_in_func_call_end(self.current_token)
+            case "#push_param_in_semantic_stack":
+                self.code_generator.push_param_in_ss(self.current_token)
             case _:
                 raise ValueError(f"Unknown semantic action: {action_symbol}")
             

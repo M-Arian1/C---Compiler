@@ -10,7 +10,7 @@ VarDeclarationPrime ~ [ #push_in_semantic_stack NUM ] ; #arr_declare
 FunDeclarationPrime ~ #func_declare ( Params ) #args_info CompoundStmt #fun_end
 TypeSpecifier ~ int
 TypeSpecifier ~ void
-Params ~ #push_in_semantic_stack int #push_in_semantic_stack ID ParamPrime ParamList
+Params ~ #push_param_in_semantic_stack int #push_param_in_semantic_stack ID ParamPrime ParamList
 Params ~ void
 ParamList ~ , Param ParamList
 ParamList ~ ε
