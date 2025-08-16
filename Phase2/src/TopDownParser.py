@@ -67,7 +67,7 @@ class DiagramParser:
             "#var_declare":                     self.code_generator.variable_declaration,
             "#arr_declare":                     self.code_generator.array_declaration,
             "#func_declare":                    self.code_generator.function_declaration,
-            "#args_info":                       self.code_generator.function_arguements,
+            "#args_info":                       self.code_generator.function_arguments,
             "fun_end":                          self.code_generator.function_end,
             "#ptr_declare":                     self.code_generator.pointer_declaration,
             "#br_save":                         self.code_generator.break_save,
@@ -105,7 +105,7 @@ class DiagramParser:
         #     case "#func_declare":
         #         self.code_generator.function_declaration(self.current_token)
         #     case "#args_info":
-        #         self.code_generator.function_arguements(self.current_token)
+        #         self.code_generator.function_arguments(self.current_token)
         #     case "fun_end":
         #         self.code_generator.function_end(self.current_token)
         #     case "#ptr_declare":

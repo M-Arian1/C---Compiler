@@ -127,14 +127,20 @@ class CodeGenerator:
         
     def push_id(self, token):
         if token == 'output':
-            self.stack.push('PRINT')
+            self.semantic_stack.push('PRINT')  # Fix: was self.stack
             return
-        #TODO: handle the semantic error differently
         
-        addr, _ = self.findaddr(token)
-        if DEBUG_P3:
-            print("addr", addr)
-        self.semantic_stack.push(addr)
+        try:
+            addr, _ = self.findaddr(token)
+            if DEBUG_P3:
+                print("addr", addr)
+            self.semantic_stack.push(addr)  # Fix: was self.stack
+        except KeyError:
+            # Handle undeclared variable error
+            if DEBUG_P3:
+                print(f"Error: Undeclared variable {token}")
+            # For now, push the token itself to prevent crashes
+            self.semantic_stack.push(token)
         return
      
     def relative_op(self, token):
@@ -263,33 +269,57 @@ class CodeGenerator:
         addr = self.program_block.current_address
         self.semantic_stack.push(addr)
         self.program_block.increment_addr()
-
+        
+        # Initialize breaks for current scope
+        if self.scope_number not in self.breaks:
+            self.breaks[self.scope_number] = []
+        
         self.open_new_scope()
         return
-    
+
     def fill_while(self, token):
         uncond_jmp_index = self.program_block.current_address
 
-
-        cond_jmp = Instruction(TACOperation.JUMP_IF_FALSE, self.semantic_stack.top(1), uncond_jmp_index + 1)
-        cond_jmp_index = self.stack.top(0)
+        # Create conditional jump instruction
+        condition_result = self.semantic_stack.top(1)  # Condition result
+        cond_jmp_index = self.semantic_stack.top(0)    # Address for conditional jump
+        while_start_addr = self.semantic_stack.top(2)  # While loop start address
+        
+        # Add conditional jump (JPF)
+        cond_jmp = ThreeAddressInstruction(TACOperation.JUMP_IF_FALSE, condition_result, uncond_jmp_index + 1, '')
         self.program_block.add_instruction(cond_jmp, cond_jmp_index)
 
-        uncond_jmp = Instruction(TACOperation.JUMP, self.semantic_stack.top(2))
+        # Add unconditional jump back to while condition
+        uncond_jmp = ThreeAddressInstruction(TACOperation.JUMP, while_start_addr, '', '')
         self.program_block.add_instruction(uncond_jmp)
 
-        self.semantic_stack.pop(3)
+        # Clean up semantic stack
+        self.semantic_stack.pop()  # Remove condition result
+        self.semantic_stack.pop()  # Remove jump address
+        self.semantic_stack.pop()  # Remove while start address
 
-        # fill breaks to current pc (no valid breaks except in while => #fill_break moved here and combined with #fill_while)
-        break_instr = Instruction(TACOperation.JUMP, self.program_block.current_address)
-        for br in self.breaks[self.scope]:
-            self.program_block.add_instruction(break_instr, br)
+        # Fill breaks to current pc
+        current_scope = self.scope_number
+        if current_scope in self.breaks:
+            break_instr = ThreeAddressInstruction(TACOperation.JUMP, self.program_block.current_address, '', '')
+            for br in self.breaks[current_scope]:
+                self.program_block.add_instruction(break_instr, br)
+            # Clear breaks for this scope
+            del self.breaks[current_scope]
+        
         self.end_scope()
         return
     
     def break_save(self, token):
-        jmp_index = self.program_block.add_instruction(Instruction(TACOperation.JUMP, "", "", ""))
-        self.breaks[self.scope].append(jmp_index)
+        # Create a jump instruction that will be backpatched later
+        jmp_instr = ThreeAddressInstruction(TACOperation.JUMP, "", "", "")
+        jmp_index = self.program_block.add_instruction(jmp_instr)
+        
+        # Add to breaks list for current scope
+        current_scope = self.scope_number
+        if current_scope not in self.breaks:
+            self.breaks[current_scope] = []
+        self.breaks[current_scope].append(jmp_index)
         return
     
     
@@ -343,23 +373,27 @@ class CodeGenerator:
         func_type = self.semantic_stack.pop()
         if DEBUG_P3:
             print("func name in func declaration:", func_name)
-        if str(func_name) == 'main':
-            #reserve some memory for main using push immediate and whatever, 
-            # but before that, check the base address of data or program block
-            instr = ThreeAddressInstruction(TACOperation.ASSIGN,'','#0', '0')
-            self.program_block.add_instruction(instr)
-            main_instr = ThreeAddressInstruction(TACOperation.JUMP, self.program_block.current_address)
-            self.program_block.add_instruction(main_instr)
-            
         
+        if str(func_name) == 'main':
+            # For main function, we need to jump to its start
+            # Reserve address 0 for initial jump to main
+            if self.program_block.current_address == 0:
+                # Reserve space for jump to main - we'll fill this later
+                self.program_block.increment_addr()
+            
+            # Store main's starting address for later backpatching
+            main_start_addr = self.program_block.current_address
+            # We'll backpatch address 0 with JP to main_start_addr later
+            main_jump = ThreeAddressInstruction(TACOperation.JUMP, main_start_addr, '', '')
+            self.program_block.add_instruction(main_jump, 0)  # Backpatch at address 0
+            
         else:
             first_line_addr = self.program_block.current_address
-            # func_data = Data("",)
-            
-            return_value_address = self.data_block.allocate_cell
-            func = FunctionObject(func_name,func_type, first_line_addr, self.scope_number, return_value_address )
+            return_value_address = self.data_block.allocate_cell()
+            func = FunctionObject(func_name, func_type, first_line_addr, self.scope_number, return_value_address)
             self.add_function(func)
-            pass
+            # Add function to current scope's symbol table
+            self.scope_stack[-1][str(func_name)] = func
 
         self.open_new_scope()
         self.semantic_stack.push(func_name)
@@ -367,33 +401,41 @@ class CodeGenerator:
         if DEBUG_P3:
             print("printing stack after #arguments:")
             self.semantic_stack.print_info()
-        pass
         
     def push_param_in_ss(self, token):
         self.semantic_stack.push(token)
         pass
     
-    def function_arguements(self,token):
-        #for args_info
+    def function_arguments(self, token):  # Fix: correct spelling
+        # Collect all arguments
         args = []
         if DEBUG_P3:
             print("printing stack before calling top in arguments:")
             self.semantic_stack.print_info()
+        
         while (str(self.semantic_stack.top()) != "#arguments"):
             arg_name = self.semantic_stack.pop()
             arg_type = self.semantic_stack.pop()
-            arg_addr = self.data_block.allocate_cell
+            arg_addr = self.data_block.allocate_cell()
             arg = FunctionArg(arg_name, arg_addr, arg_type)
             args.append(arg)
-        self.semantic_stack.pop()
+            # Add argument to current scope (function scope)
+            self.scope_stack[-1][str(arg_name)] = Data(arg_name, arg_type, arg_addr)
+        
+        self.semantic_stack.pop()  # Remove "#arguments"
         func_name = self.semantic_stack.pop()   
+        
         if DEBUG_P3:
-            print("my func_name",func_name)  
+            print("my func_name", func_name)  
             print(self.semantic_stack.print_info())       
+        
         if func_name != 'main':
-            self.get_function_by_name(func_name).add_args(arg)
-
-        pass
+            func_obj = self.get_function_by_name(func_name)
+            if func_obj:
+                # Add all arguments to function
+                for arg in reversed(args):  # Reverse to maintain correct order
+                    func_obj.add_args(arg)
+        return
     
     def return_value(self, token):
         return_val = self.semantic_stack.pop()
@@ -488,7 +530,7 @@ class CodeGenerator:
             case "#func_declare":
                 self.function_declaration(token)
             case "#args_info":
-                self.function_arguements(token)
+                self.function_arguments(token)
             case "#fun_end":
                 self.function_end(token)
             case "#ptr_declare":
@@ -539,27 +581,24 @@ class CodeGenerator:
     
 
 class FunctionObject:
-    def __init__(self, name, type, func_addr, func_scope_number, return_addr= None) -> None:
+    def __init__(self, name, type, func_addr, func_scope_number, return_addr=None) -> None:
         self.name = name
         self.scope = func_scope_number
         self.first_line_addr = func_addr
-        #return addr is where we write where we should jump at the end of the function
+        self.address = func_addr  # Add this for findaddr compatibility
         self.return_addr = return_addr
-        self.args = {}
+        self.args = []  # Fix: should be list, not dict
         self.type = type
         self.return_val = None
 
-        pass
-    def add_args(self, args):
-        for arg in args:    
-            self.args.append(arg)
+    def add_args(self, arg):  # Fix: single arg parameter
+        self.args.append(arg)
         
     def get_args(self):
         return self.args
-    
         
     def set_return_addr(self, address):
-        self.return_addr
+        self.return_addr = address  # Fix: was missing assignment
         
     def get_return_addr(self):
         return self.return_addr

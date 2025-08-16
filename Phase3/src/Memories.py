@@ -40,7 +40,7 @@ class MemorySegment:
         if self.current_address + MEMORY_BLOCK_SIZE > self.bound_address:
             raise MemoryError("Segment overflow.")
         allocated_address = self.current_address
-        self.cells.append(None)
+        self.cells[allocated_address] = None  # Fix: use address as key, not append
         self.current_address += MEMORY_BLOCK_SIZE
         return allocated_address
 
