@@ -1,21 +1,24 @@
 from Phase3.src.SemanticStack import SemanticStack
 from Phase3.src.Memories import *
+
+DEBUG_P3 = True
 class CodeGenerator:
     
     def __init__(self, parser) -> None:
         memory = Memory(0, 512, 1000)
         self.parser = parser
         self.memory = memory
-        self.semantic_stack = ss = SemanticStack()
-        self.program_block = memory.program_block
-        self.data_block = memory.data_block
-        self.temp_block = memory.temp_segment
+        self.semantic_stack = ss = SemanticStack(self)
+        self.program_block = memory.code()
+        self.data_block = memory.data()
+        self.temp_block = memory.temporaries()
         self.semantic_errors = {}
         self.scope_stack=[{}]
         self.breaks = {}
         self.scope_number = 0
-        self.functions_list = {}
-        self.in_func = {}
+        self.functions_list = []
+        self.in_func = []
+        self.action = None
         
     def add_function(self, func):
         self.functions_list.append(func)
@@ -33,8 +36,12 @@ class CodeGenerator:
     #TODO
     def get_pb(self):
         block = self.program_block.get_cells()
+        print("PB", self.program_block.cells)
+        cells = []
         for i in range(len(block)):
-            block.append(str(f"{i}"+"\t"+block[i].to_string()+"\n"))
+            cells.append(str(f"{i}"+"\t"+block[i].to_string()+"\n"))
+        return cells
+        
             
         
     def check_operand_types(self, first_operand, second_operand):
@@ -92,7 +99,7 @@ class CodeGenerator:
     
     
     #PHASE 3
-    def push_token_in_semantic_stack(self,token):
+    def push_token_in_semantic_stack(self, token):
         self.semantic_stack.push(token)
         return
     
@@ -115,18 +122,22 @@ class CodeGenerator:
         return
         
     def push_id(self, token):
-        if self.token == 'output':
+        if token == 'output':
             self.stack.push('PRINT')
             return
         #TODO: handle the semantic error differently
         
         addr, _ = self.findaddr(token)
+        if DEBUG_P3:
+            print("addr", addr)
         self.semantic_stack.push(addr)
         return
      
     def relative_op(self, token):
         tmp = self.temp_block.allocate_temp()
-        second_operand, operation, first_operand = self.semantic_stack.pop(3)
+        second_operand = self.semantic_stack.pop()
+        operation       = self.semantic_stack.pop()
+        first_operand = self.semantic_stack.pop()
         if str(operation) == '==':
             op = TACOperation.EQUAL
         elif str(operation) == '<':
@@ -147,7 +158,9 @@ class CodeGenerator:
     def arithmetic_operation(self, token):
         
         tmp = self.temp_block.allocate_temp()
-        second_operand, operation, first_operand = self.semantic_stack.pop(3)
+        second_operand = self.semantic_stack.pop()
+        operation = self.semantic_stack.pop()
+        first_operand = self.semantic_stack.pop()
         if str(operation) == '+':
             op = TACOperation.ADD
         elif str(operation) == '-':
@@ -168,7 +181,9 @@ class CodeGenerator:
     def multiply(self, token):
         
         tmp = self.temp_block.allocate_temp()
-        second_operand, operation, first_operand = self.semantic_stack.pop(3)
+        second_operand = self.semantic_stack.pop()
+        operation = self.semantic_stack.pop()
+        first_operand = self.semantic_stack.pop()
         _, _, matched = self.check_operand_types(first_operand, second_operand)
         
         if matched:
@@ -183,12 +198,12 @@ class CodeGenerator:
         if not self.semantic_stack.is_empty() and self.semantic_stack.top(1) == 'PRINT':
             operand = self.semantic_stack.pop()
             #shouldn't it be TACOperation?
-            instr = Instruction(self.semantic_stack.pop(), operand, '', '')
+            instr = ThreeAddressInstruction(self.semantic_stack.pop(), operand, '', '')
             self.program_block.add_instruction(instr)
         pass
     
     def assignment(self, token):
-        instr = Instruction(TACOperation.ASSIGN, self.semantic_stack.pop(), self.semantic_stack.top(), '')
+        instr = ThreeAddressInstruction(TACOperation.ASSIGN, self.semantic_stack.pop(), self.semantic_stack.top(), '')
         self.program_block.add_instruction(instr)
         return
 
@@ -320,8 +335,10 @@ class CodeGenerator:
     ###                                 ###
     #######################################
     def function_declaration(self, token):
-        func_name, func_type = self.semantic_stack.pop(2)
-        
+        func_name = self.semantic_stack.pop()
+        func_type = self.semantic_stack.pop()
+        if DEBUG_P3:
+            print("func name in func declaration:", func_name)
         if str(func_name) == 'main':
             #reserve some memory for main using push immediate and whatever, 
             # but before that, check the base address of data or program block
@@ -329,7 +346,7 @@ class CodeGenerator:
             self.program_block.add_instruction(instr)
             main_instr = ThreeAddressInstruction(TACOperation.JUMP, self.program_block.current_address)
             self.program_block.add_instruction(main_instr)
-            return
+            
         
         else:
             first_line_addr = self.program_block.current_address
@@ -343,6 +360,9 @@ class CodeGenerator:
         self.open_new_scope()
         self.semantic_stack.push(func_name)
         self.semantic_stack.push("#arguments")
+        if DEBUG_P3:
+            print("printing stack after #arguments:")
+            self.semantic_stack.print_info()
         pass
         
     def push_param_in_ss(self, token):
@@ -351,15 +371,23 @@ class CodeGenerator:
     
     def function_arguements(self,token):
         #for args_info
-        args = {}
-        while (str(self.semantic_stack.top()) == "#arguments"):
-            arg_name, arg_type = self.semantic_stack.pop(2)
+        args = []
+        if DEBUG_P3:
+            print("printing stack before calling top in arguments:")
+            self.semantic_stack.print_info()
+        while (str(self.semantic_stack.top()) != "#arguments"):
+            arg_name = self.semantic_stack.pop()
+            arg_type = self.semantic_stack.pop()
             arg_addr = self.data_block.allocate_cell
             arg = FunctionArg(arg_name, arg_addr, arg_type)
             args.append(arg)
-        _, func_name = self.semantic_stack.pop(2)            
-
-        self.get_function_by_name(func_name).add_args(arg)
+        self.semantic_stack.pop()
+        func_name = self.semantic_stack.pop()   
+        if DEBUG_P3:
+            print("my func_name",func_name)  
+            print(self.semantic_stack.print_info())       
+        if func_name != 'main':
+            self.get_function_by_name(func_name).add_args(arg)
 
         pass
     
@@ -421,14 +449,16 @@ class CodeGenerator:
     
         
     def args_in_func_call_end(self, token):
-        args = {}
-        while (str(self.semantic_stack.top()) == "#call_args"):
-            arg_name = self.semantic_stack.pop(2)
+        args = []
+        while (str(self.semantic_stack.top()) != "#call_args"):
+            arg_name = self.semantic_stack.pop()
+            self.semantic_stack.pop()
             arg_addr, _ = self.findaddr(arg_name)
             args.append(arg_addr)
             
         args = reversed(args)
-        _, func_name = self.semantic_stack.pop(2)
+        self.semantic_stack.pop()
+        func_name = self.semantic_stack.pop()
         if func_name == 'PRINT':
             for arg in args:
                 self.program_block.add_instruction(ThreeAddressInstruction(TACOperation.PRINT, f'{arg}'))
@@ -441,7 +471,67 @@ class CodeGenerator:
             self.program_block.add_instruction(ThreeAddressInstruction(TACOperation.ASSIGN, '', f'@{args[i]}', f'{func_args[i]}'))
             
         self.get_function_by_name(func_name).set_return_addr(self.program_block.current_address)
-
+        
+    def exec_semantic_action(self, action_symbol, token):
+        self.action = action_symbol
+        match str(action_symbol):
+            case "#push_in_semantic_stack":
+                self.push_token_in_semantic_stack(token)
+            case "#var_declare":
+                self.variable_declaration(token)
+            case "#arr_declare":
+                self.array_declaration(token)
+            case "#func_declare":
+                self.function_declaration(token)
+            case "#args_info":
+                self.function_arguements(token)
+            case "#fun_end":
+                self.function_end(token)
+            case "#ptr_declare":
+                self.pointer_declaration(token)
+            case "#br_save":
+                self.break_save(token)
+            case "#save_cond":
+                self.save_index_before_cond_jump(token)
+            case "#save_jpf":
+                self.save_jpf(token)
+            case "#jp":
+                self.jump(token)
+            case "#save_while_uncond":
+                self.while_save(token)
+            case "#save_while_cond_jpf":
+                self.while_cond_jump(token)
+            case "#fill_while_body":
+                self.fill_while(token)
+            case "#return_jp":
+                self.jump_return(token)
+            case "#save_return_value":
+                self.return_value(token)
+            case "#pid":
+                self.push_id(token)
+            case "#print":
+                self.print_value(token)
+            case "#assign":
+                self.assignment(token)
+            case "#array_addr":
+                self.calculate_array_addr(token)
+            case "#relation":
+                self.relative_op(token)
+            case "#arithm_op":
+                self.arithmetic_operation(token)
+            case "#mult":
+                self.multiply(token)
+            case "#push_imm_in_semantic_stack":
+                self.push_immediate(token)
+            case "#args_begin":
+                self.args_in_func_call_begin(token)
+            case "#args_end":
+                self.args_in_func_call_end(token)
+            case "#push_param_in_semantic_stack":
+                self.push_param_in_ss(token)
+            case _:
+                raise ValueError(f"Unknown semantic action: {action_symbol}")
+        
     
 
 class FunctionObject:

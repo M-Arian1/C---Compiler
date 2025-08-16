@@ -3,7 +3,7 @@ from Phase1.src.Tokens import Token
 from Phase3.src.CodeGenerator import CodeGenerator
 from Phase3.src.SemanticStack import SemanticStack
 
-DEBUG = True
+DEBUG = False
 IGNORE_ACTION = False
 class EdgeType(Enum):
     TERMINAL = 'TERMINAL'
@@ -48,6 +48,7 @@ class ParserDiagram:
 class DiagramParser:
 
     def __init__(self, grammar, diagrams, scanner):
+        self.kept_token = None
         self.grammar = grammar
         self.diagrams = diagrams
         self.scanner = scanner
@@ -90,69 +91,70 @@ class DiagramParser:
             "#args_end":                        self.code_generator.args_in_func_call_end
         }
         
-    def exec_semantic_action(self, action_symbol):
-        if IGNORE_ACTION:
-            return
-        match str(action_symbol):
-            case "#push_in_semantic_stack":
-                self.code_generator.push_token_in_semantic_stack(self.current_token)
-            case "#var_declare":
-                self.code_generator.variable_declaration(self.current_token)
-            case "#arr_declare":
-                self.code_generator.array_declaration(self.current_token)
-            case "#func_declare":
-                self.code_generator.function_declaration(self.current_token)
-            case "#args_info":
-                self.code_generator.function_arguements(self.current_token)
-            case "fun_end":
-                self.code_generator.function_end(self.current_token)
-            case "#ptr_declare":
-                self.code_generator.pointer_declaration(self.current_token)
-            case "#br_save":
-                self.code_generator.break_save(self.current_token)
-            case "#save_cond":
-                self.code_generator.save_index_before_cond_jump(self.current_token)
-            case "#save_jpf":
-                self.code_generator.save_jpf(self.current_token)
-            case "#jp":
-                self.code_generator.jump(self.current_token)
-            case "#save_while_uncond":
-                self.code_generator.while_save(self.current_token)
-            case "#save_while_cond_jpf":
-                self.code_generator.while_cond_jump(self.current_token)
-            case "#fill_while_body":
-                self.code_generator.fill_while(self.current_token)
-            case "#return_jp":
-                self.code_generator.jump_return(self.current_token)
-            case "#save_return_value":
-                self.code_generator.return_value(self.current_token)
-            case "#pid":
-                self.code_generator.push_id(self.current_token)
-            case "#print":
-                self.code_generator.print_value(self.current_token)
-            case "#assign":
-                self.code_generator.assignment(self.current_token)
-            case "#array_addr":
-                self.code_generator.calculate_array_addr(self.current_token)
-            case "#relation":
-                self.code_generator.relative_op(self.current_token)
-            case "#arithm_op":
-                self.code_generator.arithmetic_operation(self.current_token)
-            case "#mult":
-                self.code_generator.multiply(self.current_token)
-            case "##push_imm_in_semantic_stack":
-                self.code_generator.push_immediate(self.current_token)
-            case "#args_begin":
-                self.code_generator.args_in_func_call_begin(self.current_token)
-            case "#args_end":
-                self.code_generator.args_in_func_call_end(self.current_token)
-            case "#push_param_in_semantic_stack":
-                self.code_generator.push_param_in_ss(self.current_token)
-            case _:
-                raise ValueError(f"Unknown semantic action: {action_symbol}")
+    def exec_semantic_action(self, action_symbol, token):
+        self.code_generator.exec_semantic_action(action_symbol, token)
+        # if IGNORE_ACTION:
+        #     return
+        # match str(action_symbol):
+        #     case "#push_in_semantic_stack":
+        #         self.code_generator.push_token_in_semantic_stack(self.current_token)
+        #     case "#var_declare":
+        #         self.code_generator.variable_declaration(self.current_token)
+        #     case "#arr_declare":
+        #         self.code_generator.array_declaration(self.current_token)
+        #     case "#func_declare":
+        #         self.code_generator.function_declaration(self.current_token)
+        #     case "#args_info":
+        #         self.code_generator.function_arguements(self.current_token)
+        #     case "fun_end":
+        #         self.code_generator.function_end(self.current_token)
+        #     case "#ptr_declare":
+        #         self.code_generator.pointer_declaration(self.current_token)
+        #     case "#br_save":
+        #         self.code_generator.break_save(self.current_token)
+        #     case "#save_cond":
+        #         self.code_generator.save_index_before_cond_jump(self.current_token)
+        #     case "#save_jpf":
+        #         self.code_generator.save_jpf(self.current_token)
+        #     case "#jp":
+        #         self.code_generator.jump(self.current_token)
+        #     case "#save_while_uncond":
+        #         self.code_generator.while_save(self.current_token)
+        #     case "#save_while_cond_jpf":
+        #         self.code_generator.while_cond_jump(self.current_token)
+        #     case "#fill_while_body":
+        #         self.code_generator.fill_while(self.current_token)
+        #     case "#return_jp":
+        #         self.code_generator.jump_return(self.current_token)
+        #     case "#save_return_value":
+        #         self.code_generator.return_value(self.current_token)
+        #     case "#pid":
+        #         self.code_generator.push_id(self.current_token)
+        #     case "#print":
+        #         self.code_generator.print_value(self.current_token)
+        #     case "#assign":
+        #         self.code_generator.assignment(self.current_token)
+        #     case "#array_addr":
+        #         self.code_generator.calculate_array_addr(self.current_token)
+        #     case "#relation":
+        #         self.code_generator.relative_op(self.current_token)
+        #     case "#arithm_op":
+        #         self.code_generator.arithmetic_operation(self.current_token)
+        #     case "#mult":
+        #         self.code_generator.multiply(self.current_token)
+        #     case "##push_imm_in_semantic_stack":
+        #         self.code_generator.push_immediate(self.current_token)
+        #     case "#args_begin":
+        #         self.code_generator.args_in_func_call_begin(self.current_token)
+        #     case "#args_end":
+        #         self.code_generator.args_in_func_call_end(self.current_token)
+        #     case "#push_param_in_semantic_stack":
+        #         self.code_generator.push_param_in_ss(self.current_token)
+        #     case _:
+        #         raise ValueError(f"Unknown semantic action: {action_symbol}")
             
-        if DEBUG:
-            print("action", action_symbol ," called successfully")
+        # if DEBUG:
+        #     print("action", action_symbol ," called successfully")
         
             
             
@@ -177,6 +179,7 @@ class DiagramParser:
     def match(self, terminal):
         if self.match_token_to_symbol(terminal):
             matched = self.current_token
+            self.kept_token = self.current_token
             self.current_state, self.current_token, self.current_line_number = self.scanner.get_next_token()
             return matched
         else:
@@ -259,7 +262,7 @@ class DiagramParser:
                     #Case 1: action symbol transitions into a final state
                     if target_state.is_final:
                         #TODO: perform the semantic action and then return without using the token
-                        self.exec_semantic_action(act_sym)
+                        self.exec_semantic_action(act_sym, self.current_token)
                         if DEBUG:
                             print("Next State : final")
                          
@@ -288,7 +291,7 @@ class DiagramParser:
                                 #TODO: perform action and advance token
                                 if DEBUG:
                                     print("before calling action, now in terminal case")
-                                self.exec_semantic_action(act_sym)
+                                self.exec_semantic_action(act_sym, self.kept_token)
 
                                 
                         if terminal_matched:
@@ -305,7 +308,7 @@ class DiagramParser:
                                 self.current_node = non_terminal_node
 
                                 self.return_stack.append(next_edge.target)
-                                self.exec_semantic_action(act_sym)
+                                self.exec_semantic_action(act_sym, self.current_token)
                                 self.execute_diagram(next_edge.symbol, self.diagrams[str(next_edge.symbol)])
                                 self.current_node = parent_node
                                 state = self.return_stack.pop()
@@ -405,6 +408,7 @@ class DiagramParser:
                         else:
                             syntax_error_txt = self.current_token
                         self.log_error(f"illegal {syntax_error_txt}")
+                        self.kept_token = self.current_token
                         self.current_state, self.current_token, self.current_line_number = self.scanner.get_next_token()
                         continue
 

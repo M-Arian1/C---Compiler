@@ -101,7 +101,7 @@ class CodeSegment(MemorySegment):
 
     def __str__(self):
         return "\n".join(
-            f"{addr}\t{self.cells[addr]}" for addr in sorted(self.instructions)
+            f"{addr}\t{self.cells[addr]}" for addr in sorted(self.cells)
         )
         
     def decrement_scope(self, value = 1):
