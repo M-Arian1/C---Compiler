@@ -1,48 +1,15 @@
-/*==== Sample T10 ====*/
-int g(int x){
+int sumup(int a[]){
+	int sum;
+	sum = a[0] + a[1];
+	return sum;
+}
+void main(void){
 	int res;
-	int j;
-	int k;
-	res = 0;
-	j = 0;
-	while (j < 2){
-		if (j == 1){
-			break;
-		} else{
-			k = 0;
-			while (k < x) {
-				res = res + (k + 1);
-				k = k + 1;
-			}
-			j = j + 1;
-		}
-	}
-	return res;
-}
+	int a[3];
+	a[0] = 1;
+	a[1] = 2;
+	a[2] = 3;
+	res = sumup(a);
+	output(res);
 
-void f(int a, int c){
-	int b[6];
-	int i;
-	b[0] = a;
-	b[1] = c;
-	i = 2;
-	while (i < 20){
-		b[i] = b[i-1] + b[i-2];
-		output(b[i]);
-		if (i == 5){
-			break;
-		} else {
-			i = i + 1;
-		}
-	}
-	output(i);
-}
-
-void main(void) {
-    int x;
-    int y;
-    x = 1;
-    y = 2;
-    f(x, y);
-    output(g(y + 4));
 }

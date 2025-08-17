@@ -2,7 +2,7 @@ from enum import Enum
 
 WORD_SIZE = 4
 MEMORY_BLOCK_SIZE = 4
-MAX_MEMORY_ADDRESS = 10000
+MAX_MEMORY_ADDRESS = 1000
 
 
 # ===== Memory Layer =====

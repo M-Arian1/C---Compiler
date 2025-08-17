@@ -6,7 +6,7 @@ CHECK_ERRORS = True
 class CodeGenerator:
     
     def __init__(self, parser) -> None:
-        memory = Memory(0, 512, 1000)
+        memory = Memory(0, 500, 700)
         self.parser = parser
         self.memory = memory
         self.semantic_stack = ss = SemanticStack(self)
