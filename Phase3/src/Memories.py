@@ -16,6 +16,9 @@ class Data():
         self.attrs = attrs
         if type == 'int' or type == 'array':
             self.type_size = WORD_SIZE
+    
+    def is_func(self):
+        return self.is_func
         
 class MemorySegment:
     """Abstract base for all memory segments."""

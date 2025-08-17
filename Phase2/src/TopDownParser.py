@@ -114,7 +114,7 @@ class DiagramParser:
                 return True
         return False
     def get_line(self):
-        return self.self.current_line_number
+        return self.current_line_number
     
     def match(self, terminal):
         if self.match_token_to_symbol(terminal):

@@ -13,7 +13,7 @@ class CodeGenerator:
         self.program_block = memory.code()
         self.data_block = memory.data()
         self.temp_block = memory.temporaries()
-        self.semantic_errors = {}
+        self.semantic_errors = []
         self.scope_stack=[{}]
         self.breaks = {}
         self.scope_number = 0
@@ -84,14 +84,16 @@ class CodeGenerator:
         if name == "output":
             is_implicit_print = True
             
-            return None, is_implicit_print
+            return None, is_implicit_print, True
 
         # Search from current scope backwards
+        is_func = False
         for scope in reversed(self.scope_stack):
             # print(scope)
+
             if name in scope:
                 symbol = scope[name]
-                return symbol.address, is_implicit_print  # variable or function starting address
+                return symbol.address, is_implicit_print, symbol.is_func  # variable or function starting address
 
         # If not found
         #TODO: handle the semantic error with line number and etc
@@ -142,10 +144,13 @@ class CodeGenerator:
             return
         
         try:
-            addr, _ = self.findaddr(token)
+            addr, _ , is_func = self.findaddr(token)
             if DEBUG_P3:
                 print("addr", addr,"token", token)
-            self.semantic_stack.push(addr)  # Fix: was self.stack
+            if is_func:
+                self.semantic_stack.push(str(token).strip())
+            else:
+                self.semantic_stack.push(addr)  # Fix: was self.stack
         except KeyError:
             # Handle undeclared variable error
             if DEBUG_P3:
@@ -543,7 +548,7 @@ class CodeGenerator:
         if DEBUG_P3:
             print("hereeeee")
             
-        args = reversed(args)
+        args = list(reversed(args))
         self.semantic_stack.pop()
         func_name = self.semantic_stack.pop()
         if DEBUG_P3:
@@ -553,12 +558,15 @@ class CodeGenerator:
                 self.program_block.add_instruction(ThreeAddressInstruction(TACOperation.PRINT, f'{arg}'))
 
             return
+        
         if (len(args) != len(self.get_function_by_name(func_name).get_args())):
             
             self.semantic_errors.append( f"#{self.parser.get_line()}: Semantic error! Mismatch in numbers of arguments of {func_name}")
             return 
         func_args = self.get_function_by_name(func_name).get_args()
-        for i in len(args):
+        if DEBUG_P3:
+            print("ARGS in Calling", args)
+        for i in range(len(args)):
             matched = self.get_op_type(args[i]) == func_args[i].get_type()
             if not matched and CHECK_ERRORS:
                 self.semantic_errors.append( f"#{self.parser.get_line()}: Semantic Error! Type mismatch in operands, got {args[i]} instead of {func_args[i].get_type()}")
@@ -645,6 +653,7 @@ class FunctionObject:
         self.args = []  # Fix: should be list, not dict
         self.type = type
         self.return_val = None
+        self.is_func = True
 
     def add_args(self, arg):  # Fix: single arg parameter
         self.args.append(arg)
@@ -666,6 +675,9 @@ class FunctionObject:
         
     def get_return_val(self):
         return self.return_val
+    
+    def is_func(self):
+        return True
     
     
     
