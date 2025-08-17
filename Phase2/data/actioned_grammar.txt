@@ -14,9 +14,9 @@ Params ~ #push_param_in_semantic_stack int #push_param_in_semantic_stack ID Para
 Params ~ void
 ParamList ~ , Param ParamList
 ParamList ~ ε
-Param ~ DeclarationInitial #var_declare ParamPrime
-ParamPrime ~ [ ] #ptr_declare
-ParamPrime ~ ε 
+Param ~ DeclarationInitial ParamPrime
+ParamPrime ~ [ ] #var_declare
+ParamPrime ~ ε #var_declare
 CompoundStmt ~ { DeclarationList StatementList }
 StatementList ~ Statement StatementList
 StatementList ~ ε
