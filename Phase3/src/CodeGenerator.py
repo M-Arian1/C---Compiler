@@ -297,6 +297,7 @@ class CodeGenerator:
         
         instr = ThreeAddressInstruction(TACOperation.ASSIGN, rvalue, lvalue)
         self.program_block.add_instruction(instr)
+        self.semantic_stack.push(rvalue)
         
         return
 
