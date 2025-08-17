@@ -1,13 +1,15 @@
 /*===== Sample 1 =====*/
-int foo(int x){
-	return x;
+int add (int a, int b){
+ int sum;
+ sum = a + b;
+ return sum;
 }
-
 void main(void){
-	int i;
-	int j;
-	i= foo(0);
-	output(i);
-	j=foo(8);
-	output(j);
+    int x;
+    int y;
+    int sum;
+    x = 1;
+    y = 5;
+    sum = x + y;
+    add(x,y);
 }

@@ -462,8 +462,11 @@ class CodeGenerator:
         if DEBUG_P3:
             print("printing stack before calling top in arguments:")
             self.semantic_stack.print_info()
-        
+        i = 1
         while (str(self.semantic_stack.top()) != "#arguments"):
+            if(DEBUG_P3):
+                print("arg i:", i)
+            i+= 1
             arg_name = self.semantic_stack.pop()
             arg_type = self.semantic_stack.pop()
             arg_addr = self.data_block.allocate_cell()
@@ -476,8 +479,9 @@ class CodeGenerator:
         func_name = self.semantic_stack.pop()   
         
         if DEBUG_P3:
-            print("my func_name", func_name)  
-            print(self.semantic_stack.print_info())       
+            print("my function name", func_name)  
+            print(self.semantic_stack.print_info())   
+            print("Function Arguments:",args)    
         
         if func_name != 'main':
             func_obj = self.get_function_by_name(func_name)
@@ -583,15 +587,18 @@ class CodeGenerator:
                 self.program_block.add_instruction(ThreeAddressInstruction(TACOperation.PRINT, f'{arg}'))
 
             return
-        
-        if (len(args) != len(self.get_function_by_name(func_name).get_args())):
-            
+        len_args = self.get_function_by_name(func_name).get_args_len()
+        if (len(args) != len_args):
+            if DEBUG_P3:
+                print("matching error in func passing")
+                print("passed", args)
+                print("expected", self.get_function_by_name(func_name).get_args(), "len", len_args)
             self.semantic_errors.append( f"#{self.parser.get_line()}: Semantic error! Mismatch in numbers of arguments of {func_name}")
             return 
         func_args = self.get_function_by_name(func_name).get_args()
         if DEBUG_P3:
             print("ARGS in Calling", args)
-        for i in range(len(args)):
+        for i in range(len_args):
             matched = self.get_op_type(args[i]) == func_args[i].get_type()
             if DEBUG_P3:
                 print("func arg type", func_args[i].get_type())
@@ -698,7 +705,11 @@ class FunctionObject:
         
     def get_args(self):
         return self.args
-        
+    def get_args_len(self):
+        cnt = 0
+        for a in self.args:
+            cnt += 1
+        return cnt
     def set_return_addr(self, address):
         self.return_addr = address  # Fix: was missing assignment
         
