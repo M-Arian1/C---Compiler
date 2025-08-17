@@ -319,72 +319,92 @@ class CodeGenerator:
     ###                                 ###
     #######################################
     def while_save(self, token):
-        addr = self.program_block.current_address
-        self.semantic_stack.push(addr)
-        return
-    
-    def while_cond_jump(self, token):
-        addr = self.program_block.current_address
-        self.semantic_stack.push(addr)
-        self.program_block.increment_addr()
+        """Save the address where while condition evaluation starts"""
+        # This should be called BEFORE evaluating the while condition
+        while_start_addr = self.program_block.current_address
+        self.semantic_stack.push(while_start_addr)
         
         # Initialize breaks for current scope
         if self.scope_number not in self.breaks:
             self.breaks[self.scope_number] = []
         
+        if DEBUG_P3:
+            print(f"While save: saved address {while_start_addr}")
+        return
+
+    def while_cond_jump(self, token):
+        """Reserve space for conditional jump and open scope for while body"""
+        # This should be called AFTER condition evaluation but BEFORE while body
+        # At this point, condition result should be on top of semantic stack
+        
+        # Reserve space for JPF instruction
+        jpf_addr = self.program_block.current_address
+        self.program_block.increment_addr()  # Reserve the space
+        self.semantic_stack.push(jpf_addr)   # Save where JPF will go
+        
+        # Open new scope for while body
         self.open_new_scope()
+        
+        if DEBUG_P3:
+            print(f"While cond jump: reserved JPF at address {jpf_addr}")
+            self.semantic_stack.print_info()
         return
 
     def fill_while(self, token):
-        uncond_jmp_index = self.program_block.current_address
-
-        # Create conditional jump instruction
-        condition_result = self.semantic_stack.top(1)  # Condition result
-        cond_jmp_index = self.semantic_stack.top(0)    # Address for conditional jump
-        while_start_addr = self.semantic_stack.top(2)  # While loop start address
+        """Fill in the JPF instruction and add jump back to condition"""
+        # Stack should contain (from top): jpf_address, condition_result, while_start_address
         
-        # Add conditional jump (JPF)
-        cond_jmp = ThreeAddressInstruction(TACOperation.JUMP_IF_FALSE, condition_result, uncond_jmp_index + 1, '')
-        self.program_block.add_instruction(cond_jmp, cond_jmp_index)
-
-        # Add unconditional jump back to while condition
-        uncond_jmp = ThreeAddressInstruction(TACOperation.JUMP, while_start_addr, '', '')
-        self.program_block.add_instruction(uncond_jmp)
-
-        # Clean up semantic stack
-        self.semantic_stack.pop()  # Remove condition result
-        self.semantic_stack.pop()  # Remove jump address
-        self.semantic_stack.pop()  # Remove while start address
-
-        # Fill breaks to current pc
+        if DEBUG_P3:
+            print("Fill while - stack before:")
+            self.semantic_stack.print_info()
+        
+        # Get addresses from semantic stack
+        jpf_addr = self.semantic_stack.pop()          # Where to put JPF
+        condition_result = self.semantic_stack.pop()  # Condition evaluation result  
+        while_start_addr = self.semantic_stack.pop()  # Where condition evaluation starts
+        
+        # Current address is where we'll continue after the while loop
+        after_while_addr = self.program_block.current_address + 1  # +1 for the JP instruction we're about to add
+        
+        # Create and backpatch JPF instruction
+        # If condition is false, jump to after the while loop
+        jpf_instr = ThreeAddressInstruction(TACOperation.JUMP_IF_FALSE, condition_result, after_while_addr, '')
+        self.program_block.add_instruction(jpf_instr, jpf_addr)
+        
+        # Add unconditional jump back to condition evaluation
+        jp_back_instr = ThreeAddressInstruction(TACOperation.JUMP, while_start_addr, '', '')
+        self.program_block.add_instruction(jp_back_instr)
+        
+        # Now backpatch all break statements to jump to current address (after the loop)
         current_scope = self.scope_number
         if current_scope in self.breaks:
-            break_instr = ThreeAddressInstruction(TACOperation.JUMP, self.program_block.current_address, '', '')
-            for br in self.breaks[current_scope]:
-                self.program_block.add_instruction(break_instr, br)
+            for break_addr in self.breaks[current_scope]:
+                break_instr = ThreeAddressInstruction(TACOperation.JUMP, self.program_block.current_address, '', '')
+                self.program_block.add_instruction(break_instr, break_addr)
             # Clear breaks for this scope
             del self.breaks[current_scope]
         
-        
-        current_scope = self.scope_number
-        for ind in self.breaks[current_scope]:
-            jmp_instr = ThreeAddressInstruction(TACOperation.JUMP, f'{self.program_block.current_address}', '', '')
-            self.program_block.add_instruction(jmp_instr,ind)
-            
+        # Close the while body scope
         self.end_scope()
         
+        if DEBUG_P3:
+            print(f"Fill while: JPF at {jpf_addr} -> {after_while_addr}, JP back to {while_start_addr}")
         return
-    
+
     def break_save(self, token):
-        # Create a jump instruction that will be backpatched later
-        jmp_instr = ThreeAddressInstruction(TACOperation.JUMP, '', '', '')
-        jmp_index = self.program_block.add_instruction(jmp_instr)
+        """Handle break statement - reserve space for jump that will be backpatched"""
+        # Reserve space for break jump instruction
+        break_addr = self.program_block.current_address
+        self.program_block.increment_addr()
         
         # Add to breaks list for current scope
         current_scope = self.scope_number
         if current_scope not in self.breaks:
             self.breaks[current_scope] = []
-        self.breaks[current_scope].append(jmp_index)
+        self.breaks[current_scope].append(break_addr)
+        
+        if DEBUG_P3:
+            print(f"Break save: reserved break jump at address {break_addr} for scope {current_scope}")
         return
     
     
