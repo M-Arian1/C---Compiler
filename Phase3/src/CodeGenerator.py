@@ -21,6 +21,7 @@ class CodeGenerator:
         self.in_func = []
         self.action = None
         self.has_error = False
+        self.current_function_name = None
         
     def add_function(self, func):
         self.functions_list.append(func)
@@ -70,6 +71,8 @@ class CodeGenerator:
         return first_type, second_type, second_type == first_type
     
     def get_op_type(self, addr):
+        if addr.startswith("#"):
+            return 'int'
         return self.data_block.get_data_by_address(addr).type
         
        
@@ -339,12 +342,19 @@ class CodeGenerator:
             # Clear breaks for this scope
             del self.breaks[current_scope]
         
+        
+        current_scope = self.scope_number
+        for ind in self.breaks[current_scope]:
+            jmp_instr = ThreeAddressInstruction(TACOperation.JUMP, f'{self.program_block.current_address}', '', '')
+            self.program_block.add_instruction(jmp_instr,ind)
+            
         self.end_scope()
+        
         return
     
     def break_save(self, token):
         # Create a jump instruction that will be backpatched later
-        jmp_instr = ThreeAddressInstruction(TACOperation.JUMP, "", "", "")
+        jmp_instr = ThreeAddressInstruction(TACOperation.JUMP, '', '', '')
         jmp_index = self.program_block.add_instruction(jmp_instr)
         
         # Add to breaks list for current scope
@@ -421,15 +431,21 @@ class CodeGenerator:
             self.program_block.add_instruction(ThreeAddressInstruction(TACOperation.ASSIGN,'', '#0', f'{self.data_block.get_res()}'))
             
         else:
-            first_line_addr = self.program_block.current_address
+            # Reserve a jump over this function
+            skip_addr = self.program_block.current_address
+            self.program_block.increment_addr()   # placeholder JP
+            func_start = self.program_block.current_address
+            
             return_value_address = self.data_block.allocate_cell()
-            func = FunctionObject(func_name, func_type, first_line_addr, self.scope_number, return_value_address)
+            func = FunctionObject(func_name, func_type, func_start, self.scope_number, return_value_address)
             self.add_function(func)
-            # Add function to current scope's symbol table
             self.scope_stack[-1][str(func_name)] = func
-            # self.print_scope
+
+            # backpatch jump to after function later in function_end()
+            func._skip_addr = skip_addr
 
         self.open_new_scope()
+        self.current_function_name = func_name
         self.semantic_stack.push(func_name)
         self.semantic_stack.push("#arguments")
         if DEBUG_P3:
@@ -472,9 +488,15 @@ class CodeGenerator:
         return
     
     def return_value(self, token):
+        if DEBUG_P3:
+            print("return with value")
         return_val = self.semantic_stack.pop()
         rt_inst = ThreeAddressInstruction(TACOperation.ASSIGN, '', f'{return_val}', f'{self.data_block.get_res()}')
         self.program_block.add_instruction(rt_inst)
+        ret_addr = self.get_function_by_name(self.current_function_name).return_addr
+        ret_jmp_inst = ThreeAddressInstruction(TACOperation.JUMP,f'@{ret_addr}')
+        self.program_block.add_instruction(ret_jmp_inst)
+
         return
     
     def function_end(self, token):
@@ -483,7 +505,9 @@ class CodeGenerator:
         return
     
     def jump_return(self, token):
-        ret_addr = self.get_function_by_name(self.current_function_name).re
+        if DEBUG_P3:
+            print("return inst")
+        ret_addr = self.get_function_by_name(self.current_function_name).return_addr
         ret_jmp_inst = ThreeAddressInstruction(TACOperation.JUMP,f'@{ret_addr}')
         self.program_block.add_instruction(ret_jmp_inst)
         return
@@ -547,6 +571,7 @@ class CodeGenerator:
         
         if DEBUG_P3:
             print("hereeeee")
+            print(args)
             
         args = list(reversed(args))
         self.semantic_stack.pop()
@@ -568,21 +593,34 @@ class CodeGenerator:
             print("ARGS in Calling", args)
         for i in range(len(args)):
             matched = self.get_op_type(args[i]) == func_args[i].get_type()
+            if DEBUG_P3:
+                print("func arg type", func_args[i].get_type())
+                print("passed args", args[i])
             if not matched and CHECK_ERRORS:
+                if DEBUG_P3:
+                    print("error in arg passing")
                 self.semantic_errors.append( f"#{self.parser.get_line()}: Semantic Error! Type mismatch in operands, got {args[i]} instead of {func_args[i].get_type()}")
                 return
 
                 
-            self.program_block.add_instruction(ThreeAddressInstruction(TACOperation.ASSIGN, '', f'@{args[i]}', f'{func_args[i]}'))
+            self.program_block.add_instruction(ThreeAddressInstruction(TACOperation.ASSIGN, '', f'{args[i]}', f'{func_args[i].addr}'))
             
-        self.get_function_by_name(func_name).set_return_addr(self.program_block.current_address)
-        tmp = self.temp_block.get_temp()
+        called_func = self.get_function_by_name(func_name)
+        # self.get_function_by_name(func_name).set_return_addr(self.program_block.current_address)
+        ret_inst_after_call = ThreeAddressInstruction(TACOperation.ASSIGN, f"{self.program_block.current_address + 2}",f"{called_func.get_return_addr()}", '')
+        self.program_block.add_instruction(ret_inst_after_call)
+        jmp_to_func = ThreeAddressInstruction(TACOperation.JUMP,self.get_function_by_name(func_name).first_line_addr,'','')
+        self.program_block.add_instruction(jmp_to_func)
+        
+        tmp = self.temp_block.allocate_temp()
         self.semantic_stack.push(tmp)
         #Assuming the return value of function is saved in first address of data block
         self.program_block.add_instruction(ThreeAddressInstruction(TACOperation.ASSIGN,'',f'{self.data_block.get_res()}',f'{tmp}'))
         
     def exec_semantic_action(self, action_symbol, token):
         self.action = action_symbol
+        if DEBUG_P3:
+            print("MY ACTION CALLED:", action_symbol)
         match str(action_symbol):
             case "#push_in_semantic_stack":
                 self.push_token_in_semantic_stack(token)
@@ -694,6 +732,6 @@ class FunctionArg:
         return self.name
     
     def get_type(self):
-        return self.get_type
+        return self.type
     
     
