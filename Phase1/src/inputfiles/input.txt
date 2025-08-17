@@ -1,13 +1,14 @@
-/* sample 1 */
-
-int func(int a){
-	int b;
-    b = a + 5;
-    return b;
-}
 
 void main(void) {
+    int c;
     int a;
-    a = 5;
-    func(a);
+    int b;
+    c = 3;
+    
+ if(c < 5){
+    output(b - a);
+    } else {
+    output(c * 2);
+    }
+
 }

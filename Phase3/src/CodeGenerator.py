@@ -268,8 +268,8 @@ class CodeGenerator:
         condition_result = self.semantic_stack.pop()
 
         # Backpatch JPF at the reserved spot
-        instr = Instruction(TACOperation.JUMP_IF_FALSE, condition_result, '', self.program_block.current_address + 1)
-        self.program_block.add_instruction(instr, jpf_index)
+        instr = ThreeAddressInstruction(TACOperation.JUMP_IF_FALSE, condition_result, '', self.program_block.current_address + 1)
+        self.program_block.add_instruction(instr, int(jpf_index))
 
         # Reserve spot for unconditional JP to skip the else
         jp_index = self.program_block.current_address
