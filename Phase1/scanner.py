@@ -190,7 +190,7 @@ def is_comment_token(token):
 class Scanner:
     def __init__(self):
         self.C_minus_scanner = AutomataBuilder()
-        self.input_reader = InputReader('Phase1/src/inputfiles/input.txt')
+        self.input_reader = InputReader('input.txt')
     
     def input_reader_has_next(self):
         return self.input_reader.has_next()
