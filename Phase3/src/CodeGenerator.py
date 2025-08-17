@@ -259,33 +259,34 @@ class CodeGenerator:
     ####################################### 
     
     def save_index_before_cond_jump(self, token):
-        index = self.program_block.current_address
-        self.semantic_stack.push(index)
+        condition_result = self.semantic_stack.pop()
+        jpf_address = self.program_block.current_address
         self.program_block.increment_addr()
+        self.semantic_stack.push(jpf_address)
+        self.semantic_stack.push(condition_result)
         return
     
     #TODO: Check
     #PRBLEM: shouldn't we save scope or change it?
     def save_jpf(self, token):
-        jpf_index = self.semantic_stack.pop()
         condition_result = self.semantic_stack.pop()
+        jpf_address = self.semantic_stack.pop()
+        else_start_address = self.program_block.current_address + 1
+        jp_address = self.program_block.current_address
+        self.program_block.increment_addr()  # Reserve space for JP
 
-        # Backpatch JPF at the reserved spot
-        instr = ThreeAddressInstruction(TACOperation.JUMP_IF_FALSE, condition_result, '', self.program_block.current_address + 1)
-        self.program_block.add_instruction(instr, int(jpf_index))
-
-        # Reserve spot for unconditional JP to skip the else
-        jp_index = self.program_block.current_address
-        self.program_block.increment_addr()
+        jpf_instr = ThreeAddressInstruction(TACOperation.JUMP_IF_FALSE, condition_result, else_start_address, '')
+        self.program_block.add_instruction(jpf_instr, jpf_address)
         
-        # Push JP index for later backpatching
-        self.semantic_stack.push(jp_index)
+        self.semantic_stack.push(jp_address)
+        
         return
     
     def jump(self, token):
-        jp_index = self.semantic_stack.pop()
-        instr = Instruction(TACOperation.JUMP, '', '', self.program_block.current_address)
-        self.program_block.add_instruction(instr, jp_index)
+        jp_address = self.semantic_stack.pop()
+        end_address = self.program_block.current_address
+        jp_instr = ThreeAddressInstruction(TACOperation.JUMP, end_address, '', '')
+        self.program_block.add_instruction(jp_instr, jp_address)
         return
     
     
