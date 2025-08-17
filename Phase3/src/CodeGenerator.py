@@ -300,7 +300,9 @@ class CodeGenerator:
         self.semantic_stack.push(rvalue)
         
         return
-
+    def finish_assing_seq(self, token):
+        self.semantic_stack.pop()
+        pass
 
     #######################################
     ###                                 ###
@@ -853,6 +855,8 @@ class CodeGenerator:
                 self.push_param_in_ss(token)
             case "#param_declare":
                 self.param_declaration(token)
+            case "#finish_assing_seq":
+                self.finish_assing_seq(token)
             case _:
                 raise ValueError(f"Unknown semantic action: {action_symbol}")
         
