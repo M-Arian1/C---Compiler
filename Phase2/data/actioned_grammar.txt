@@ -34,7 +34,7 @@ ReturnStmt ~ return ReturnStmtPrime
 ReturnStmtPrime ~ #return_jp ;                                                                        
 ReturnStmtPrime ~ Expression #save_return_value ;
 Expression ~ SimpleExpressionZegond
-Expression ~ #pid ID B 
+Expression ~ #pid ID B #finish_assing_seq
 B ~ = Expression #assign
 B ~ [ Expression ] #array_addr H
 B ~ SimpleExpressionPrime

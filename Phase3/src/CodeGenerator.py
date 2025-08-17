@@ -293,15 +293,17 @@ class CodeGenerator:
             self.semantic_stack.print_info()
         
         rvalue = self.semantic_stack.pop()
-        lvalue = self.semantic_stack.pop() 
+        lvalue = self.semantic_stack.top() 
         
         instr = ThreeAddressInstruction(TACOperation.ASSIGN, rvalue, lvalue)
         self.program_block.add_instruction(instr)
-        self.semantic_stack.push(rvalue)
         
         return
     def finish_assing_seq(self, token):
-        self.semantic_stack.pop()
+        if not self.semantic_stack.is_empty() and self.semantic_stack.top(1) == 'output':
+            operand = self.semantic_stack.pop()
+            instr = ThreeAddressInstruction(TACOperation.PRINT, operand, '', '')
+            self.program_block.add_instruction(instr)
         pass
 
     #######################################
