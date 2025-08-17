@@ -1,4 +1,6 @@
 #2 : syntax error, missing [
 #2 : syntax error, missing ]
-#2 : syntax error, missing [
-#2 : syntax error, missing ]
+#5 : syntax error, missing [
+#5 : syntax error, missing ]
+#5 : syntax error, missing [
+#5 : syntax error, missing ]
