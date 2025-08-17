@@ -70,10 +70,41 @@ class CodeGenerator:
 
         return first_type, second_type, second_type == first_type
     
+    # ADD this enhanced get_op_type() method to CodeGenerator class:
     def get_op_type(self, addr):
-        if addr.startswith("#"):
+        """Enhanced operand type checking with better error handling"""
+        try:
+            # Handle immediate values
+            if isinstance(addr, str):
+                if addr.startswith('#'):
+                    return 'int'  # Immediate values are integers
+                elif addr.startswith('@'):
+                    # Indirect address - try to get the base type
+                    base_addr_str = addr[1:]
+                    try:
+                        base_addr = int(base_addr_str)
+                        data = self.data_block.get_data_by_address(base_addr)
+                        return data.type if data else 'int'
+                    except (ValueError, KeyError, AttributeError):
+                        return 'int'  # Default to int for unknown indirect addresses
+            
+            # Handle direct addresses
+            if isinstance(addr, int):
+                data = self.data_block.get_data_by_address(addr)
+                return data.type if data else 'int'
+            
+            # Handle string addresses (should be converted to int)
+            if isinstance(addr, str) and addr.isdigit():
+                data = self.data_block.get_data_by_address(int(addr))
+                return data.type if data else 'int'
+            
+            # For any other case, default to int
             return 'int'
-        return self.data_block.get_data_by_address(addr).type
+            
+        except (AttributeError, KeyError, ValueError) as e:
+            if DEBUG_P3:
+                print(f"Warning: Could not determine type for {addr}, defaulting to 'int'. Error: {e}")
+            return 'int'
         
        
     def findaddr(self, name):
@@ -140,24 +171,36 @@ class CodeGenerator:
             self.data_block.create_data(var_name, 'int', self.scope_stack[-1])
         return
         
+    # REMOVE the print_value() method entirely from CodeGenerator class
+# Delete this method:
+# def print_value(self, token):
+#     if not self.semantic_stack.is_empty() and self.semantic_stack.top(1) == 'output':
+#         operand = self.semantic_stack.pop()
+#         instr = ThreeAddressInstruction(self.semantic_stack.pop(), operand, '', '')
+#         self.program_block.add_instruction(instr)
+#     pass
+
+# REPLACE the push_id() method with this corrected version:
     def push_id(self, token):
-        if token == 'output':
-            self.semantic_stack.push('int')
-            self.semantic_stack.push('output')  # Fix: was self.stack
-            return
-        
+        """Handle identifier pushing - treat 'output' as a regular function identifier"""
         try:
-            addr, _ , is_func = self.findaddr(token)
+            addr, is_implicit_print, is_func = self.findaddr(token)
             if DEBUG_P3:
-                print("addr", addr,"token", token)
-            if is_func:
+                print("addr", addr, "token", token, "is_func", is_func)
+            
+            if is_implicit_print:  # This is the 'output' function
+                self.semantic_stack.push('output')
+            elif is_func:
                 self.semantic_stack.push(str(token).strip())
             else:
-                self.semantic_stack.push(addr)  # Fix: was self.stack
+                self.semantic_stack.push(addr)
+                
         except KeyError:
             # Handle undeclared variable error
             if DEBUG_P3:
                 print(f"Error: Undeclared variable {token}")
+            # Add semantic error
+            self.semantic_errors.append(f"#{self.parser.get_line()}: Semantic Error! '{token}' is not defined")
             # For now, push the token itself to prevent crashes
             self.semantic_stack.push(token)
         return
@@ -583,90 +626,145 @@ class CodeGenerator:
 
    
         
+# REPLACE the args_in_func_call_begin() method with this corrected version:
     def args_in_func_call_begin(self, token):
+        """Handle beginning of function call arguments"""
         if DEBUG_P3:
-            print("Reached begining of function arguments")
+            print("Reached beginning of function arguments")
+            
         func_name = self.semantic_stack.top()
+        if DEBUG_P3:
+            print(f"Function name at top of stack: {func_name}")
+        
         if func_name == 'output':
-            #TODO: handle output implicitly
+            # 'output' is an implicitly defined function - treat it normally
+            # No special handling needed here, just mark argument collection start
             self.semantic_stack.push("#call_args")
             return
         else:
-            if (self.get_function_by_name(func_name) == None):
-                #TODO: Handle undefined function error
-                if DEBUG_P3:
-                    print("didn't find func name", func_name)
-                self.semantic_errors.append(f"{self.parser.get_line()}:Semantic Error! {func_name} is not defined")
+            # Check if the function is defined
+            func_obj = self.get_function_by_name(func_name)
+            if func_obj is None:
+                # Function not found - add semantic error with correct format
+                self.semantic_errors.append(f"#{self.parser.get_line()}: Semantic Error! '{func_name}' is not defined")
+                # Still push marker to prevent parsing issues
+                self.semantic_stack.push("#call_args")
                 return
+            
+            # Function exists, proceed normally
             self.semantic_stack.push("#call_args")
-
             return
             
     
         
+    # REPLACE the args_in_func_call_end() method with this completely rewritten version:
     def args_in_func_call_end(self, token):
+        """Handle end of function call arguments - generate appropriate instructions"""
+        # Collect all arguments from the stack
         args = []
-        while (str(self.semantic_stack.top()) != "#call_args"):
-            
+        while str(self.semantic_stack.top()) != "#call_args":
             if DEBUG_P3:
                 self.semantic_stack.print_info()
-                print("in while1")
+                print("Collecting argument from stack")
             arg_addr = self.semantic_stack.pop()
-
-            # arg_addr, _ = self.findaddr(arg_name)
             args.append(arg_addr)
         
-        if DEBUG_P3:
-            print("hereeeee")
-            print(args)
-            
-        args = list(reversed(args))
+        # Remove the "#call_args" marker
         self.semantic_stack.pop()
+        
+        # Get the function name
         func_name = self.semantic_stack.pop()
+        
         if DEBUG_P3:
-            print("End of Args",func_name)
+            print(f"Function call end: {func_name} with args: {args}")
+        
+        # Reverse args to get correct order (last pushed = first argument)
+        args = list(reversed(args))
+        
+        # Handle 'output' function specially (implicitly defined)
         if func_name == 'output':
-            for arg in args:
-                self.program_block.add_instruction(ThreeAddressInstruction(TACOperation.PRINT, f'{arg}'))
-
-            return
-        len_args = self.get_function_by_name(func_name).get_args_len()
-        if (len(args) != len_args):
-            if DEBUG_P3:
-                print("matching error in func passing")
-                print("passed", args)
-                print("expected", self.get_function_by_name(func_name).get_args(), "len", len_args)
-            self.semantic_errors.append( f"#{self.parser.get_line()}: Semantic error! Mismatch in numbers of arguments of {func_name}")
-            return 
-        func_args = self.get_function_by_name(func_name).get_args()
-        if DEBUG_P3:
-            print("ARGS in Calling", args)
-        for i in range(len_args):
-            matched = self.get_op_type(args[i]) == func_args[i].get_type()
-            if DEBUG_P3:
-                print("func arg type", func_args[i].get_type())
-                print("passed args", args[i])
-            if not matched and CHECK_ERRORS:
-                if DEBUG_P3:
-                    print("error in arg passing")
-                self.semantic_errors.append( f"#{self.parser.get_line()}: Semantic Error! Type mismatch in operands, got {args[i]} instead of {func_args[i].get_type()}")
+            # Validate argument count for output function
+            if len(args) != 1:
+                self.semantic_errors.append(f"#{self.parser.get_line()}: Semantic error! Mismatch in numbers of arguments of 'output'")
                 return
-
-                
-            self.program_block.add_instruction(ThreeAddressInstruction(TACOperation.ASSIGN, '', f'{args[i]}', f'{func_args[i].addr}'))
             
-        called_func = self.get_function_by_name(func_name)
-        # self.get_function_by_name(func_name).set_return_addr(self.program_block.current_address)
-        ret_inst_after_call = ThreeAddressInstruction(TACOperation.ASSIGN, f"{self.program_block.current_address + 2}",f"{called_func.get_return_addr()}", '')
-        self.program_block.add_instruction(ret_inst_after_call)
-        jmp_to_func = ThreeAddressInstruction(TACOperation.JUMP,self.get_function_by_name(func_name).first_line_addr,'','')
-        self.program_block.add_instruction(jmp_to_func)
+            # Validate argument type (should be int)
+            arg = args[0]
+            try:
+                arg_type = self.get_op_type(arg) if not str(arg).startswith('#') else 'int'
+                if arg_type != 'int' and CHECK_ERRORS:
+                    self.semantic_errors.append(f"#{self.parser.get_line()}: Semantic Error! Mismatch in type of argument 1 for 'output'. Expected 'int' but got '{arg_type}' instead")
+                    return
+            except (AttributeError, KeyError):
+                # If we can't determine type, assume it's correct
+                pass
+            
+            # Generate PRINT instruction with correct format
+            print_instr = ThreeAddressInstruction(TACOperation.PRINT, arg, '', '')
+            self.program_block.add_instruction(print_instr)
+            
+            if DEBUG_P3:
+                print(f"Generated PRINT instruction for output({arg})")
+            
+            # output function doesn't return a value that can be used in expressions
+            # So we don't push anything back on the semantic stack
+            return
         
-        tmp = self.temp_block.allocate_temp()
-        self.semantic_stack.push(tmp)
-        #Assuming the return value of function is saved in first address of data block
-        self.program_block.add_instruction(ThreeAddressInstruction(TACOperation.ASSIGN,'',f'{self.data_block.get_res()}',f'{tmp}'))
+        # Handle user-defined functions
+        func_obj = self.get_function_by_name(func_name)
+        if func_obj is None:
+            # Error already reported in args_in_func_call_begin, just return
+            return
         
+        # Validate argument count
+        expected_args = func_obj.get_args()
+        if len(args) != len(expected_args):
+            self.semantic_errors.append(f"#{self.parser.get_line()}: Semantic error! Mismatch in numbers of arguments of '{func_name}'")
+            return
+        
+        # Validate argument types and generate assignment instructions
+        for i in range(len(args)):
+            arg = args[i]
+            expected_arg = expected_args[i]
+            
+            # Type checking
+            try:
+                arg_type = self.get_op_type(arg) if not str(arg).startswith('#') else 'int'
+                expected_type = expected_arg.get_type()
+                
+                if arg_type != expected_type and CHECK_ERRORS:
+                    self.semantic_errors.append(f"#{self.parser.get_line()}: Semantic Error! Mismatch in type of argument {i+1} for '{func_name}'. Expected '{expected_type}' but got '{arg_type}' instead")
+                    return
+            except (AttributeError, KeyError):
+                # If we can't determine type, assume it's correct
+                pass
+            
+            # Generate assignment instruction to pass argument
+            assign_instr = ThreeAddressInstruction(TACOperation.ASSIGN, arg, expected_arg.get_addr(), '')
+            self.program_block.add_instruction(assign_instr)
+        
+        # Set up return address
+        return_addr_temp = self.temp_block.allocate_temp()
+        return_addr_instr = ThreeAddressInstruction(TACOperation.ASSIGN, f'#{self.program_block.current_address + 2}', return_addr_temp, '')
+        self.program_block.add_instruction(return_addr_instr)
+        func_obj.set_return_addr(return_addr_temp)
+        
+        # Generate jump to function
+        jump_instr = ThreeAddressInstruction(TACOperation.JUMP, func_obj.get_addr(), '', '')
+        self.program_block.add_instruction(jump_instr)
+        
+        # Prepare to receive return value
+        result_temp = self.temp_block.allocate_temp()
+        self.semantic_stack.push(result_temp)
+        
+        # Generate instruction to copy return value
+        return_val_instr = ThreeAddressInstruction(TACOperation.ASSIGN, self.data_block.get_res(), result_temp, '')
+        self.program_block.add_instruction(return_val_instr)
+        
+        if DEBUG_P3:
+            print(f"Generated function call sequence for {func_name}")
+
+
     def exec_semantic_action(self, action_symbol, token):
         self.action = action_symbol
         if DEBUG_P3:
