@@ -771,7 +771,7 @@ class CodeGenerator:
         
         # Set up return address
         return_addr_temp = func_obj.get_return_addr()
-        return_addr_instr = ThreeAddressInstruction(TACOperation.ASSIGN, f'#{self.program_block.current_address + 2}', f"@{return_addr_temp}", '')
+        return_addr_instr = ThreeAddressInstruction(TACOperation.ASSIGN, f'#{self.program_block.current_address + 2}', f"{return_addr_temp}", '')
         self.program_block.add_instruction(return_addr_instr)
         func_obj.set_return_addr(return_addr_temp)
         
