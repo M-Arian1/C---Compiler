@@ -248,9 +248,15 @@ class CodeGenerator:
         if DEBUG_P3:
             print("ASSIGNMENT")
             self.semantic_stack.print_info()
-        instr = ThreeAddressInstruction(TACOperation.ASSIGN, self.semantic_stack.pop(), self.semantic_stack.top(), '')
+        
+        rvalue = self.semantic_stack.pop()
+        lvalue = self.semantic_stack.pop() 
+        
+        instr = ThreeAddressInstruction(TACOperation.ASSIGN, rvalue, '', lvalue)
         self.program_block.add_instruction(instr)
+        
         return
+
 
     #######################################
     ###                                 ###
@@ -259,18 +265,34 @@ class CodeGenerator:
     ####################################### 
     
     def save_index_before_cond_jump(self, token):
-        condition_result = self.semantic_stack.pop()
-        jpf_address = self.program_block.current_address
+        condition_result = self.semantic_stack.pop()  # Get condition result (1000)
+
+        # Reserve space for JPF instruction
+        jpf_address = self.program_block.current_address  # Gets 3
         self.program_block.increment_addr()
-        self.semantic_stack.push(jpf_address)
-        self.semantic_stack.push(condition_result)
+
+        # Push in correct order: jpf_address first, then condition_result
+        # This way jpf_address will be on top when save_jpf pops
+        self.semantic_stack.push(condition_result)  # Push 1000 first (bottom)
+        self.semantic_stack.push(jpf_address)       # Push 3 second (top)
+
         return
     
     #TODO: Check
     #PRBLEM: shouldn't we save scope or change it?
     def save_jpf(self, token):
-        condition_result = self.semantic_stack.pop()
-        jpf_address = self.semantic_stack.pop()
+        if DEBUG_P3:
+            print("SAVE_JPF - Stack before popping:")
+            self.semantic_stack.print_info()
+            
+        jpf_address = self.semantic_stack.pop()      
+        if DEBUG_P3:
+            print(f"Popped jpf_address: {jpf_address} (should be 3)")
+            
+        condition_result = self.semantic_stack.pop() 
+        if DEBUG_P3:
+            print(f"Popped condition_result: {condition_result} (should be 1000)")
+        
         else_start_address = self.program_block.current_address + 1
         jp_address = self.program_block.current_address
         self.program_block.increment_addr()  # Reserve space for JP
