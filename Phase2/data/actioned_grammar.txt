@@ -15,8 +15,8 @@ Params ~ void
 ParamList ~ , Param ParamList
 ParamList ~ ε
 Param ~ DeclarationInitial ParamPrime
-ParamPrime ~ [ ] #var_declare
-ParamPrime ~ ε #var_declare
+ParamPrime ~ [ ] #param_declare
+ParamPrime ~ ε #param_declare
 CompoundStmt ~ { DeclarationList StatementList }
 StatementList ~ Statement StatementList
 StatementList ~ ε
@@ -34,7 +34,7 @@ ReturnStmt ~ return ReturnStmtPrime
 ReturnStmtPrime ~ #return_jp ;                                                                        
 ReturnStmtPrime ~ Expression #save_return_value ;
 Expression ~ SimpleExpressionZegond
-Expression ~ #pid ID B #print
+Expression ~ #pid ID B 
 B ~ = Expression #assign
 B ~ [ Expression ] #array_addr H
 B ~ SimpleExpressionPrime
