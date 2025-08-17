@@ -28,9 +28,14 @@ class CodeGenerator:
         
     def get_function_by_name(self, name):
         my_func = None
+        if DEBUG_P3:
+            print("SELF FUNCS:",self.functions_list)
         for f in self.functions_list:
+            if DEBUG_P3:
+                print("CHECK Functions, name:", "~~~",f.name,"~~~",type, f.type,"looking for", name)
             if str(f.name) == name:
                 my_func = f
+                break
         return my_func
 
     
@@ -417,6 +422,7 @@ class CodeGenerator:
             self.add_function(func)
             # Add function to current scope's symbol table
             self.scope_stack[-1][str(func_name)] = func
+            # self.print_scope
 
         self.open_new_scope()
         self.semantic_stack.push(func_name)
@@ -512,6 +518,9 @@ class CodeGenerator:
         else:
             if (self.get_function_by_name(func_name) == None):
                 #TODO: Handle undefined function error
+                if DEBUG_P3:
+                    print("didn't find func name", func_name)
+                self.semantic_errors.append(f"{self.parser.get_line()}:Semantic Error! {func_name} is not defined")
                 return
             self.semantic_stack.push("#call_args")
 
