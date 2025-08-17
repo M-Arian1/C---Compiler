@@ -2,7 +2,7 @@ from enum import Enum
 
 WORD_SIZE = 4
 MEMORY_BLOCK_SIZE = 4
-MAX_MEMORY_ADDRESS = 1000
+MAX_MEMORY_ADDRESS = 10000
 
 
 # ===== Memory Layer =====
@@ -23,7 +23,7 @@ class MemorySegment:
         self.base_address = base_address
         self.bound_address = bound_address
         self.current_address = base_address
-        self.cells = {}
+        # self.cells = {}
 
     def _check_bounds(self, address):
         if not (self.base_address <= address <= self.bound_address):
@@ -86,6 +86,7 @@ class CodeSegment(MemorySegment):
         # self.instructions = {}
         self.scope = 0
         self.error = False
+        self.cells = {}
 
     def add_instruction(self, instruction, address=None):
         if address is None:
@@ -117,6 +118,11 @@ class CodeSegment(MemorySegment):
 
 class DataSegment(MemorySegment):
     """Holds program variables."""
+    def __init__(self, base_address, bound_address):
+        super().__init__(base_address, bound_address)
+        self.cells = {}
+        self.reserved_addr_for_return = base_address
+        self.current_address += WORD_SIZE
     def create_data(self, data_name, data_type, symbol_table, array_size=1, attrs={}):
         # self.cells.append[self.current_address]
         for i in range(array_size):
@@ -127,8 +133,10 @@ class DataSegment(MemorySegment):
             self.current_address += data.type_size
     pass
 
-    def create_function(self, func_name, func_val, func_first_line, symbol_table):
-        
+
+    def create_function(self, func_name, func_type, func_first_line, symbol_table):
+        data = Data(func_name, func_type, func_first_line, attrs=None)
+        symbol_table[str(func_name)] = data
         return
 
     def get_data_by_address(self, address):
@@ -138,8 +146,14 @@ class DataSegment(MemorySegment):
         self.cells[address] = data
         return
     
+    def get_res(self):
+        return self.reserved_addr_for_return
+    
 
 class TemporarySegment(MemorySegment):
+    def __init__(self, base_address, bound_address):
+        super().__init__(base_address, bound_address)
+        self.cells = []
     """Holds temporary variables for computation."""
     def allocate_temp(self):
         if self.current_address + MEMORY_BLOCK_SIZE > self.bound_address:

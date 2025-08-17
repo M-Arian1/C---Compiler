@@ -19,7 +19,7 @@ class SemanticStack:
         """
         if DEBUG_P3:
             print("stack pointer before popping:",self.sp)
-            print("popping", self.stack[self.sp - 1])
+            print("popping", self.stack[self.sp - 1],"for", self.code_gen.action)
         popped = self.stack.pop()
         self.sp -= 1
         return popped

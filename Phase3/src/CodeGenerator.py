@@ -2,6 +2,7 @@ from Phase3.src.SemanticStack import SemanticStack
 from Phase3.src.Memories import *
 
 DEBUG_P3 = True
+CHECK_ERRORS = True
 class CodeGenerator:
     
     def __init__(self, parser) -> None:
@@ -19,6 +20,7 @@ class CodeGenerator:
         self.functions_list = []
         self.in_func = []
         self.action = None
+        self.has_error = False
         
     def add_function(self, func):
         self.functions_list.append(func)
@@ -36,7 +38,7 @@ class CodeGenerator:
     #TODO
     def get_pb(self):
         block = self.program_block.get_cells()
-        print("PB", self.program_block.cells)
+        # print("PB", self.program_block.cells)
         
         result = []
         for address in sorted(block.keys()):
@@ -49,7 +51,7 @@ class CodeGenerator:
             
         
     def check_operand_types(self, first_operand, second_operand):
-        first_type,second_type = 'int', 'int'
+        first_type, second_type = 'int', 'int'
         try:
             first_type = self.data_block.get_data_by_address(first_operand).type
         except (ValueError, KeyError, AttributeError):
@@ -60,7 +62,10 @@ class CodeGenerator:
         except (ValueError, KeyError, AttributeError):
             second_type = 'int'
 
-        return first_type, second_type, True
+        return first_type, second_type, second_type == first_type
+    
+    def get_op_type(self, addr):
+        return self.data_block.get_data_by_address(addr).type
         
        
     def findaddr(self, name):
@@ -127,13 +132,14 @@ class CodeGenerator:
         
     def push_id(self, token):
         if token == 'output':
-            self.semantic_stack.push('PRINT')  # Fix: was self.stack
+            self.semantic_stack.push('int')
+            self.semantic_stack.push('output')  # Fix: was self.stack
             return
         
         try:
             addr, _ = self.findaddr(token)
             if DEBUG_P3:
-                print("addr", addr)
+                print("addr", addr,"token", token)
             self.semantic_stack.push(addr)  # Fix: was self.stack
         except KeyError:
             # Handle undeclared variable error
@@ -142,7 +148,13 @@ class CodeGenerator:
             # For now, push the token itself to prevent crashes
             self.semantic_stack.push(token)
         return
-     
+    
+    #######################################
+    ###                                 ###
+    ###          ARITHMETIC OPS         ###
+    ###                                 ###
+    ####################################### 
+    
     def relative_op(self, token):
         tmp = self.temp_block.allocate_temp()
         second_operand = self.semantic_stack.pop()
@@ -191,9 +203,15 @@ class CodeGenerator:
     def multiply(self, token):
         
         tmp = self.temp_block.allocate_temp()
+        if DEBUG_P3:
+            print("MULT Begin")
+            self.semantic_stack.print_info()
+            print("MULT End")
         second_operand = self.semantic_stack.pop()
-        operation = self.semantic_stack.pop()
+        # operation = self.semantic_stack.pop()
+
         first_operand = self.semantic_stack.pop()
+        
         _, _, matched = self.check_operand_types(first_operand, second_operand)
         
         if matched:
@@ -204,8 +222,9 @@ class CodeGenerator:
             #TODO: handle mismatch error
             pass
         
+    #TODO: What is this?
     def print_value(self, token):
-        if not self.semantic_stack.is_empty() and self.semantic_stack.top(1) == 'PRINT':
+        if not self.semantic_stack.is_empty() and self.semantic_stack.top(1) == 'output':
             operand = self.semantic_stack.pop()
             #shouldn't it be TACOperation?
             instr = ThreeAddressInstruction(self.semantic_stack.pop(), operand, '', '')
@@ -213,6 +232,9 @@ class CodeGenerator:
         pass
     
     def assignment(self, token):
+        if DEBUG_P3:
+            print("ASSIGNMENT")
+            self.semantic_stack.print_info()
         instr = ThreeAddressInstruction(TACOperation.ASSIGN, self.semantic_stack.pop(), self.semantic_stack.top(), '')
         self.program_block.add_instruction(instr)
         return
@@ -346,14 +368,14 @@ class CodeGenerator:
         tmp2 = self.temp_block.allocate_temp()
         offset = self.semantic_stack.pop()
         base = self.semantic_stack.pop()
-        mult_instruction = Instruction(TACOperation.MULTIPLY, '#4', offset, tmp1)
+        mult_instruction = ThreeAddressInstruction(TACOperation.MULTIPLY, '#4', offset, tmp1)
         self.program_block.add_instruction(mult_instruction)
         if str(base).startswith('@'):
             tmp_array_base = self.temp_block.allocate_temp()
             self.program_block.add_instruction(Instruction('ASSIGN', base, tmp_array_base, ''))
-            add_instruction = Instruction(TACOperation.ADD, tmp_array_base, tmp1, tmp2)
+            add_instruction = ThreeAddressInstruction(TACOperation.ADD, tmp_array_base, tmp1, tmp2)
         else:
-            add_instruction = Instruction(TACOperation.ADD, '#' + str(base), tmp1, tmp2)
+            add_instruction = ThreeAddressInstruction(TACOperation.ADD, '#' + str(base), tmp1, tmp2)
         self.program_block.add_instruction(add_instruction)
         self.semantic_stack.push('@' + str(tmp2))
         pass
@@ -386,6 +408,7 @@ class CodeGenerator:
             # We'll backpatch address 0 with JP to main_start_addr later
             main_jump = ThreeAddressInstruction(TACOperation.JUMP, main_start_addr, '', '')
             self.program_block.add_instruction(main_jump, 0)  # Backpatch at address 0
+            self.program_block.add_instruction(ThreeAddressInstruction(TACOperation.ASSIGN,'', '#0', f'{self.data_block.get_res()}'))
             
         else:
             first_line_addr = self.program_block.current_address
@@ -439,7 +462,7 @@ class CodeGenerator:
     
     def return_value(self, token):
         return_val = self.semantic_stack.pop()
-        rt_inst = ThreeAddressInstruction(TACOperation.ASSIGN, '','0', return_val)
+        rt_inst = ThreeAddressInstruction(TACOperation.ASSIGN, '', f'{return_val}', f'{self.data_block.get_res()}')
         self.program_block.add_instruction(rt_inst)
         return
     
@@ -471,7 +494,7 @@ class CodeGenerator:
         else:
             self.data_block.create_data(arg_name, 'array', self.scope_stack[-1])
             self.semantic_stack.push(arg_name)
-            self.semantic_stack.push(data_type)
+            self.semantic_stack.push('array')
         return
    
     
@@ -479,10 +502,12 @@ class CodeGenerator:
    
         
     def args_in_func_call_begin(self, token):
+        if DEBUG_P3:
+            print("Reached begining of function arguments")
         func_name = self.semantic_stack.top()
-        if func_name == 'PRINT':
+        if func_name == 'output':
             #TODO: handle output implicitly
-            
+            self.semantic_stack.push("#call_args")
             return
         else:
             if (self.get_function_by_name(func_name) == None):
@@ -497,26 +522,47 @@ class CodeGenerator:
     def args_in_func_call_end(self, token):
         args = []
         while (str(self.semantic_stack.top()) != "#call_args"):
-            arg_name = self.semantic_stack.pop()
-            self.semantic_stack.pop()
-            arg_addr, _ = self.findaddr(arg_name)
+            
+            if DEBUG_P3:
+                self.semantic_stack.print_info()
+                print("in while1")
+            arg_addr = self.semantic_stack.pop()
+
+            # arg_addr, _ = self.findaddr(arg_name)
             args.append(arg_addr)
+        
+        if DEBUG_P3:
+            print("hereeeee")
             
         args = reversed(args)
         self.semantic_stack.pop()
         func_name = self.semantic_stack.pop()
-        if func_name == 'PRINT':
+        if DEBUG_P3:
+            print("End of Args",func_name)
+        if func_name == 'output':
             for arg in args:
                 self.program_block.add_instruction(ThreeAddressInstruction(TACOperation.PRINT, f'{arg}'))
 
             return
         if (len(args) != len(self.get_function_by_name(func_name).get_args())):
-            raise "semantic error! Mismatch in numbers of arguments of ID"
+            
+            self.semantic_errors.append( f"#{self.parser.get_line()}: Semantic error! Mismatch in numbers of arguments of {func_name}")
+            return 
         func_args = self.get_function_by_name(func_name).get_args()
         for i in len(args):
+            matched = self.get_op_type(args[i]) == func_args[i].get_type()
+            if not matched and CHECK_ERRORS:
+                self.semantic_errors.append( f"#{self.parser.get_line()}: Semantic Error! Type mismatch in operands, got {args[i]} instead of {func_args[i].get_type()}")
+                return
+
+                
             self.program_block.add_instruction(ThreeAddressInstruction(TACOperation.ASSIGN, '', f'@{args[i]}', f'{func_args[i]}'))
             
         self.get_function_by_name(func_name).set_return_addr(self.program_block.current_address)
+        tmp = self.temp_block.get_temp()
+        self.semantic_stack.push(tmp)
+        #Assuming the return value of function is saved in first address of data block
+        self.program_block.add_instruction(ThreeAddressInstruction(TACOperation.ASSIGN,'',f'{self.data_block.get_res()}',f'{tmp}'))
         
     def exec_semantic_action(self, action_symbol, token):
         self.action = action_symbol
@@ -578,7 +624,7 @@ class CodeGenerator:
             case _:
                 raise ValueError(f"Unknown semantic action: {action_symbol}")
         
-    
+        
 
 class FunctionObject:
     def __init__(self, name, type, func_addr, func_scope_number, return_addr=None) -> None:
@@ -623,5 +669,10 @@ class FunctionArg:
         self.addr = addr
         self.type = type
         pass
+    def get_name(self):
+        return self.name
+    
+    def get_type(self):
+        return self.get_type
     
     
