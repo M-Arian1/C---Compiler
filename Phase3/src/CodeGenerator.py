@@ -476,16 +476,15 @@ class CodeGenerator:
         self.semantic_stack.pop()
         return
     def break_save(self, token):
-        """Handle break statement - reserve space for jump that will be backpatched"""
-        # Reserve space for break jump instruction
         break_addr = self.program_block.current_address
         self.program_block.increment_addr()
         
-        # Add to breaks list for current scope
-        current_scope = self.scope_number
+        # FIX: Use while_scope_number instead of scope_number
+        current_scope = self.while_scope_number
+        
         if current_scope not in self.breaks:
             self.breaks[current_scope] = []
-        self.breaks[current_scope].append(break_addr) 
+        self.breaks[current_scope].append(break_addr)
         
         if DEBUG_P3:
             print(f"Break save: reserved break jump at address {break_addr} for scope {current_scope}")
