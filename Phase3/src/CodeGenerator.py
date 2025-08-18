@@ -678,7 +678,7 @@ class CodeGenerator:
         else:
             self.data_block.create_data(arg_name, 'array', self.scope_stack[-1])
             self.semantic_stack.push(arg_name)
-            self.semantic_stack.push('array')
+            self.semantic_stack.push(data_type)
         return
    
     
