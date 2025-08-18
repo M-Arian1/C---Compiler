@@ -8,12 +8,13 @@ MAX_MEMORY_ADDRESS = 1000
 # ===== Memory Layer =====
 
 class Data():
-    def __init__(self, lexeme, type, loc, is_func=False, attrs={}):
+    def __init__(self, lexeme, type, loc, is_func=False, attrs={}, val = 0):
         self.lexeme = lexeme
         self.address = loc
         self.type = type
         self.is_func = is_func
         self.attrs = attrs
+        self.val = val
         if type == 'int' or type == 'array':
             self.type_size = WORD_SIZE
     
@@ -131,10 +132,11 @@ class DataSegment(MemorySegment):
         for i in range(array_size):
             data = Data(data_name, data_type, self.current_address, attrs=attrs)
             if i == 0:
+                first_cell = self.current_address
                 symbol_table[str(data_name)]= data
             self.cells[self.current_address] = data
             self.current_address += data.type_size
-    pass
+        return first_cell
 
 
     def create_function(self, func_name, func_type, func_first_line, symbol_table):

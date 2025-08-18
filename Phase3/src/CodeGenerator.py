@@ -491,10 +491,15 @@ class CodeGenerator:
     
 
     def array_declaration(self, token):
-        array_size = self.semantic_stack.pop()
+        array_size = int(self.semantic_stack.pop())
         array_name = self.semantic_stack.pop()
-        self.data_block.create_data(array_name, 'array', self.scope_stack[-1], int(array_size),
+        array_type = self.semantic_stack.pop()
+        dummy_symbol_table = {}
+        array_addr = self.data_block.create_data(array_name, 'array', dummy_symbol_table, int(array_size),
                                     {'array_size': int(array_size)})
+        pointer_addr = self.data_block.create_data(array_name,'array',self.scope_stack[-1])
+        self.program_block.add_instruction(ThreeAddressInstruction(TACOperation.ASSIGN,f'#{array_addr}', f'{pointer_addr}'))
+
         return
     
         #when one of function arguemnts is an array
@@ -502,8 +507,8 @@ class CodeGenerator:
        
     def calculate_array_addr(self, token):
         self.program_block.add_instruction(ThreeAddressInstruction(TACOperation.ASSIGN,'#0',f"{self.temp_block.current_address}"))
-        self.program_block.add_instruction(ThreeAddressInstruction(TACOperation.ASSIGN,'#0',f"{self.temp_block.current_address}"))
         tmp1 = self.temp_block.allocate_temp()
+        self.program_block.add_instruction(ThreeAddressInstruction(TACOperation.ASSIGN,'#0',f"{self.temp_block.current_address}"))
         tmp2 = self.temp_block.allocate_temp()
         offset = self.semantic_stack.pop()
         base = self.semantic_stack.pop()
