@@ -841,69 +841,69 @@ class CodeGenerator:
         self.action = action_symbol
         if DEBUG_P3:
             print("MY ACTION CALLED:", action_symbol)
-        match str(action_symbol):
-            case "#push_in_semantic_stack":
-                self.push_token_in_semantic_stack(token)
-            case "#var_declare":
-                self.variable_declaration(token)
-            case "#arr_declare":
-                self.array_declaration(token)
-            case "#func_declare":
-                self.function_declaration(token)
-            case "#args_info":
-                self.function_arguments(token)
-            case "#fun_end":
-                self.function_end(token)
-            case "#ptr_declare":
-                self.pointer_declaration(token)
-            case "#br_save":
-                self.break_save(token)
-            case "#save_cond":
-                self.save_index_before_cond_jump(token)
-            case "#save_jpf":
-                self.save_jpf(token)
-            case "#jp":
-                self.jump(token)
-            case "#save_while_uncond":
-                self.while_save(token)
-            case "#save_while_cond_jpf":
-                self.while_cond_jump(token)
-            case "#fill_while_body":
-                self.fill_while(token)
-            case "#remove_exp_result":
-                self.remove_expression_result(token)
-            case "#return_jp":
-                self.jump_return(token)
-            case "#save_return_value":
-                self.return_value(token)
-            case "#pid":
-                self.push_id(token)
-            case "#print":
-                self.print_value(token)
-            case "#assign":
-                self.assignment(token)
-            case "#array_addr":
-                self.calculate_array_addr(token)
-            case "#relation":
-                self.relative_op(token)
-            case "#arithm_op":
-                self.arithmetic_operation(token)
-            case "#mult":
-                self.multiply(token)
-            case "#push_imm_in_semantic_stack":
-                self.push_immediate(token)
-            case "#args_begin":
-                self.args_in_func_call_begin(token)
-            case "#args_end":
-                self.args_in_func_call_end(token)
-            case "#push_param_in_semantic_stack":
-                self.push_param_in_ss(token)
-            case "#param_declare":
-                self.param_declaration(token)
-            case "#finish_assign_seq":
-                self.finish_assing_seq(token)
-            case _:
-                raise ValueError(f"Unknown semantic action: {action_symbol}")
+        action_str = str(action_symbol)
+        if action_str == "#push_in_semantic_stack":
+            self.push_token_in_semantic_stack(token)
+        elif action_str == "#var_declare":
+            self.variable_declaration(token)
+        elif action_str == "#arr_declare":
+            self.array_declaration(token)
+        elif action_str == "#func_declare":
+            self.function_declaration(token)
+        elif action_str == "#args_info":
+            self.function_arguments(token)
+        elif action_str == "#fun_end":
+            self.function_end(token)
+        elif action_str == "#ptr_declare":
+            self.pointer_declaration(token)
+        elif action_str == "#br_save":
+            self.break_save(token)
+        elif action_str == "#save_cond":
+            self.save_index_before_cond_jump(token)
+        elif action_str == "#save_jpf":
+            self.save_jpf(token)
+        elif action_str == "#jp":
+            self.jump(token)
+        elif action_str == "#save_while_uncond":
+            self.while_save(token)
+        elif action_str == "#save_while_cond_jpf":
+            self.while_cond_jump(token)
+        elif action_str == "#fill_while_body":
+            self.fill_while(token)
+        elif action_str == "#remove_exp_result":
+            self.remove_expression_result(token)
+        elif action_str == "#return_jp":
+            self.jump_return(token)
+        elif action_str == "#save_return_value":
+            self.return_value(token)
+        elif action_str == "#pid":
+            self.push_id(token)
+        elif action_str == "#print":
+            self.print_value(token)
+        elif action_str == "#assign":
+            self.assignment(token)
+        elif action_str == "#array_addr":
+            self.calculate_array_addr(token)
+        elif action_str == "#relation":
+            self.relative_op(token)
+        elif action_str == "#arithm_op":
+            self.arithmetic_operation(token)
+        elif action_str == "#mult":
+            self.multiply(token)
+        elif action_str == "#push_imm_in_semantic_stack":
+            self.push_immediate(token)
+        elif action_str == "#args_begin":
+            self.args_in_func_call_begin(token)
+        elif action_str == "#args_end":
+            self.args_in_func_call_end(token)
+        elif action_str == "#push_param_in_semantic_stack":
+            self.push_param_in_ss(token)
+        elif action_str == "#param_declare":
+            self.param_declaration(token)
+        elif action_str == "#finish_assign_seq":
+            self.finish_assing_seq(token)
+        else:
+            raise ValueError(f"Unknown semantic action: {action_symbol}")
         
         
 
