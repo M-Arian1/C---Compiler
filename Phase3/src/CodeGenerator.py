@@ -48,14 +48,24 @@ class CodeGenerator:
         block = self.program_block.get_cells()
         # print("PB", self.program_block.cells)
         
+        #tof
+        my_range = []
+        for i in range(sorted(block.keys())[-1] + 1):
+            my_range.append(0)
+        for address in block.keys():
+            my_range[address] = 1
         result = []
-        for address in sorted(block.keys()):
-            instruction = block[address]
-            # Format: "line_number (OPERATION, operand1, operand2, operand3)"
-            result.append(f"{address}\t{instruction.to_string()}")
+        for address in range(len(my_range)):
+            if my_range[address] == 1:
+                instruction = block[address]
+                # Format: "line_number (OPERATION, operand1, operand2, operand3)"
+                result.append(f"{address}\t{instruction.to_string()}")
+            else:
+                instruction = ThreeAddressInstruction(TACOperation.JUMP, str(address + 1))
+                result.append(f"{address}\t{instruction.to_string()}")
+
         
         return "\n".join(result)
-        
             
         
     def check_operand_types(self, first_operand, second_operand):
@@ -520,7 +530,7 @@ class CodeGenerator:
             self.program_block.add_instruction(Instruction('ASSIGN', base, tmp_array_base, ''))
             add_instruction = ThreeAddressInstruction(TACOperation.ADD, tmp_array_base, tmp1, tmp2)
         else:
-            add_instruction = ThreeAddressInstruction(TACOperation.ADD, '#' + str(base), tmp1, tmp2)
+            add_instruction = ThreeAddressInstruction(TACOperation.ADD, str(base), tmp1, tmp2)
         self.program_block.add_instruction(add_instruction)
         self.semantic_stack.push('@' + str(tmp2))
         pass
@@ -611,11 +621,14 @@ class CodeGenerator:
             i+= 1
             arg_name = self.semantic_stack.pop()
             arg_type = self.semantic_stack.pop()
-            arg_addr = self.data_block.allocate_cell()
+            if DEBUG_P3:
+                print("arg_name",arg_name)
+            arg_addr,_,_ = self.findaddr(arg_name)
+            
             arg = FunctionArg(arg_name, arg_addr, arg_type)
             args.append(arg)
             # Add argument to current scope (function scope)
-            self.scope_stack[-1][str(arg_name)] = Data(arg_name, arg_type, arg_addr)
+            # self.scope_stack[-1][str(arg_name)] = Data(arg_name, arg_type, arg_addr)
         
         self.semantic_stack.pop()  # Remove "#arguments"
         func_name = self.semantic_stack.pop()   
@@ -682,8 +695,9 @@ class CodeGenerator:
             pass
         else:
             self.data_block.create_data(arg_name, 'array', self.scope_stack[-1])
-            self.semantic_stack.push(arg_name)
             self.semantic_stack.push(data_type)
+            self.semantic_stack.push(arg_name)
+            
         return
    
     
