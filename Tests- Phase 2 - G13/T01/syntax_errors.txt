@@ -1,2 +1,0 @@
-#5 : syntax error, illegal int
-#18 : syntax error, missing ID

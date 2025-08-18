@@ -17,9 +17,11 @@ class CodeGenerator:
         self.scope_stack=[{}]
         self.breaks = {}
         self.scope_number = 0
+        self.while_scope_number = 0
         self.functions_list = []
         self.in_func = []
         self.action = None
+        self.prev_act = None
         self.has_error = False
         self.current_function_name = None
         
@@ -212,6 +214,7 @@ class CodeGenerator:
     ####################################### 
     
     def relative_op(self, token):
+        self.program_block.add_instruction(ThreeAddressInstruction(TACOperation.ASSIGN,'#0',f"{self.temp_block.current_address}"))
         tmp = self.temp_block.allocate_temp()
         second_operand = self.semantic_stack.pop()
         operation       = self.semantic_stack.pop()
@@ -234,7 +237,7 @@ class CodeGenerator:
             pass
             
     def arithmetic_operation(self, token):
-        
+        self.program_block.add_instruction(ThreeAddressInstruction(TACOperation.ASSIGN,'#0',f"{self.temp_block.current_address}"))
         tmp = self.temp_block.allocate_temp()
         second_operand = self.semantic_stack.pop()
         operation = self.semantic_stack.pop()
@@ -257,8 +260,9 @@ class CodeGenerator:
             pass
             
     def multiply(self, token):
-        
+        self.program_block.add_instruction(ThreeAddressInstruction(TACOperation.ASSIGN,'#0',f"{self.temp_block.current_address}"))
         tmp = self.temp_block.allocate_temp()
+
         if DEBUG_P3:
             print("MULT Begin")
             self.semantic_stack.print_info()
@@ -288,22 +292,34 @@ class CodeGenerator:
         pass
     
     def assignment(self, token):
+        
         if DEBUG_P3:
             print("ASSIGNMENT")
             self.semantic_stack.print_info()
         
         rvalue = self.semantic_stack.pop()
-        lvalue = self.semantic_stack.top() 
+        lvalue = self.semantic_stack.pop() 
         
         instr = ThreeAddressInstruction(TACOperation.ASSIGN, rvalue, lvalue)
         self.program_block.add_instruction(instr)
+        self.semantic_stack.push(lvalue)
+        
+        return
         
         return
     def finish_assing_seq(self, token):
+        if DEBUG_P3:
+            print("in finish_assing_seq")
+            print("previous action:",self.prev_act)
+            print("prev act", str(self.prev_act) == "#assign")
+        if not self.semantic_stack.is_empty() and self.prev_act == "#assign":
+            print()
+            self.semantic_stack.pop()
         if not self.semantic_stack.is_empty() and self.semantic_stack.top(1) == 'output':
             operand = self.semantic_stack.pop()
-            instr = ThreeAddressInstruction(TACOperation.PRINT, operand, '', '')
+            instr = ThreeAddressInstruction(self.semantic_stack.pop(), operand, '', '')
             self.program_block.add_instruction(instr)
+        
         pass
 
     #######################################
@@ -373,8 +389,8 @@ class CodeGenerator:
         self.semantic_stack.push(while_start_addr)
         
         # Initialize breaks for current scope
-        if self.scope_number not in self.breaks:
-            self.breaks[self.scope_number] = []
+        if self.while_scope_number not in self.breaks:
+            self.breaks[self.while_scope_number] = []
         
         if DEBUG_P3:
             print(f"While save: saved address {while_start_addr}")
@@ -391,7 +407,9 @@ class CodeGenerator:
         self.semantic_stack.push(jpf_addr)   # Save where JPF will go
         
         # Open new scope for while body
+        self.while_scope_number += 1
         self.open_new_scope()
+        self.breaks[self.while_scope_number] = []
         
         if DEBUG_P3:
             print(f"While cond jump: reserved JPF at address {jpf_addr}")
@@ -424,7 +442,7 @@ class CodeGenerator:
         self.program_block.add_instruction(jp_back_instr)
         
         # Now backpatch all break statements to jump to current address (after the loop)
-        current_scope = self.scope_number
+        current_scope = self.while_scope_number
         if current_scope in self.breaks:
             for break_addr in self.breaks[current_scope]:
                 break_instr = ThreeAddressInstruction(TACOperation.JUMP, self.program_block.current_address, '', '')
@@ -434,11 +452,19 @@ class CodeGenerator:
         
         # Close the while body scope
         self.end_scope()
+        self.while_scope_number -= 1
         
         if DEBUG_P3:
             print(f"Fill while: JPF at {jpf_addr} -> {after_while_addr}, JP back to {while_start_addr}")
         return
-
+    def remove_expression_result(self, token):
+        if DEBUG_P3:
+            print("REMOVE LAST EXP RESULT")
+            self.semantic_stack.print_info()
+        if self.semantic_stack.sp == 0:
+            return
+        self.semantic_stack.pop()
+        return
     def break_save(self, token):
         """Handle break statement - reserve space for jump that will be backpatched"""
         # Reserve space for break jump instruction
@@ -449,7 +475,7 @@ class CodeGenerator:
         current_scope = self.scope_number
         if current_scope not in self.breaks:
             self.breaks[current_scope] = []
-        self.breaks[current_scope].append(break_addr)
+        self.breaks[current_scope].append(break_addr) 
         
         if DEBUG_P3:
             print(f"Break save: reserved break jump at address {break_addr} for scope {current_scope}")
@@ -475,6 +501,8 @@ class CodeGenerator:
 
        
     def calculate_array_addr(self, token):
+        self.program_block.add_instruction(ThreeAddressInstruction(TACOperation.ASSIGN,'#0',f"{self.temp_block.current_address}"))
+        self.program_block.add_instruction(ThreeAddressInstruction(TACOperation.ASSIGN,'#0',f"{self.temp_block.current_address}"))
         tmp1 = self.temp_block.allocate_temp()
         tmp2 = self.temp_block.allocate_temp()
         offset = self.semantic_stack.pop()
@@ -482,6 +510,7 @@ class CodeGenerator:
         mult_instruction = ThreeAddressInstruction(TACOperation.MULTIPLY, '#4', offset, tmp1)
         self.program_block.add_instruction(mult_instruction)
         if str(base).startswith('@'):
+            self.program_block.add_instruction(ThreeAddressInstruction(TACOperation.ASSIGN,'#0',f"{self.temp_block.current_address}"))
             tmp_array_base = self.temp_block.allocate_temp()
             self.program_block.add_instruction(Instruction('ASSIGN', base, tmp_array_base, ''))
             add_instruction = ThreeAddressInstruction(TACOperation.ADD, tmp_array_base, tmp1, tmp2)
@@ -605,18 +634,26 @@ class CodeGenerator:
         return_val = self.semantic_stack.pop()
         rt_inst = ThreeAddressInstruction(TACOperation.ASSIGN, f'{return_val}', f'{self.data_block.get_res()}')
         self.program_block.add_instruction(rt_inst)
-        ret_addr = self.get_function_by_name(self.current_function_name).return_addr
-        ret_jmp_inst = ThreeAddressInstruction(TACOperation.JUMP,f'@{ret_addr}')
-        self.program_block.add_instruction(ret_jmp_inst)
+        
 
         return
     
     def function_end(self, token):
+        if DEBUG_P3:
+            print("return inst")
+            print("Currnet function", self.current_function_name)
+        if self.current_function_name == 'main':
+            return
+        ret_addr = self.get_function_by_name(self.current_function_name).return_addr
+        ret_jmp_inst = ThreeAddressInstruction(TACOperation.JUMP,f'@{ret_addr}')
+        self.program_block.add_instruction(ret_jmp_inst)
+        
         self.current_function_name = None
         self.end_scope()
         return
     
     def jump_return(self, token):
+        return
         if DEBUG_P3:
             print("return inst")
         ret_addr = self.get_function_by_name(self.current_function_name).return_addr
@@ -661,6 +698,8 @@ class CodeGenerator:
         if func_name == 'output':
             # 'output' is an implicitly defined function - treat it normally
             # No special handling needed here, just mark argument collection start
+            if DEBUG_P3:
+                print("args for output")
             self.semantic_stack.push("#call_args")
             return
         else:
@@ -727,7 +766,7 @@ class CodeGenerator:
             
             if DEBUG_P3:
                 print(f"Generated PRINT instruction for output({arg})")
-            
+            self.semantic_stack.push(arg)
             # output function doesn't return a value that can be used in expressions
             # So we don't push anything back on the semantic stack
             return
@@ -785,6 +824,7 @@ class CodeGenerator:
         self.program_block.add_instruction(jump_instr)
         
         # Prepare to receive return value
+        self.program_block.add_instruction(ThreeAddressInstruction(TACOperation.ASSIGN,'#0',f"{self.temp_block.current_address}"))
         result_temp = self.temp_block.allocate_temp()
         self.semantic_stack.push(result_temp)
         
@@ -797,6 +837,7 @@ class CodeGenerator:
 
 
     def exec_semantic_action(self, action_symbol, token):
+        self.prev_act = self.action
         self.action = action_symbol
         if DEBUG_P3:
             print("MY ACTION CALLED:", action_symbol)
@@ -829,6 +870,8 @@ class CodeGenerator:
                 self.while_cond_jump(token)
             case "#fill_while_body":
                 self.fill_while(token)
+            case "#remove_exp_result":
+                self.remove_expression_result(token)
             case "#return_jp":
                 self.jump_return(token)
             case "#save_return_value":
@@ -857,7 +900,7 @@ class CodeGenerator:
                 self.push_param_in_ss(token)
             case "#param_declare":
                 self.param_declaration(token)
-            case "#finish_assing_seq":
+            case "#finish_assign_seq":
                 self.finish_assing_seq(token)
             case _:
                 raise ValueError(f"Unknown semantic action: {action_symbol}")

@@ -1,5 +1,6 @@
 from enum import Enum
 
+DEBUG = False
 # === Constants ===
 class EdgeType(Enum):
     TERMINAL = 'TERMINAL'
@@ -67,14 +68,14 @@ class DiagramBuilder:
         return state
 
     def determine_edge_type(self, symbol):
-        # print("symbol", symbol, str(symbol).startswith("#"), "end")
+        print("symbol", symbol, str(symbol).startswith("#"), "end")
         if isinstance(symbol, self.grammar.Terminal):
             return EdgeType.TERMINAL
         elif isinstance(symbol, self.grammar.NonTerminal):
             return EdgeType.NON_TERMINAL
         elif isinstance(symbol, self.grammar.ActionSymbol):
             return EdgeType.ACTION_SYMBOL
-        elif symbol == 'epsilon' or symbol == 'ε':
+        elif str(symbol) == 'epsilon' or str(symbol) == 'ε':
             return EdgeType.EPSILON
         else:
             raise ValueError(f"Unknown symbol type: {symbol}")
@@ -101,11 +102,22 @@ class DiagramBuilder:
             if len(production) == 1 and str(production[0]) == 'ε':  # ε-production
                 start.add_edge('epsilon', final, EdgeType.EPSILON)
                 continue
+            
 
             current = start
             for i, symbol in enumerate(production):
                 is_last = (i == len(production) - 1)
+
+                
                 edge_type = self.determine_edge_type(symbol)
+                if str(symbol) == 'ε':
+                    edge_type = EdgeType.EPSILON
+                if DEBUG:
+                    print("when building diagrams")
+                    print("symbol", symbol)
+                    print (edge_type)
+                    print("epsilon checking", str(symbol) == 'ε')
+                
                 has_semantic_action = (edge_type.value == EdgeType.ACTION_SYMBOL.value)
                 # print("determinig edge type", edge_type, has_semantic_action)
                 next_state = final if is_last else self.new_state(has_semantic_action = has_semantic_action)

@@ -92,6 +92,8 @@ class DiagramParser:
         }
         
     def exec_semantic_action(self, action_symbol, token):
+        if IGNORE_ACTION:
+            return
         self.code_generator.exec_semantic_action(action_symbol, token)
         
             
