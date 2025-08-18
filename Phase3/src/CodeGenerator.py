@@ -670,7 +670,6 @@ class CodeGenerator:
         return
     
     def jump_return(self, token):
-        return
         if DEBUG_P3:
             print("return inst")
         ret_addr = self.get_function_by_name(self.current_function_name).return_addr
