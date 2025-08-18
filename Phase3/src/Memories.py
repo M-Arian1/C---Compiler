@@ -96,6 +96,8 @@ class CodeSegment(MemorySegment):
         if address is None:
             address = self.current_address
             self.current_address += 1
+
+            
         self._check_bounds(address)
         self.cells[address] = instruction
         return address  # Return where the instruction was stored

@@ -24,8 +24,11 @@ class CodeGenerator:
         self.prev_act = None
         self.has_error = False
         self.current_function_name = None
+        self.main_back = -1
+        
         
     def add_function(self, func):
+        
         self.functions_list.append(func)
         self.in_func.append(func.name)
         
@@ -145,6 +148,12 @@ class CodeGenerator:
         #TODO: handle the semantic error with line number and etc
         # self.semantic_errors.append()
         raise KeyError(f"Undeclared identifier: {name}")
+    
+    def find_by_addr(self, addr):
+        for scope in reversed(self.scope_stack):
+            for name in scope:
+                if scope[name].address == int(addr):
+                    return scope[name]
         
         
     def open_new_scope(self):
@@ -504,9 +513,12 @@ class CodeGenerator:
         array_name = self.semantic_stack.pop()
         array_type = self.semantic_stack.pop()
         dummy_symbol_table = {}
+        print("DEFINING ARRAY ", array_name)
         array_addr = self.data_block.create_data(array_name, 'array', dummy_symbol_table, int(array_size),
                                     {'array_size': int(array_size)})
         pointer_addr = self.data_block.create_data(array_name,'array',self.scope_stack[-1])
+        print("POINTER AT", pointer_addr)
+        print("added array dec at ", self.program_block.current_address)
         self.program_block.add_instruction(ThreeAddressInstruction(TACOperation.ASSIGN,f'#{array_addr}', f'{pointer_addr}'))
 
         return
@@ -523,12 +535,14 @@ class CodeGenerator:
         base = self.semantic_stack.pop()
         mult_instruction = ThreeAddressInstruction(TACOperation.MULTIPLY, '#4', offset, tmp1)
         self.program_block.add_instruction(mult_instruction)
-        if str(base).startswith('@'):
+        print(self.find_by_addr(base).type )
+        if self.find_by_addr(base).type == 'array' or str(base).startswith('@'):
             self.program_block.add_instruction(ThreeAddressInstruction(TACOperation.ASSIGN,'#0',f"{self.temp_block.current_address}"))
             tmp_array_base = self.temp_block.allocate_temp()
-            self.program_block.add_instruction(Instruction('ASSIGN', base, tmp_array_base, ''))
+            self.program_block.add_instruction(ThreeAddressInstruction(TACOperation.ASSIGN, base, tmp_array_base, ''))
             add_instruction = ThreeAddressInstruction(TACOperation.ADD, tmp_array_base, tmp1, tmp2)
         else:
+            print("BASE BASE", base)
             add_instruction = ThreeAddressInstruction(TACOperation.ADD, str(base), tmp1, tmp2)
         self.program_block.add_instruction(add_instruction)
         self.semantic_stack.push('@' + str(tmp2))
@@ -549,19 +563,22 @@ class CodeGenerator:
         func_type = self.semantic_stack.pop()
         if DEBUG_P3:
             print("func name in func declaration:", func_name)
-        
+        print("adding func, addr is ", self.program_block.current_address)
+        if self.main_back == -1:
+            self.main_back = self.program_block.current_address
+            self.program_block.increment_addr()
         if str(func_name) == 'main':
             # For main function, we need to jump to its start
             # Reserve address 0 for initial jump to main
-            if self.program_block.current_address == 0:
+            # if self.program_block.current_address == 0:
                 # Reserve space for jump to main - we'll fill this later
-                self.program_block.increment_addr()
+            
             
             # Store main's starting address for later backpatching
             main_start_addr = self.program_block.current_address
             # We'll backpatch address 0 with JP to main_start_addr later
             main_jump = ThreeAddressInstruction(TACOperation.JUMP, main_start_addr, '', '')
-            self.program_block.add_instruction(main_jump, 0)  # Backpatch at address 0
+            self.program_block.add_instruction(main_jump, self.main_back)  # Backpatch at address 0
             self.program_block.add_instruction(ThreeAddressInstruction(TACOperation.ASSIGN,'#0', f'{self.data_block.get_res()}'))
             
         else:
@@ -670,6 +687,7 @@ class CodeGenerator:
         return
     
     def jump_return(self, token):
+        # return
         if DEBUG_P3:
             print("return inst")
         ret_addr = self.get_function_by_name(self.current_function_name).return_addr
