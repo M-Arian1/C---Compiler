@@ -192,6 +192,5 @@ class AutomataBuilder:
         
         alph = Alphabet().include_all_chars()
         
-        # print(panic_alphabet.is_in_alphabet('/'))  # True (ASCII 47)
         
         return automaton

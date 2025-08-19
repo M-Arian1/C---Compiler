@@ -153,13 +153,7 @@ class DiagramParser:
     def execute_diagram(self, diagram_name, diagram):
         from Phase2.src.TreeHandler import ParseNode
         state = diagram.start_state
-        # i = 0
         while (self.scanner.input_reader_has_next() or self.current_token == '$') and not self.unexpected_eof_flag and not self.missing_end_detected:
-            # i += 1
-            if DEBUG:
-                print("Current Token", self.current_token, "Current State", state.get_id())
-            # if i == 10:
-            #     return
             transitioned = False
             epsilon_edge = None
             terminal_transitions = []
@@ -171,23 +165,18 @@ class DiagramParser:
             final_after_action = False
 
             for edge in state.edges:
-                if DEBUG:
-                    print("Determining edge type", edge.symbol, edge.edge_type.value)
+
                 if edge.edge_type.value == EdgeType.TERMINAL.value:
                     terminal_transitions.append(edge)
                 elif edge.edge_type.value == EdgeType.NON_TERMINAL.value:
                     non_terminal_transitions.append(edge)
                 elif edge.edge_type.value == EdgeType.ACTION_SYMBOL.value:
-                    if DEBUG:
-                        print("edge with action symbol detected")
                     transition_with_action_symbol.append(edge)
                     state_or_transition_has_action = True
                 elif edge.edge_type.value == EdgeType.EPSILON.value:
                     epsilon_edge = edge
             
             if state_or_transition_has_action:
-                if DEBUG:
-                    print("on action")
                 #TODO
                 #Phase3
                 '''We should do the destined semantic routine IF the token matches with the next transition after this
@@ -199,14 +188,11 @@ class DiagramParser:
                     target_state = edge.target
                     act_sym = edge.symbol
                     
-                    if DEBUG:
-                        print(target_state.get_id(), "action", act_sym)
+
                     #Case 1: action symbol transitions into a final state
                     if target_state.is_final:
-                        #TODO: perform the semantic action and then return without using the token
                         self.exec_semantic_action(act_sym, self.current_token)
-                        if DEBUG:
-                            print("Next State : final")
+
                          
                         transitioned = True
                         final_after_action = True
@@ -215,12 +201,10 @@ class DiagramParser:
                     
                     #Case 2: action symbol is a transition to an intermediate state
                     else:
-                        #TODO: first we should add the transition from this state into the next one and add it to the possible "edges" so it matches with that instead of an action symbol!
                         
                         #get the next edge after this
                         next_edge = target_state.get_edges_from_state()[0]
-                        if DEBUG:
-                            print("Next edge after action symbol", next_edge, "symbol", next_edge.symbol)
+                       
                         if next_edge.edge_type.value == EdgeType.TERMINAL.value:
                             # edge = next_edge
                             if self.match_token_to_symbol(next_edge.symbol):
@@ -229,10 +213,7 @@ class DiagramParser:
                                 self.match(next_edge.symbol)
                                 state = next_edge.target
                                 transitioned = True
-                                terminal_matched = True
-                                #TODO: perform action and advance token
-                                if DEBUG:
-                                    print("before calling action, now in terminal case")
+                                terminal_matched = True                                
                                 self.exec_semantic_action(act_sym, self.kept_token)
 
                                 
@@ -240,8 +221,7 @@ class DiagramParser:
                             break   
                         if next_edge.edge_type.value == EdgeType.NON_TERMINAL.value:
                             predict = self.grammar.get_predict(next_edge.get_name())
-                            if DEBUG:
-                                print("Next edge was non terminal")
+
                             if self.check_in_set(predict):
                                 non_terminal_node = ParseNode(next_edge.symbol)
                                 self.current_node.add_child(non_terminal_node)
@@ -259,8 +239,7 @@ class DiagramParser:
                                
                                 
                         if non_terminal_matched:
-                            if DEBUG:
-                                print("Non terminal after action symbol")
+
                             break
                         if not transitioned and  next_edge.edge_type.value == EdgeType.EPSILON.value:
                             epsilon_edge = next_edge
@@ -272,8 +251,7 @@ class DiagramParser:
                             continue
                         
             if transitioned: 
-                if DEBUG:
-                    print("here")
+
                 if final_after_action:
                     return
                 continue

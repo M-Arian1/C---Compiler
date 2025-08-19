@@ -17,8 +17,7 @@ class ParserEdge:
         self.edge_type = edge_type
     def get_name(self):
         return str(self.symbol)
-    def edge_info(self):
-        print("from :", self.source.get_id(), "with", self.symbol, "to", self.target.get_id(), "Type:", self.edge_type)
+    
 
 
 class ParserState:
@@ -98,7 +97,6 @@ class DiagramBuilder:
 
         for rule in rules:
             production = rule.rhs
-            # print("PRODUCTION", production, "len", (len(production)),)
             if len(production) == 1 and str(production[0]) == 'ε':  # ε-production
                 start.add_edge('epsilon', final, EdgeType.EPSILON)
                 continue
@@ -112,14 +110,9 @@ class DiagramBuilder:
                 edge_type = self.determine_edge_type(symbol)
                 if str(symbol) == 'ε':
                     edge_type = EdgeType.EPSILON
-                if DEBUG:
-                    print("when building diagrams")
-                    print("symbol", symbol)
-                    print (edge_type)
-                    print("epsilon checking", str(symbol) == 'ε')
+                
                 
                 has_semantic_action = (edge_type.value == EdgeType.ACTION_SYMBOL.value)
-                # print("determinig edge type", edge_type, has_semantic_action)
                 next_state = final if is_last else self.new_state(has_semantic_action = has_semantic_action)
                 if not is_last:
                     diagram.add_state(next_state)
@@ -131,7 +124,6 @@ class DiagramBuilder:
             print(f"\nDiagram for Non-Terminal: {nt_name}")
             for state in diagram.states:
                 final_str = " (final)" if state.is_final else ""
-                # has_action_str = " (has action symbol) " if state.has_action else ""
                 print(f"  State {state.id}{final_str}")
                 for edge in state.edges:
                     print(f"    --[{edge.symbol} ({edge.edge_type.name})]--> State {edge.target.id}")
