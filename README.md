@@ -34,3 +34,6 @@ Phase1/                   DFA scanner, token types, symbol/error tables
 Phase2/                   grammar, FIRST/FOLLOW/predict sets, transition-diagram parser, parse tree
 Phase3/                   semantic stack, memory model, three-address code generator
 ```
+
+## License
+MIT, see [LICENSE](LICENSE).
