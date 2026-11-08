@@ -1,4 +1,0 @@
-2.	(2x,	Invalid Number)	(2a,	Invalid Number)	
-4.	(2x,	Invalid Number)	
-7.	(else$,	Invalid Input)	(2x,	Invalid Number)	
-9.	(#,	Invalid Input)	

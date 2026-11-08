@@ -35,3 +35,9 @@ Thumbs.db
 # Debugging files
 .coverage
 htmlcov/
+.DS_Store
+output.txt
+parse_tree.txt
+syntax_errors.txt
+semantic_errors.txt
+Phase1/src/outputfiles/
